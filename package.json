@@ -4,8 +4,11 @@
   "description": "Collect end-user data",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup  -c -m"
   },
   "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^0.36.4"
+  }
 }

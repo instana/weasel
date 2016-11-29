@@ -4,11 +4,14 @@
   "description": "Collect end-user data",
   "main": "lib/index.js",
   "scripts": {
-    "build": "rollup  -c -m"
+    "clean": "rm -rf target",
+    "build": "rollup  -c -m",
+    "minify": "java -jar node_modules/google-closure-compiler/compiler.jar --compilation_level=ADVANCED --language_in=ECMASCRIPT6_STRICT  --js_output_file=target/weasel.min.js --output_wrapper='(function(){%output%})();' --create_source_map='%outname%.map' --source_map_input='target/weasel.js|target/weasel.js.map' --source_map_format=V3 --formatting=SINGLE_QUOTES target/weasel.js"
   },
   "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",
   "license": "MIT",
   "devDependencies": {
+    "google-closure-compiler": "^20161024.3.0",
     "rollup": "^0.36.4"
   }
 }

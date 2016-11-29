@@ -1,5 +1,5 @@
 export default {
   entry: 'lib/index.js',
-  dest: 'target/weasel.min.js',
+  dest: 'target/weasel.js',
   format: 'iife'
 };

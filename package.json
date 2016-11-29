@@ -4,14 +4,20 @@
   "description": "Collect end-user data",
   "main": "lib/index.js",
   "scripts": {
-    "clean": "rm -rf target",
-    "build": "rollup  -c -m",
-    "minify": "java -jar node_modules/google-closure-compiler/compiler.jar --compilation_level=ADVANCED --language_in=ECMASCRIPT6_STRICT  --js_output_file=target/weasel.min.js --output_wrapper='(function(){%output%})();' --create_source_map='%outname%.map' --source_map_input='target/weasel.js|target/weasel.js.map' --source_map_format=V3 --formatting=SINGLE_QUOTES target/weasel.js"
+    "build": "npm run build:clean && npm run build:production && npm run build:debug",
+    "build:clean": "rm -rf target",
+    "build:production": "NODE_ENV=production FILENAME=weasel npm run build:bundle",
+    "build:debug": "NODE_ENV=development FILENAME=weasel.debug npm run build:bundle",
+    "build:bundle": "npm run rollup && npm run minify",
+    "rollup": "rollup  -c -m",
+    "minify": "java -jar node_modules/google-closure-compiler/compiler.jar --compilation_level=ADVANCED --language_in=ECMASCRIPT5_STRICT --language_out=ECMASCRIPT3 --js_output_file=target/$FILENAME.min.js --output_wrapper='(function(){%output%})();' --create_source_map='%outname%.map' --formatting=SINGLE_QUOTES target/$FILENAME.js"
   },
   "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",
   "license": "MIT",
   "devDependencies": {
     "google-closure-compiler": "^20161024.3.0",
-    "rollup": "^0.36.4"
+    "rollup": "^0.36.4",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-flow": "^1.0.1"
   }
 }

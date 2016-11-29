@@ -10,14 +10,20 @@
     "build:debug": "NODE_ENV=development FILENAME=weasel.debug npm run build:bundle",
     "build:bundle": "npm run rollup && npm run minify",
     "rollup": "rollup  -c -m",
-    "minify": "java -jar node_modules/google-closure-compiler/compiler.jar --compilation_level=ADVANCED --language_in=ECMASCRIPT5_STRICT --language_out=ECMASCRIPT3 --js_output_file=target/$FILENAME.min.js --output_wrapper='(function(){%output%})();' --create_source_map='%outname%.map' --formatting=SINGLE_QUOTES target/$FILENAME.js"
+    "minify": "java -jar node_modules/google-closure-compiler/compiler.jar --compilation_level=ADVANCED --language_in=ECMASCRIPT5_STRICT --language_out=ECMASCRIPT3 --js_output_file=target/$FILENAME.min.js --output_wrapper='(function(){%output%})();' --create_source_map='%outname%.map' --formatting=SINGLE_QUOTES target/$FILENAME.js",
+
+    "test": "jest --coverage"
   },
   "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",
   "license": "MIT",
   "devDependencies": {
+    "babel-jest": "^17.0.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-polyfill": "^6.16.0",
     "google-closure-compiler": "^20161024.3.0",
+    "jest": "^17.0.3",
     "rollup": "^0.36.4",
-    "rollup-plugin-replace": "^1.1.1",
-    "rollup-plugin-flow": "^1.0.1"
+    "rollup-plugin-flow": "^1.0.1",
+    "rollup-plugin-replace": "^1.1.1"
   }
 }

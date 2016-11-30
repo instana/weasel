@@ -1,5 +1,4 @@
 # Weasel
 
- - add eslint
- - add jest test harness
+ - add protractor test harness
  - record time until onload event

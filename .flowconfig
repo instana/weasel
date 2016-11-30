@@ -1,0 +1,5 @@
+[options]
+module.file_ext=.js
+
+[ignore]
+.*/node_modules/.*

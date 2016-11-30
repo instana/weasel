@@ -1,4 +1,4 @@
-import {generateUniqueId} from '../lib/util';
+import {generateUniqueId} from '../../lib/util';
 
 describe('util', () => {
   describe('generateUniqueId', () => {

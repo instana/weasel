@@ -8,7 +8,9 @@ module.exports = {
     sourceType: 'module'
   },
   globals: {
-    DEBUG: false
+    DEBUG: false,
+    EumState: false,
+    EumEvent: false
   },
   rules: {
     indent: [

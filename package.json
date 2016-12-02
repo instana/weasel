@@ -4,7 +4,7 @@
   "description": "Collect end-user data",
   "main": "lib/index.js",
   "scripts": {
-    "build": "npm run build:clean && npm run build:production && npm run build:debug",
+    "build": "npm run build:clean && npm run build:production && npm run build:debug && npm run fileStats",
     "build:clean": "rm -rf target",
     "build:production": "NODE_ENV=production FILENAME=weasel npm run build:bundle",
     "build:debug": "NODE_ENV=development FILENAME=weasel.debug npm run build:bundle",
@@ -18,7 +18,8 @@
     "test:e2e": "protractor protractor.config.js",
     "test:lint": "eslint lib/**/*.js test/**/*.js",
     "test:flow": "flow; test $? -eq 0 -o $? -eq 2",
-    "devServer": "BEACON_SERVER_PORT=3009 node test/server/server"
+    "devServer": "BEACON_SERVER_PORT=3009 node test/server/server",
+    "fileStats": "echo \"\nFile Stats:\" && ls target/*.js | xargs -I '%' bash -c 'echo \"%: $(./node_modules/.bin/gzip-size % | ./node_modules/.bin/pretty-bytes) (gzip)\"'"
   },
   "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",
   "license": "MIT",
@@ -38,8 +39,10 @@
     "express": "^4.14.0",
     "flow-bin": "^0.36.0",
     "google-closure-compiler": "^20161024.3.0",
+    "gzip-size-cli": "^1.0.0",
     "husky": "^0.11.9",
     "jest": "^17.0.3",
+    "pretty-bytes-cli": "^2.0.0",
     "protractor": "^4.0.11",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",

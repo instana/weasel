@@ -38,6 +38,9 @@ function waitUntilServerIsUp() {
 }
 
 
+exports.getE2ETestBaseUrl = () => `http://127.0.0.1:${port}/e2e`;
+
+
 exports.getBeacons = () => {
   return request({
     method: 'GET',

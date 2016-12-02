@@ -4,7 +4,8 @@ const path = require('path');
 
 const app = express();
 
-app.use('/target', express.static(path.join(__dirname, '..', '..', '')));
+app.use('/target', express.static(path.join(__dirname, '..', '..', 'target')));
+app.use('/e2e', express.static(path.join(__dirname, '..', 'e2e')));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

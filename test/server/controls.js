@@ -4,7 +4,7 @@ const request = require('request-promise');
 const spawn = require('child_process').spawn;
 const path = require('path');
 
-const util = require('./util');
+const util = require('../util');
 
 const port = 3008;
 let serverProcess;

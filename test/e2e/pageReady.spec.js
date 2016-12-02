@@ -3,13 +3,12 @@ const util = require('../util');
 
 const cexpect = require('chai').expect;
 
-describe('pageLoad', () => {
+describe('pageReady', () => {
   registerTestHooks();
 
-  it('must support loading of e2e pages', () => {
+  it('must send pageReady beacon', () => {
     browser.ignoreSynchronization = true;
-    browser.get(`${getE2ETestBaseUrl()}/pageLoad.html`);
-    expect(browser.getTitle()).toEqual('pageload test');
+    browser.get(`${getE2ETestBaseUrl()}/pageReady.html`);
 
     return util.retry(() => {
       return getBeacons()

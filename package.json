@@ -17,7 +17,8 @@
     "test:unit": "jest --coverage --collectCoverageFrom=\"lib/**/*.js\" test/unit/* test/server/*",
     "test:e2e": "protractor protractor.config.js",
     "test:lint": "eslint lib/**/*.js test/**/*.js",
-    "test:flow": "flow; test $? -eq 0 -o $? -eq 2"
+    "test:flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "devServer": "BEACON_SERVER_PORT=3009 node test/server/server"
   },
   "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",
   "license": "MIT",

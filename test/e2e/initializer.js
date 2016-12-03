@@ -4,7 +4,7 @@
   var script = '/target/weasel.min.js';
 
   if (window.location.href.indexOf('debug=true') !== -1) {
-    script = '/target/weasel.debug.js';
+    script = '/target/weasel.debug.min.js';
   }
 
   (function(i,s,o,g,r,a,m){i['EumObject']=r;i[r]=i[r]||function(){

@@ -3,12 +3,12 @@ const util = require('../util');
 
 const cexpect = require('chai').expect;
 
-describe('pageReady', () => {
+describe('pageLoad', () => {
   registerTestHooks();
 
-  it('must send pageReady beacon', () => {
+  it('must send pageLoad beacon', () => {
     browser.ignoreSynchronization = true;
-    browser.get(`${getE2ETestBaseUrl()}/pageReady.html`);
+    browser.get(`${getE2ETestBaseUrl()}/pageLoad.html`);
 
     return util.retry(() => {
       return getBeacons()

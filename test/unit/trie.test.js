@@ -71,4 +71,50 @@ describe('trie', () => {
       }
     });
   });
+
+  it('must handle URL paths', () => {
+    t = createTrie()
+      .addItem('https://assets-cdn.github.com/assets/frameworks-7f2a605da6435efc2ee84e59714b38adf17b327656cf5739a7f65a0029fbe2d5.css', 42)
+      .addItem('https://assets-cdn.github.com/assets/github-66b4793238c819b34fb96e3275e183137b80b9c46385fb8aea5551146f74fef2.css', 23)
+      .addItem('https://avatars0.githubusercontent.com/u/596443?v=3&s=40', 21)
+      .addItem('https://assets-cdn.github.com/images/spinners/octocat-spinner-128.gif', 22)
+      .toJs();
+    expect(t).to.deep.equal({
+      'https://a': {
+        'ssets-cdn.github.com/': {
+          'assets/': {
+            'frameworks-7f2a605da6435efc2ee84e59714b38adf17b327656cf5739a7f65a0029fbe2d5.css': [
+              42
+            ],
+            'github-66b4793238c819b34fb96e3275e183137b80b9c46385fb8aea5551146f74fef2.css': [
+              23
+            ]
+          },
+          'images/spinners/octocat-spinner-128.gif': [
+            22
+          ]
+        },
+        'vatars0.githubusercontent.com/u/596443?v=3&s=40': [
+          21
+        ]
+      }
+    });
+  });
+
+  it('must handle localhost path regression', () => {
+    t = createTrie()
+      .addItem('http://localhost:3009/e2e/initializer.js', '-446,8,3,3,501')
+      .addItem('http://localhost:3009/target/weasel.debug.min.js', '-57,4,3,3,3641')
+      .toJs();
+    expect(t).to.deep.equal({
+      'http://localhost:3009/': {
+        'e2e/initializer.js': [
+          '-446,8,3,3,501'
+        ],
+        'target/weasel.debug.min.js': [
+          '-57,4,3,3,3641'
+        ]
+      }
+    });
+  });
 });

@@ -13,10 +13,7 @@ app.get('/', (req, res) => res.send('OK'));
 
 const beaconRequests = [];
 app.post('/beacon', (req, res) => {
-  beaconRequests.push({
-    body: req.body,
-    params: req.params
-  });
+  beaconRequests.push(req.body);
   res.send('OK');
 });
 
@@ -31,5 +28,4 @@ app.delete('/beacon', (req, res) => {
 
 const port = process.env.BEACON_SERVER_PORT;
 app.listen(port, () => {
-  console.log(`Dummy server listening on port ${port}!`);
 });

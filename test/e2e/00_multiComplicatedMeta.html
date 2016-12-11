@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>pageLoad test</title>
+</head>
+<body>
+  Hello World!
+
+  <script>
+    window.onEumLoad = function(eum) {
+      eum('meta', 'user', 'tom.mason@example.com');
+      eum('meta', 'No&way', 'Ifyou\nHaveTo&DoThis');
+    };
+  </script>
+  <script src="/e2e/initializer.js"></script>
+</body>
+</html>

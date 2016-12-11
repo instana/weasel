@@ -9,7 +9,7 @@ const util = require('../util');
 const port = 3008;
 let serverProcess;
 
-exports.registerTestHooks = () => {
+exports.registerTestServerHooks = () => {
   beforeEach(() => {
     var env = Object.create(process.env);
     env.BEACON_SERVER_PORT = port;
@@ -38,7 +38,7 @@ function waitUntilServerIsUp() {
 }
 
 
-exports.getE2ETestBaseUrl = () => `http://127.0.0.1:${port}/e2e`;
+exports.getE2ETestBaseUrl = file => `http://127.0.0.1:${port}/e2e/${file}.html`;
 
 
 exports.getBeacons = () => {

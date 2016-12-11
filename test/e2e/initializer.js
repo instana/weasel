@@ -13,4 +13,8 @@
   })(window,document,'script',script,'eum');
 
   eum('reportingUrl', '/beacon');
+
+  if (window.onEumLoad) {
+    window.onEumLoad(eum);
+  }
 })();

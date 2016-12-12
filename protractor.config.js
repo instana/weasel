@@ -6,7 +6,7 @@ if (process.env.TRAVIS) {
     sauceUser: process.env.SAUCE_USERNAME,
     sauceKey: process.env.SAUCE_ACCESS_KEY,
     multiCapabilities: [
-      newSaucelabsCapability('chrome', 'OS X 10.11', '54.0'),
+      newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
       newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
       newSaucelabsCapability('internet explorer', '8.0', 'Windows 7'),
       newSaucelabsCapability('internet explorer', '6.0', 'Windows XP'),

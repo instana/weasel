@@ -18,10 +18,15 @@ app.post('/beacon', (req, res) => {
 });
 
 app.get('/beacon', (req, res) => {
+  beaconRequests.push(req.query);
+  res.send('OK');
+});
+
+app.get('/transmittedBeacons', (req, res) => {
   res.json(beaconRequests);
 });
 
-app.delete('/beacon', (req, res) => {
+app.delete('/transmittedBeacons', (req, res) => {
   beaconRequests.length = 0;
   res.send('OK');
 });

@@ -23,7 +23,7 @@ exports.retry = function retry(fn, time, until) {
 
 exports.getTestTimeout = function() {
   if (process.env.CI) {
-    return 30000;
+    return 10000;
   }
   return 5000;
 };

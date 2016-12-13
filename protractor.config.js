@@ -11,8 +11,8 @@ if (process.env.TRAVIS) {
       newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
       newSaucelabsCapability('internet explorer', '8.0', 'Windows 7'),
       newSaucelabsCapability('internet explorer', '6.0', 'Windows XP'),
-      newSaucelabsCapability('firefox', '45.0', 'Linux')
-      // newSaucelabsCapability('safari', '10.0', 'OS X 10.11'),
+      newSaucelabsCapability('firefox', '45.0', 'Linux'),
+      newSaucelabsCapability('safari', '10.0', 'OS X 10.11')
       // newSaucelabsCapability('safari', '9.0', 'OS X 10.11')
       // Saucelabs is currently lacking for Sauce connect for MicrosoftEdge.
       // This means, that tests will always fail.

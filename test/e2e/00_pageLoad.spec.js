@@ -82,4 +82,52 @@ describe('00_pageLoad', () => {
       });
     });
   });
+
+  // TODO test in safari
+  // TODO api key
+  // TODO backend trace id
+  // TODO test navigation timings
+
+  describe('00_resourceTimings', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_resourceTimings'));
+    });
+
+    it('must send resource timing data', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            const timings = JSON.parse(beacon.res);
+            replaceTimingValuesWithNumberOfValues(timings);
+            cexpect(timings).to.deep.equal({
+              http: {
+                's://': {
+                  'maxcdn.bootstrapcdn.com/bootstrap/3.3.7/': {
+                    'css/bootstrap': {
+                      '.min.css': [3],
+                      '-theme.min.css': [3]
+                    },
+                    'js/bootstrap.min.js': [3]
+                  },
+                  'cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js': [3]
+                },
+                '://127.0.0.1:3008/': {
+                  'e2e/initializer.js': [5],
+                  'target/weasel.min.js': [5]
+                }
+              }
+            });
+          });
+      });
+    });
+
+    function replaceTimingValuesWithNumberOfValues(node) {
+      if (node instanceof Array) {
+        node.forEach((entry, i) => node[i] = entry.split(',').length);
+        return;
+      }
+
+      Object.keys(node).forEach(key => replaceTimingValuesWithNumberOfValues(node[key]));
+    }
+  });
 });

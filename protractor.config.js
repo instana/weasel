@@ -5,6 +5,7 @@ if (process.env.TRAVIS) {
     specs: ['test/e2e/**/*.spec.js'],
     sauceUser: process.env.SAUCE_USERNAME,
     sauceKey: process.env.SAUCE_ACCESS_KEY,
+    sauceBuild: process.env.TRAVIS_JOB_NUMBER,
     multiCapabilities: [
       newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
       newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),

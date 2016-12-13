@@ -5,6 +5,8 @@ exports.registerBaseHooks = () => {
   });
 };
 
+exports.getCapabilities = () => browser.getProcessedConfig().then(config => config.capabilities);
+
 exports.whenConfigMatches = (predicate, fn) => {
   return browser.getProcessedConfig()
     .then(config => {

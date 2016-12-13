@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../server/controls');
-const {registerBaseHooks, skipInternetExplorer6} = require('./base');
+const {registerBaseHooks, skipInternetExplorer6, getCapabilities} = require('./base');
 const util = require('../util');
 
 const cexpect = require('chai').expect;
@@ -119,30 +119,38 @@ describe('00_pageLoad', () => {
     });
 
     it('must send resource timing data', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(([beacon]) => {
-            const timings = JSON.parse(beacon.res);
-            replaceTimingValuesWithNumberOfValues(timings);
-            cexpect(timings).to.deep.equal({
-              http: {
-                's://': {
-                  'maxcdn.bootstrapcdn.com/bootstrap/3.3.7/': {
-                    'css/bootstrap': {
-                      '.min.css': [3],
-                      '-theme.min.css': [3]
+      return getCapabilities().then(capabilities => {
+        if (!hasResourceTimingSupport(capabilities)) {
+          return true;
+        }
+
+        const hasLevel3Support = hasEnhancedResourceTimingLevel3Support(capabilities);
+
+        return util.retry(() => {
+          return getBeacons()
+            .then(([beacon]) => {
+              const timings = JSON.parse(beacon.res);
+              replaceTimingValuesWithNumberOfValues(timings);
+              cexpect(timings).to.deep.equal({
+                http: {
+                  's://': {
+                    'maxcdn.bootstrapcdn.com/bootstrap/3.3.7/': {
+                      'css/bootstrap': {
+                        '.min.css': [3],
+                        '-theme.min.css': [3]
+                      },
+                      'js/bootstrap.min.js': [3]
                     },
-                    'js/bootstrap.min.js': [3]
+                    'cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js': [3]
                   },
-                  'cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js': [3]
-                },
-                '://127.0.0.1:3008/': {
-                  'e2e/initializer.js': [5],
-                  'target/weasel.min.js': [5]
+                  '://127.0.0.1:3008/': {
+                    'e2e/initializer.js': [hasLevel3Support ? 5 : 3],
+                    'target/weasel.min.js': [hasLevel3Support ? 5 : 3]
+                  }
                 }
-              }
-            }, `Got the following timing: ${JSON.stringify(JSON.parse(beacon.res), 0, 2)}.`);
-          });
+              }, `Got the following timing: ${JSON.stringify(JSON.parse(beacon.res), 0, 2)}.`);
+            });
+        });
       });
     });
 
@@ -153,6 +161,17 @@ describe('00_pageLoad', () => {
       }
 
       Object.keys(node).forEach(key => replaceTimingValuesWithNumberOfValues(node[key]));
+    }
+
+    function hasResourceTimingSupport(capabilities) {
+      const version = Number(capabilities.version);
+      return (capabilities.browserName !== 'internet explorer' && capabilities.browserName !== 'safari') ||
+        (capabilities.browserName === 'internet explorer' && version >= 10);
+    }
+
+    function hasEnhancedResourceTimingLevel3Support(capabilities) {
+      return hasResourceTimingSupport(capabilities) && capabilities.browserName !== 'internet explorer';
+
     }
   });
 });

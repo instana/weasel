@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../server/controls');
-const {registerBaseHooks} = require('./base');
+const {registerBaseHooks, skipInternetExplorer6} = require('./base');
 const util = require('../util');
 
 const cexpect = require('chai').expect;
@@ -50,13 +50,15 @@ describe('00_pageLoad', () => {
     });
 
     it('must send simple meta data information', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(([beacon]) => {
-            cexpect(JSON.parse(beacon.m)).to.deep.equal({
-              'user': 'tom.mason@example.com'
+      return skipInternetExplorer6(() => {
+        return util.retry(() => {
+          return getBeacons()
+            .then(([beacon]) => {
+              cexpect(JSON.parse(beacon.m)).to.deep.equal({
+                'user': 'tom.mason@example.com'
+              });
             });
-          });
+        });
       });
     });
   });
@@ -67,14 +69,16 @@ describe('00_pageLoad', () => {
     });
 
     it('must send complicated meta data information', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(([beacon]) => {
-            cexpect(JSON.parse(beacon.m)).to.deep.equal({
-              'user': 'tom.mason@example.com',
-              'No&way': 'Ifyou\nHaveTo&DoThis'
+      return skipInternetExplorer6(() => {
+        return util.retry(() => {
+          return getBeacons()
+            .then(([beacon]) => {
+              cexpect(JSON.parse(beacon.m)).to.deep.equal({
+                'user': 'tom.mason@example.com',
+                'No&way': 'Ifyou\nHaveTo&DoThis'
+              });
             });
-          });
+        });
       });
     });
   });

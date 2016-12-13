@@ -141,7 +141,7 @@ describe('00_pageLoad', () => {
                   'target/weasel.min.js': [5]
                 }
               }
-            });
+            }, `Got the following timing: ${JSON.stringify(JSON.parse(beacon.res), 0, 2)}.`);
           });
       });
     });

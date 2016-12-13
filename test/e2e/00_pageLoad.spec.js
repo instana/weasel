@@ -39,6 +39,8 @@ describe('00_pageLoad', () => {
             cexpect(beacon.r.length).to.be.at.least(String(start).length);
             cexpect(beacon.ts.length).to.be.below(6);
             cexpect(beacon.d.length).to.be.below(6);
+            cexpect(beacon.k).to.equal(undefined);
+            cexpect(beacon.bt).to.equal(undefined);
           });
       });
     });
@@ -83,9 +85,32 @@ describe('00_pageLoad', () => {
     });
   });
 
-  // TODO test in safari
-  // TODO api key
-  // TODO backend trace id
+  describe('00_apiKey', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_apiKey'));
+    });
+
+    it('must send user provided API key', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => cexpect(beacon.k).to.equal('myFancyApiKey'));
+      });
+    });
+  });
+
+  describe('00_backendTraceId', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_backendTraceId'));
+    });
+
+    it('must send user provided backend trace ID', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => cexpect(beacon.bt).to.equal('someBackendTraceId'));
+      });
+    });
+  });
+
   // TODO test navigation timings
 
   describe('00_resourceTimings', () => {

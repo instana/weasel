@@ -17,11 +17,3 @@ exports.whenConfigMatches = (predicate, fn) => {
       return true;
     });
 };
-
-
-exports.skipInternetExplorer6 = fn => {
-  return exports.whenConfigMatches(
-    config => !config.capabilities.browserName === 'internet explorer' || !config.capabilities.version === '6.0',
-    fn
-  );
-};

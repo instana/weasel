@@ -163,7 +163,9 @@ describe('00_pageLoad', () => {
     }
 
     function hasEnhancedResourceTimingLevel3Support(capabilities) {
-      return hasResourceTimingSupport(capabilities) && capabilities.browserName !== 'internet explorer';
+      return hasResourceTimingSupport(capabilities) &&
+        capabilities.browserName !== 'internet explorer' &&
+        capabilities.browserName !== 'MicrosoftEdge';
 
     }
   });

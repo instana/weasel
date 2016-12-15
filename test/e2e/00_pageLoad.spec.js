@@ -110,39 +110,56 @@ describe('00_pageLoad', () => {
     });
 
     it('must send navigation timings', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(([beacon]) => {
-            testIsPositiveInteger(beacon.t_unl);
-            testIsPositiveInteger(beacon.t_red);
-            testIsPositiveInteger(beacon.t_apc);
-            testIsPositiveInteger(beacon.t_dns);
-            testIsPositiveInteger(beacon.t_tcp);
-            testIsPositiveInteger(beacon.t_req);
-            testIsPositiveInteger(beacon.t_rsp);
-            testIsPositiveInteger(beacon.t_pro);
-            testIsPositiveInteger(beacon.t_loa);
-          });
+      return getCapabilities().then(capabilities => {
+        if (!hasNavigationTimingSupport(capabilities)) {
+          return true;
+        }
+
+        return util.retry(() => {
+          return getBeacons()
+            .then(([beacon]) => {
+              testIsPositiveInteger(beacon.t_unl);
+              testIsPositiveInteger(beacon.t_red);
+              testIsPositiveInteger(beacon.t_apc);
+              testIsPositiveInteger(beacon.t_dns);
+              testIsPositiveInteger(beacon.t_tcp);
+              testIsPositiveInteger(beacon.t_req);
+              testIsPositiveInteger(beacon.t_rsp);
+              testIsPositiveInteger(beacon.t_pro);
+              testIsPositiveInteger(beacon.t_loa);
+            });
+        });
       });
     });
 
     it('must send either no first paint time or a time > 0', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(([beacon]) => {
-            // ensure that we have a beacon with some data
-            testIsPositiveInteger(beacon.t_loa);
+      return getCapabilities().then(capabilities => {
+        if (!hasNavigationTimingSupport(capabilities)) {
+          return true;
+        }
 
-            if (beacon.t_fp !== undefined) {
-              testIsPositiveInteger(beacon.t_fp, 1);
-            }
-          });
+        return util.retry(() => {
+          return getBeacons()
+            .then(([beacon]) => {
+              // ensure that we have a beacon with some data
+              testIsPositiveInteger(beacon.t_loa);
+
+              if (beacon.t_fp !== undefined) {
+                testIsPositiveInteger(beacon.t_fp, 1);
+              }
+            });
+        });
       });
     });
 
     function testIsPositiveInteger(s, minInclusive = 0) {
       cexpect(s).to.match(/^\d+$/);
       cexpect(parseInt(s, 10)).to.be.at.least(minInclusive);
+    }
+
+    function hasNavigationTimingSupport(capabilities) {
+      const version = Number(capabilities.version);
+      return capabilities.browserName !== 'internet explorer' || version >= 9;
     }
   });
 
@@ -203,9 +220,12 @@ describe('00_pageLoad', () => {
     }
 
     function hasEnhancedResourceTimingLevel3Support(capabilities) {
+      const version = Number(capabilities.version);
       return hasResourceTimingSupport(capabilities) &&
         capabilities.browserName !== 'internet explorer' &&
-        capabilities.browserName !== 'MicrosoftEdge';
+        capabilities.browserName !== 'MicrosoftEdge' &&
+        (capabilities.browserName !== 'chrome' ||
+          (capabilities.browserName === 'chrome' && (capabilities.version == null || version >= 50)));
     }
   });
 });

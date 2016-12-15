@@ -136,7 +136,7 @@ describe('00_pageLoad', () => {
                     },
                     'cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js': [3]
                   },
-                  '://127.0.0.1:3008/': {
+                  '://127.0.0.1:3333/': {
                     'e2e/initializer.js': [hasLevel3Support ? 5 : 3],
                     'target/weasel.min.js': [hasLevel3Support ? 5 : 3]
                   }

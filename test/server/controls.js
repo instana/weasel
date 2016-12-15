@@ -6,7 +6,9 @@ const path = require('path');
 
 const util = require('../util');
 
-const port = 3008;
+// See this wiki entry for port selection details
+// https://wiki.saucelabs.com/display/DOCS/Sauce+Connect+Proxy+FAQS
+const port = 3333;
 let serverProcess;
 
 exports.registerTestServerHooks = () => {

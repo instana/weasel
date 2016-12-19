@@ -195,7 +195,7 @@ describe('00_pageLoad', () => {
                   },
                   '://127.0.0.1:8000/': {
                     'e2e/initializer.js': [hasLevel3Support ? 5 : 3],
-                    'target/weasel.min.js': [hasLevel3Support ? 5 : 3]
+                    'target/eum.min.js': [hasLevel3Support ? 5 : 3]
                   }
                 }
               }, `Got the following timing: ${JSON.stringify(JSON.parse(beacon.res), 0, 2)}.`);

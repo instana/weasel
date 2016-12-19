@@ -8,7 +8,7 @@ cd weasel
 npm install
 ./node_modules/.bin/webdriver-manager update
 ./node_modules/.bin/webdriver-manager start
-npm run verify
+npm run test
 ```
 
 ## Configure Travis CI

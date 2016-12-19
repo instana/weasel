@@ -41,6 +41,7 @@ describe('00_pageLoad', () => {
             cexpect(beacon.d.length).to.be.below(6);
             cexpect(beacon.k).to.equal(undefined);
             cexpect(beacon.bt).to.equal(undefined);
+            cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
           });
       });
     });

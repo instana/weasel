@@ -4,7 +4,7 @@
   var script = '/target/eum.min.js';
 
   if (window.location.href.indexOf('debug=true') !== -1) {
-    script = '/target/eum.debug.min.js';
+    script = '/target/eum.debug.js';
   }
 
   (function(i,s,o,g,r,a,m){i['EumObject']=r;i[r]=i[r]||function(){

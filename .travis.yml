@@ -15,3 +15,7 @@ install:
 script:
 - npm run build
 - npm run test
+notifications:
+  slack:
+    rooms:
+      secure: fEkSvnWEUVftfjI/lcCLjR/Wk2/vcVXac7v55VWlOIYYOp9/dbpRaH184Yk1nqfrJlECsQzDPcOP2EsBYywDONmsWxKnsWOnyr6hbkvsWDQEhrAmyDE7MLQFEgzRbF/8v3PoKCzGu5n6aK+gBa89CAUjE79pw//rWec2q2gxeeEurK+QUKmzcsjblTzVUOWo/onsq21jZZnk8R71E3HHiJnQAMefhddTr0e8/PNM7BngaiKZThyUdvSn2LH6uDhW+uLpceU28qqVvpgeIz0g97AhXp6rH1+OZizZqQe0yMQXembu/eQt6DligXzoRxxzNj+oH1/04e1UXRJeGh/rx1ExE2NgFDCuCO0YS6/O+yv4MkqwtFPlyKME8REb8z49sOuM7gzSuZxaDL3Ig3xsQr483xLu/2KQvWNs+4kYmVqHTzL6nd4RR7Mok+WYbVqo0Q6TrDcBrdFA2uK8OKikf1NrVgq8f6AWlkU8y/eQ1c2z3p+X2zZjsdUun4UQO9351Gh/R/cm1dg1bIeqhfVG3DRog1OZBdQVAw3E++Q9G+Fds3U+qQA8REDdZIcHT19ZYif54ovZKaME/UF6wdYujOrymjFhFFUY/+lbEgww2ZedRhQAXze3sIcKzjnv6CelenQ0vOGCSSp3joYJDPs7PpPOwfTEZuTWhMpsBJhiFso=

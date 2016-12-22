@@ -1,3 +1,4 @@
+const uuidV4 = require('uuid/v4');
 const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
@@ -29,6 +30,27 @@ app.get('/transmittedBeacons', (req, res) => {
 app.delete('/transmittedBeacons', (req, res) => {
   beaconRequests.length = 0;
   res.send('OK');
+});
+
+const ajaxRequests = [];
+app.all('/ajax', (req, res) => {
+  const response = uuidV4();
+  ajaxRequests.push({
+    method: req.method,
+    url: req.url,
+    params: req.params,
+    headers: req.headers,
+    response
+  });
+
+  // Delay responses to allow timeout tests.
+  setTimeout(() => {
+    res.send(response);
+  }, 50);
+});
+
+app.get('/ajaxRequests', (req, res) => {
+  res.json(ajaxRequests);
 });
 
 const port = process.env.BEACON_SERVER_PORT;

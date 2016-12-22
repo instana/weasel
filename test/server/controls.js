@@ -39,7 +39,7 @@ function waitUntilServerIsUp() {
   });
 }
 
-
+exports.getServerBaseUrl = () => `http://127.0.0.1:${port}`;
 exports.getE2ETestBaseUrl = file => `http://127.0.0.1:${port}/e2e/${file}.html`;
 
 
@@ -47,6 +47,15 @@ exports.getBeacons = () => {
   return request({
     method: 'GET',
     url: `http://127.0.0.1:${port}/transmittedBeacons`
+  })
+  .then(responseBody => JSON.parse(responseBody));
+};
+
+
+exports.getAjaxRequests = () => {
+  return request({
+    method: 'GET',
+    url: `http://127.0.0.1:${port}/ajaxRequests`
   })
   .then(responseBody => JSON.parse(responseBody));
 };

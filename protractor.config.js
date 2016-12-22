@@ -20,7 +20,10 @@ if (process.env.TRAVIS) {
     ],
     // Do not allow parallel test execution. Makes the test execution a lot
     // slower, but the setup simpler.
-    maxSessions: 1
+    maxSessions: 1,
+    jasmineNodeOpts: {
+      defaultTimeoutInterval: 60000
+    }
   };
 } else {
   exports.config = {

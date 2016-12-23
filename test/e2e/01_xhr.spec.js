@@ -33,6 +33,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhrAfterPageLoad'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');

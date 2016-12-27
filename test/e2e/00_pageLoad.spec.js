@@ -32,7 +32,7 @@ describe('00_pageLoad', () => {
       return util.retry(() => {
         return getBeacons()
           .then(([beacon]) => {
-            cexpect(beacon.t).to.match(/[0-9a-f]{16}/i);
+            cexpect(beacon.t).to.match(/[0-9a-f]{1,16}/i);
 
             // We cannot compare with start time due to saucelabs platforms not having
             // NTP properly configured…

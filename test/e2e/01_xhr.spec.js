@@ -28,7 +28,7 @@ describe('01_xhr', () => {
               });
 
               const ajaxBeacon = expectOneMatching(beacons, beacon => {
-                cexpect(beacon.t).to.match(/^[0-9A-F]{16}$/i);
+                cexpect(beacon.t).to.match(/^[0-9A-F]{1,16}$/i);
                 cexpect(beacon.t).to.equal(beacon.s);
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
@@ -76,7 +76,7 @@ describe('01_xhr', () => {
               });
 
               const ajaxBeacon = expectOneMatching(beacons, beacon => {
-                cexpect(beacon.s).to.match(/^[0-9A-F]{16}$/i);
+                cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
                 cexpect(beacon.t).not.to.equal(beacon.s);
                 cexpect(beacon.t).to.equal(pageLoadBeacon.t);
               });
@@ -115,7 +115,7 @@ describe('01_xhr', () => {
               });
 
               const ajaxBeacon = expectOneMatching(beacons, beacon => {
-                cexpect(beacon.s).to.match(/^[0-9A-F]{16}$/i);
+                cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
                 cexpect(beacon.t).not.to.equal(beacon.s);
                 cexpect(beacon.t).to.equal(pageLoadBeacon.t);
               });
@@ -153,7 +153,7 @@ describe('01_xhr', () => {
               }
 
               expectOneMatching(beacons, beacon => {
-                cexpect(beacon.s).to.match(/^[0-9A-F]{16}$/i);
+                cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
                 cexpect(beacon.t).to.equal(beacon.s);
                 cexpect(beacon.st).to.equal(expectedStatus);
               });

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>xhr test</title>
+  <title>error test</title>
 
   <script src="/e2e/initializer.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -11,25 +11,44 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-  ajax after page load
+  throw error on button click
 
-  <div id="result"></div>
+  <div id="result">
+    <button type="button"
+            id="first">
+      First error type
+    </button>
+
+    <button type="button"
+            id="second">
+      Second error type
+    </button>
+
+    <button type="button"
+            id="many">
+      Throw a bunch of errors
+    </button>
+  </div>
 
   <script>
-    $(window).on('load', function() {
-      setTimeout(function() {
-        $.ajax({
-          url: '/ajax' + '?cacheBust=' + ((new Date()).getTime()),
-          timeout: 2,
-          success: function(result) {
-            $('#result').text(result);
-          },
-          error: function() {
-            $('#result').text('error');
-          }
-        });
-      }, 100);
+    $('#first').on('click', function myClickHandler() {
+      throwAnError();
     });
+
+    $('#second').on('click', function myClickHandler() {
+      throw new Error('Another error type.');
+    });
+
+    $('#many').on('click', function manyButtonClickHandler() {
+      setTimeout(throwAnError, 10);
+      setTimeout(throwAnError, 10);
+      setTimeout(throwAnError, 10);
+      throw new Error('Another error type.');
+    });
+
+    function throwAnError() {
+      throw new Error("This is intended for testing purposes.");
+    }
   </script>
 </body>
 </html>

@@ -46,7 +46,7 @@ app.all('/ajax', (req, res) => {
   // Delay responses to allow timeout tests.
   setTimeout(() => {
     res.send(response);
-  }, 50);
+  }, 100);
 });
 
 app.get('/ajaxRequests', (req, res) => {

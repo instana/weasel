@@ -79,6 +79,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
                 cexpect(beacon.t).not.to.equal(beacon.s);
                 cexpect(beacon.t).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.ty).to.equal('xhr');
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -118,6 +119,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
                 cexpect(beacon.t).not.to.equal(beacon.s);
                 cexpect(beacon.t).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.ty).to.equal('xhr');
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {

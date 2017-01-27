@@ -186,14 +186,11 @@ describe('00_pageLoad', () => {
               cexpect(timings).to.deep.equal({
                 http: {
                   's://': {
-                    'maxcdn.bootstrapcdn.com/bootstrap/3.3.7/': {
-                      'css/bootstrap': {
-                        '.min.css': [3],
-                        '-theme.min.css': [3]
-                      },
-                      'js/bootstrap.min.js': [3]
+                    'maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap': {
+                      '.min.css': [3],
+                      '-theme.min.css': [3]
                     },
-                    'cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js': [3]
+                    'cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js': [3]
                   },
                   '://127.0.0.1:8000/': {
                     'e2e/initializer.js': [hasLevel3Support ? 5 : 3],

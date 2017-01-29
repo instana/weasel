@@ -25,7 +25,8 @@ describe('02_error', () => {
               expectOneMatching(beacons, beacon => {
                 cexpect(beacon.ty).to.equal('err');
                 cexpect(beacon.e).to.match(/This is intended for testing purposes/);
-                cexpect(beacon.s).to.be.a('string');
+                cexpect(beacon.s).to.equal(beacon.t);
+                cexpect(beacon.st).to.be.a('string');
                 cexpect(beacon.c).to.equal('1');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
               });

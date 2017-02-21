@@ -18,10 +18,11 @@ Weasel takes a different approach than other popular EUM solutions, e.g. [Boomer
 By design, this means that Weasel won't include all the metrics that tools such as Boomerang provide. This is because there are very many tools nowadays in use and available to engineers that can provide highly granular inspection from that point on, e.g. browser developer tools and [WebPageTest](https://www.webpagetest.org/). Weasel provides everything engineers needs in order to identify and start a first problem analysis without incurring an impact on monitored websites.
 
 ## Features
-Features are categorized into beacon types that weasel is able to emit. Currently, it only supports one beacon type:
+Features are categorized into beacon types that weasel is able to emit. Currently, it supports multiple beacon type:
 
  - **Page load beacon:** The page load beacon will be transmitted once the page load (`window.onload`) event has fired. It includes various information, e.g. the API token, navigation and resource timings, first paint time and configurable meta data.
- - **In the future: Error beacon:** Transmitted when unhandled errors occur.
+ - **XHR beacon:** Transmitted for occuring XMLHttpRequests
+ - **Error beacon:** Transmitted when unhandled errors occur.
  - **In the future: SPA support:** Transmitted when navigating within single-page applications (SPAs).
 
 ## Weasel's approach to tracing

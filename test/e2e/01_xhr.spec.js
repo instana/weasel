@@ -168,6 +168,43 @@ describe('01_xhr', () => {
   });
 
 
+  describe('01_ignoredXhr', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('01_ignoredXhr'));
+    });
+
+    it('must ignore certain XHR calls', () => {
+      return whenXhrInstrumentationIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
+              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.ty).to.equal('pl');
+                cexpect(beacon.s).to.equal(undefined);
+              });
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.u).to.match(/^\/ajax\?cacheBust=\d+$/);
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('GET');
+                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+
+              cexpect(ajaxRequests.length).to.equal(2);
+              cexpect(beacons.length).to.equal(2);
+            });
+        })
+      );
+    });
+  });
+
+
   function whenXhrInstrumentationIsSupported(fn) {
     return whenConfigMatches(
       config => config.capabilities.browserName !== 'internet explorer' || Number(config.capabilities.version) > 8,

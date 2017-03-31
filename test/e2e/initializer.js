@@ -13,6 +13,7 @@
   })(window,document,'script',script,'eum');
 
   eum('reportingUrl', '/beacon');
+  eum('ignoreUrls', [/.*pleaseIgnoreThis.*/]);
 
   if (window.onEumLoad) {
     window.onEumLoad(eum);

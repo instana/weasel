@@ -117,4 +117,38 @@ describe('trie', () => {
       }
     });
   });
+
+  it('must handle $ characters in items', () => {
+    t = createTrie()
+      .addItem('http://localhost:3009/$abc', 'abc')
+      .addItem('http://localhost:3009/$def', 'def')
+      .toJs();
+    expect(t).to.deep.equal({
+      'http://localhost:3009/$': {
+        'abc': ['abc'],
+        'def': ['def']
+      }
+    });
+  });
+
+  it('must handle internal end marker in items', () => {
+    t = createTrie()
+      .addItem('http://localhost:3009/ENDabc', 'abc')
+      .addItem('http://localhost:3009/ENDdef', 'def')
+      .addItem('http://localhost:3008/abc', 'abc')
+      .addItem('http://localhost:3008/ENDdef', 'ENDdef')
+      .toJs();
+    expect(t).to.deep.equal({
+      'http://localhost:300': {
+        '9/END': {
+          'abc': ['abc'],
+          'def': ['def']
+        },
+        '8/': {
+          'abc': ['abc'],
+          'ENDdef': ['ENDdef']
+        }
+      }
+    });
+  });
 });

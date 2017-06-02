@@ -106,6 +106,24 @@ describe('00_pageLoad', () => {
     });
   });
 
+  describe('00_manualPageLoad', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_manualPageLoad'));
+    });
+
+    it('must send user triggered page load beacon', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(beacons => {
+            cexpect(beacons).to.have.lengthOf(1);
+            const [beacon] = beacons;
+            cexpect(beacon.ty).to.equal('pl');
+            cexpect(beacon.m_afterLoad).to.equal('123');
+          });
+      });
+    });
+  });
+
   describe('00_navigationTimings', () => {
     beforeEach(() => {
       browser.get(getE2ETestBaseUrl('00_navigationTimings'));

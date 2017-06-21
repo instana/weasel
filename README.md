@@ -23,7 +23,7 @@ Features are categorized into beacon types that weasel is able to emit. Currentl
  - **Page load beacon:** The page load beacon will be transmitted once the page load (`window.onload`) event has fired. It includes various information, e.g. the API token, navigation and resource timings, first paint time and configurable meta data.
  - **XHR beacon:** Transmitted for occuring XMLHttpRequests
  - **Error beacon:** Transmitted when unhandled errors occur.
- - **In the future: SPA support:** Transmitted when navigating within single-page applications (SPAs).
+ - **SPA beacon:** Transmitted when navigating within single-page applications (SPAs).
 
 ## Weasel's approach to tracing
 Weasel is designed from the ground up to support tracing. Every beacon is assigned a random ID that can easily be used to stitch on load and SPA beacons, as well as backend traces together. The ID concept is aligned to Zipkin's ID generation strategy, i.e. each ID is 64 lower-hex encoded bits (`/^[0-9a-f]{1,16}$/i`).

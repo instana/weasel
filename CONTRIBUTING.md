@@ -17,3 +17,6 @@ npm run test
 $ travis encrypt --add env.global SAUCE_USERNAME=…
 $ travis encrypt --add env.global SAUCE_ACCESS_KEY=…
 ```
+
+## Executing a Single E2E Test
+To execute a single E2E test, change the `describe` or `it` function to `fdescribe` or `fit` respectively.

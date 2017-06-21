@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>spa test</title>
+</head>
+<body>
+  Hello World!
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+  <script>
+    $(window).on('load', function() {
+      setTimeout(function() {
+        eum('startSpaPageTransition');
+      }, 100);
+
+      setTimeout(function() {
+        eum('endSpaPageTransition', {
+          url: 'http://spa-test.example.com',
+          status: 'completed',
+          explanation: 'user click'
+        });
+      }, 130);
+    });
+  </script>
+  <script src="/e2e/initializer.js"></script>
+</body>
+</html>

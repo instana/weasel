@@ -12,15 +12,15 @@
     $(window).on('load', function() {
       setTimeout(function() {
         eum('startSpaPageTransition');
-      }, 100);
 
-      setTimeout(function() {
-        eum('endSpaPageTransition', {
-          url: 'http://spa-test.example.com',
-          status: 'completed',
-          explanation: 'user click'
+        $.getScript('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js', function() {
+          eum('endSpaPageTransition', {
+            url: 'http://spa-test.example.com',
+            status: 'completed',
+            explanation: 'user click'
+          });
         });
-      }, 130);
+      }, 200);
     });
   </script>
   <script src="/e2e/initializer.js"></script>

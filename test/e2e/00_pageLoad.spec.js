@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../server/controls');
-const {registerBaseHooks, getCapabilities} = require('./base');
+const {registerBaseHooks, getCapabilities, hasResourceTimingSupport} = require('./base');
 const util = require('../util');
 
 const cexpect = require('chai').expect;
@@ -228,12 +228,6 @@ describe('00_pageLoad', () => {
       }
 
       Object.keys(node).forEach(key => replaceTimingValuesWithNumberOfValues(node[key]));
-    }
-
-    function hasResourceTimingSupport(capabilities) {
-      const version = Number(capabilities.version);
-      return (capabilities.browserName !== 'internet explorer' && capabilities.browserName !== 'safari') ||
-        (capabilities.browserName === 'internet explorer' && version >= 10);
     }
 
     function hasEnhancedResourceTimingLevel3Support(capabilities) {

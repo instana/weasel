@@ -42,6 +42,7 @@ describe('00_pageLoad', () => {
             cexpect(beacon.ty).to.equal('pl');
             cexpect(beacon.k).to.equal(undefined);
             cexpect(beacon.bt).to.equal(undefined);
+            cexpect(beacon.p).to.equal(undefined);
             cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
           });
       });
@@ -59,6 +60,21 @@ describe('00_pageLoad', () => {
           .then(([beacon]) => {
 
             cexpect(beacon['m_user']).to.equal('tom.mason@example.com');
+          });
+      });
+    });
+  });
+
+  describe('00_customPage', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_customPage'));
+    });
+
+    it('must send user configured page', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['p']).to.equal('myPage');
           });
       });
     });

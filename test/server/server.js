@@ -5,6 +5,11 @@ const path = require('path');
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.set('Timing-Allow-Origin', '*');
+  next();
+});
+
 app.use('/target', express.static(path.join(__dirname, '..', '..', 'target')));
 app.use('/e2e', express.static(path.join(__dirname, '..', 'e2e')));
 

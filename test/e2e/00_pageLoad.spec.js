@@ -163,6 +163,8 @@ describe('00_pageLoad', () => {
               testIsPositiveInteger(beacon.t_rsp);
               testIsPositiveInteger(beacon.t_pro);
               testIsPositiveInteger(beacon.t_loa);
+              testIsPositiveInteger(beacon.t_dom);
+              testIsPositiveInteger(beacon.t_chi);
             });
         });
       });

@@ -161,8 +161,6 @@ describe('00_pageLoad', () => {
               testIsPositiveInteger(beacon.t_tcp);
               testIsPositiveInteger(beacon.t_req);
               testIsPositiveInteger(beacon.t_rsp);
-              testIsPositiveInteger(beacon.t_pro);
-              testIsPositiveInteger(beacon.t_loa);
               testIsPositiveInteger(beacon.t_dom);
               testIsPositiveInteger(beacon.t_chi);
             });
@@ -180,7 +178,7 @@ describe('00_pageLoad', () => {
           return getBeacons()
             .then(([beacon]) => {
               // ensure that we have a beacon with some data
-              testIsPositiveInteger(beacon.t_loa);
+              testIsPositiveInteger(beacon.t_dom);
 
               if (beacon.t_fp !== undefined) {
                 testIsPositiveInteger(beacon.t_fp, 1);

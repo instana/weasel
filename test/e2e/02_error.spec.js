@@ -32,6 +32,10 @@ describe('02_error', () => {
 
               // must send at most one epv beacon per page load
               cexpect(beacons.filter(beacon => beacon.ty === 'epv').length).to.equal(1);
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon.ty).to.equal('epv');
+                cexpect(beacon.ts).to.equal(String(parseInt(pageLoadBeacon.ts, 10) + parseInt(pageLoadBeacon.r, 10)));
+              });
             });
           });
         });

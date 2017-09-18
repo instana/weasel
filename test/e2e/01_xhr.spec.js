@@ -37,7 +37,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');
-                cexpect(beacon.u).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
                 cexpect(beacon.a).to.equal('1');
                 cexpect(beacon.st).to.equal('200');
               });
@@ -186,7 +186,7 @@ describe('01_xhr', () => {
               expectOneMatching(beacons, beacon => {
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-                cexpect(beacon.u).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {

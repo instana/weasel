@@ -109,6 +109,19 @@ describe('00_pageLoad', () => {
     });
   });
 
+  describe('00_apiKeyViaKey', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_apiKeyViaKey'));
+    });
+
+    it('must send user provided API key', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => cexpect(beacon.k).to.equal('myFancyApiKey'));
+      });
+    });
+  });
+
   describe('00_backendTraceId', () => {
     beforeEach(() => {
       browser.get(getE2ETestBaseUrl('00_backendTraceId'));

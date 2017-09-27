@@ -26,6 +26,7 @@ describe('ignoreUrls', () => {
     expect(isUrlIgnored('http://example.com/ping')).to.equal(true);
     expect(isUrlIgnored('http://example.com/ping/')).to.equal(true);
     expect(isUrlIgnored('http://example.com/dsadsadad/ping/')).to.equal(true);
+    expect(isUrlIgnored('http://example.com/ping?foo=bar')).to.equal(true);
     expect(isUrlIgnored('http://ping.com/shop')).to.equal(false);
     expect(isUrlIgnored('http://example.com/ping/example')).to.equal(false);
     expect(isUrlIgnored('http://example.com/pingalistic')).to.equal(false);
@@ -38,5 +39,6 @@ describe('ignoreUrls', () => {
     expect(isUrlIgnored('http://example.com/ping/')).to.equal(false);
     expect(isUrlIgnored('http://example.com/dsadsadad/ping/')).to.equal(false);
     expect(isUrlIgnored('http://ping.com/shop')).to.equal(false);
+    expect(isUrlIgnored('http://example.com/ping?foo=bar')).to.equal(false);
   });
 });

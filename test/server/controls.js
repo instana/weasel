@@ -48,7 +48,7 @@ exports.getBeacons = () => {
     method: 'GET',
     url: `http://127.0.0.1:${port}/transmittedBeacons`
   })
-  .then(responseBody => JSON.parse(responseBody));
+    .then(responseBody => JSON.parse(responseBody));
 };
 
 
@@ -57,5 +57,5 @@ exports.getAjaxRequests = () => {
     method: 'GET',
     url: `http://127.0.0.1:${port}/ajaxRequests`
   })
-  .then(responseBody => JSON.parse(responseBody));
+    .then(responseBody => JSON.parse(responseBody));
 };

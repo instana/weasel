@@ -8,7 +8,7 @@ describe('01_xhr', () => {
   registerTestServerHooks();
   registerBaseHooks();
 
-// disable for IE8 and below
+  // disable for IE8 and below
 
   describe('01_xhrAfterPageLoad', () => {
     beforeEach(() => {

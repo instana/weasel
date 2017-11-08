@@ -65,4 +65,35 @@ describe('02_error', () => {
         });
     });
   });
+
+  describe('02_manualErrorReporting', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('02_manualErrorReporting'));
+    });
+
+    it('must support manual error reporting', () => {
+      return retry(() => {
+        return getBeacons().then(beacons => {
+          const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('pl');
+          });
+
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('err');
+            cexpect(beacon.e).to.match(/Testing 123/);
+            cexpect(beacon.st).to.be.a('string');
+            cexpect(beacon.c).to.equal('1');
+            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+          });
+
+          // must send at most one epv beacon per page load
+          cexpect(beacons.filter(beacon => beacon.ty === 'epv').length).to.equal(1);
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('epv');
+            cexpect(beacon.ts).to.equal(String(parseInt(pageLoadBeacon.ts, 10) + parseInt(pageLoadBeacon.r, 10)));
+          });
+        });
+      });
+    });
+  });
 });

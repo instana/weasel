@@ -13,7 +13,8 @@ if (process.env.TRAVIS) {
       newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
       newSaucelabsCapability('internet explorer', '9.0', 'Windows 7'),
       newSaucelabsCapability('internet explorer', '8.0', 'Windows 7'),
-      newSaucelabsCapability('internet explorer', '6.0', 'Windows XP'),
+      // sauce labs no longer support testing against Internet Explorer 6…
+      // newSaucelabsCapability('internet explorer', '6.0', 'Windows XP'),
       newSaucelabsCapability('safari', '10.0', 'OS X 10.11'),
       newSaucelabsCapability('safari', '9.0', 'OS X 10.11'),
       newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10')

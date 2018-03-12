@@ -5,10 +5,10 @@
 ```
 git clone https://github.com/instana/weasel.git
 cd weasel
-npm install
+yarn
 ./node_modules/.bin/webdriver-manager update
 ./node_modules/.bin/webdriver-manager start
-npm run test
+yarn test
 ```
 
 ## Configure Travis CI

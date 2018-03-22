@@ -10,6 +10,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  res.set('Server-Timing', 'intid;desc=aFakeBackendTraceIdForTests');
+  next();
+});
+
 app.use('/target', express.static(path.join(__dirname, '..', '..', 'target')));
 app.use('/e2e', express.static(path.join(__dirname, '..', 'e2e')));
 

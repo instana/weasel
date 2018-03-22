@@ -15,6 +15,10 @@
   eum('reportingUrl', '/beacon');
   eum('ignoreUrls', [/.*pleaseIgnoreThis.*/]);
 
+  if (window.location.href.indexOf('debug=true') !== -1) {
+    eum('autoClearResourceTimings', false);
+  }
+
   if (window.onEumLoad) {
     window.onEumLoad(eum);
   }

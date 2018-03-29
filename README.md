@@ -27,3 +27,42 @@ Features are categorized into beacon types that weasel is able to emit. Currentl
 
 ## Weasel's approach to tracing
 Weasel is designed from the ground up to support tracing. Every beacon is assigned a random ID that can easily be used to stitch on load and SPA beacons, as well as backend traces together. The ID concept is aligned to Zipkin's ID generation strategy, i.e. each ID is 64 lower-hex encoded bits (`/^[0-9a-f]{1,16}$/i`).
+
+
+## Usage
+Usage of Weasel is different than that of many other libraries. Technically, this is because of its lack of a plugin system and compilation modes. This was done with a drastic **users first** design in mind (this means **developers later**). Weasel is shipped to a huge number of users on a variety of websites. As a result, its size and impact on the monitored websites must be minimal. To achieve this, Weasel does not include a plugin system or any optional code paths. Weasel is compiled using Rollup enabled tree shaking followed by Google Closure Compiler advanced mode compilation.
+
+This being said, how would you go about using Weasel? We recommend the following way to adapt and use Weasel:
+
+ 1. Fork Weasel. Yes, really. The lack of a plugin system and the desire to remove optional code paths means that some things just aren't configurable. But don't worry about pulling improvements from upstream: The kind of changes that you have to make in your fork are pretty small.
+ 2. Update the following files within your fork as you see fit:
+  - The global variables which define such values as the default reporting URL. To be found in [lib/vars.js](https://github.com/instana/weasel/blob/master/lib/vars.js).
+  - Remove or adapt backend correlation headers as necessary within the [XMLHttpRequest](https://github.com/instana/weasel/blob/master/lib/hooks/XMLHttpRequest.js#L184-L186) hook.
+ 3. Install the necessary dependencies and build weasel:
+
+    ```
+    yarn
+    # -or-
+    npm install
+
+    npm run build
+    ```
+
+ 4. The files within `target/` are the result of the build process. Serve these in whatever way you see fit. You want these to be accessible by (end-) users.
+ 5. Load Weasel on a website by embedding the following script tag. Take note of and replace the placeholders within this snippet!
+
+    ```javascript
+    <script>
+      (function(i,s,o,g,r,a,m){i['{{vars.nameOfLongGlobal}}']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','{{urlToRetrieveWeaselFrom}}','{{nameOfShortGlobal}}');
+      ineum('reportingUrl', '{{urlToSendBeaconsTo}}');
+      ineum('apiKey', '{{optionalApiToken}}');
+    </script>
+    ```
+
+ 6. Accept the data on the server side. Weasel will send data either as HTTP `GET` requests with data being stored in query parameters, or as HTTP `POST` requests with data being available as the request body encoded as `application/x-www-form-urlencoded` (whether `GET` or `POST` is used depends on the amount of data). The data format is described in [lib/types.js](https://github.com/instana/weasel/blob/master/lib/types.js).
+ 7. Let us know about how you are using Weasel! This will help us get a better understanding for the community and the impact that our changes will have.
+ 8. Keep your fork up-to-date by periodically pulling from upstream.
+ 9. Have a great day ☀️!

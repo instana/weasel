@@ -40,6 +40,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
                 cexpect(beacon.a).to.equal('1');
                 cexpect(beacon.st).to.equal('200');
+                cexpect(beacon.bc).to.equal('1');
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {

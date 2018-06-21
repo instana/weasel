@@ -1,0 +1,130 @@
+
+
+#####################################
+Origin:      same
+Description: Parsing error: Syntax
+Got an error:
+		message (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
+		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/parsingError.js"
+		lineNumber (type number): – 4
+		columnNumber (type number): – 0
+		String(error) (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
+		error.name (type string): – "SyntaxError"
+		error.message (type string): – "Unexpected keyword 'true'. Expected '(' to start a while loop condition."
+		error.stack (type string): – ""
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      same
+Description: Parsing error: Undefined variable
+Got an error:
+		message (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
+		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js"
+		lineNumber (type number): – 4
+		columnNumber (type number): – 64
+		String(error) (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
+		error.name (type string): – "ReferenceError"
+		error.message (type string): – "Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
+		error.stack (type string): (1)
+Global Code — undefinedVariable.js:4
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      same
+Description: Runtime error
+Got an error:
+		message (type string): – "Error: This is an expected runtime error."
+		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js"
+		lineNumber (type number): – 12
+		columnNumber (type number): – 56
+		String(error) (type string): – "Error: This is an expected runtime error."
+		error.name (type string): – "Error"
+		error.message (type string): – "This is an expected runtime error."
+		error.stack (type string): (1)
+c — runtimeError.js:12b — runtimeError.js:8a — runtimeError.js:4Global Code — runtimeError.js:15
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      cross
+Description: Parsing error: Syntax
+Got an error:
+		message (type string): – "Script error."
+		fileName (type string): – ""
+		lineNumber (type number): – 0
+		columnNumber (type number): – 0
+		String(error) (type string): – "null"
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      cross
+Description: Parsing error: Undefined variable
+Got an error:
+		message (type string): – "Script error."
+		fileName (type string): – ""
+		lineNumber (type number): – 0
+		columnNumber (type number): – 0
+		String(error) (type string): – "null"
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      cross
+Description: Runtime error
+Got an error:
+		message (type string): – "Script error."
+		fileName (type string): – ""
+		lineNumber (type number): – 0
+		columnNumber (type number): – 0
+		String(error) (type string): – "null"
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      cross (with whitelisting)
+Description: Parsing error: Syntax
+Got an error:
+		message (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
+		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js?cors=true"
+		lineNumber (type number): – 4
+		columnNumber (type number): – 0
+		String(error) (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
+		error.name (type string): – "SyntaxError"
+		error.message (type string): – "Unexpected keyword 'true'. Expected '(' to start a while loop condition."
+		error.stack (type string): – ""
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      cross (with whitelisting)
+Description: Parsing error: Undefined variable
+Got an error:
+		message (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
+		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true"
+		lineNumber (type number): – 4
+		columnNumber (type number): – 64
+		String(error) (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
+		error.name (type string): – "ReferenceError"
+		error.message (type string): – "Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
+		error.stack (type string): (1)
+Global Code — undefinedVariable.js:4
+		artificial backtrace (type string): – "onErrorTracker↵"
+
+
+#####################################
+Origin:      cross (with whitelisting)
+Description: Runtime error
+Got an error:
+		message (type string): – "Error: This is an expected runtime error."
+		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true"
+		lineNumber (type number): – 12
+		columnNumber (type number): – 56
+		String(error) (type string): – "Error: This is an expected runtime error."
+		error.name (type string): – "Error"
+		error.message (type string): – "This is an expected runtime error."
+		error.stack (type string): (1)
+c — runtimeError.js:12b — runtimeError.js:8a — runtimeError.js:4Global Code — runtimeError.js:15
+		artificial backtrace (type string): – "onErrorTracker↵"

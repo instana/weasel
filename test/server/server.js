@@ -12,13 +12,21 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+  if (req.query.cors) {
+    res.set('Access-Control-Allow-Origin', '*');
+  }
+  next();
+});
+
+app.use((req, res, next) => {
   res.set('Server-Timing', 'intid;desc=aFakeBackendTraceIdForTests');
   next();
 });
 
 [
   path.join(__dirname, '..', '..', 'target'),
-  path.join(__dirname, '..', 'e2e')
+  path.join(__dirname, '..', 'e2e'),
+  path.join(__dirname, '..', 'experiments')
 ].forEach(p =>
   app.use(`/${path.basename(p)}`, express.static(p), serveIndex(p, {
     icons: true
@@ -73,4 +81,4 @@ app.get('/ajaxRequests', (req, res) => {
 process.env.BEACON_SERVER_PORTS
   .split(',')
   .map(v => parseInt(v, 10))
-  .forEach(port => app.listen(port, () => console.log('Test server available via http://127.0.0.1:%s/e2e', port)));
+  .forEach(port => app.listen(port, () => console.log('Test server available via http://127.0.0.1:%s (check /e2e, /experiments or /target)', port)));

@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Errors</title>
+</head>
+<body>
+  <h1>Errors!</h1>
+
+  <p>
+    Make sure to open this page on origin <a href="http://127.0.0.1:3009/experiments/errors">127.0.0.1:3009</a>!
+  </p>
+
+  <script>
+    window.introduceTestCase = function(origin, description) {
+      console.log('\n');
+      console.log('#####################################');
+      console.log('Origin:      %s', origin);
+      console.log('Description: %s', description);
+    };
+  </script>
+  <script src="unhandledErrorHandler.js"></script>
+
+
+
+  <script>introduceTestCase('same', 'Parsing error: Syntax');</script>
+  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/parsingError.js"></script>
+
+  <script>introduceTestCase('same', 'Parsing error: Undefined variable');</script>
+  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js"></script>
+
+  <script>introduceTestCase('same', 'Runtime error');</script>
+  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js"></script>
+
+
+
+  <script>introduceTestCase('cross', 'Parsing error: Syntax');</script>
+  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js"></script>
+
+  <script>introduceTestCase('cross', 'Parsing error: Undefined variable');</script>
+  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js"></script>
+
+  <script>introduceTestCase('cross', 'Runtime error');</script>
+  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js"></script>
+
+
+
+  <script>introduceTestCase('cross (with whitelisting)', 'Parsing error: Syntax');</script>
+  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js?cors=true"></script>
+
+  <script>introduceTestCase('cross (with whitelisting)', 'Parsing error: Undefined variable');</script>
+  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true"></script>
+
+  <script>introduceTestCase('cross (with whitelisting)', 'Runtime error');</script>
+  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true"></script>
+</body>
+</html>

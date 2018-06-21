@@ -1,0 +1,144 @@
+
+
+#####################################
+Origin:      same
+Description: Parsing error: Syntax
+ Got an error:
+ 		message (type string): Uncaught SyntaxError: Unexpected token true
+ 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/parsingError.js
+ 		lineNumber (type number): 4
+ 		columnNumber (type number): 9
+ 		String(error) (type string): SyntaxError: Unexpected token true
+ 		error.name (type string): SyntaxError
+ 		error.message (type string): Unexpected token true
+ 		error.stack (type string): SyntaxError: Unexpected token true
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      same
+Description: Parsing error: Undefined variable
+ Got an error:
+ 		message (type string): Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+ 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js
+ 		lineNumber (type number): 4
+ 		columnNumber (type number): 3
+ 		String(error) (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+ 		error.name (type string): ReferenceError
+ 		error.message (type string): thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+ 		error.stack (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+    at http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js:4:3
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      same
+Description: Runtime error
+ Got an error:
+ 		message (type string): Uncaught Error: This is an expected runtime error.
+ 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js
+ 		lineNumber (type number): 12
+ 		columnNumber (type number): 9
+ 		String(error) (type string): Error: This is an expected runtime error.
+ 		error.name (type string): Error
+ 		error.message (type string): This is an expected runtime error.
+ 		error.stack (type string): Error: This is an expected runtime error.
+    at c (http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:12:9)
+    at b (http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:8:3)
+    at a (http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:4:3)
+    at http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:15:1
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      cross
+Description: Parsing error: Syntax
+ Got an error:
+ 		message (type string): Script error.
+ 		fileName (type string):
+ 		lineNumber (type number): 0
+ 		columnNumber (type number): 0
+ 		String(error) (type string): null
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      cross
+Description: Parsing error: Undefined variable
+ Got an error:
+ 		message (type string): Script error.
+ 		fileName (type string):
+ 		lineNumber (type number): 0
+ 		columnNumber (type number): 0
+ 		String(error) (type string): null
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      cross
+Description: Runtime error
+ Got an error:
+ 		message (type string): Script error.
+ 		fileName (type string):
+ 		lineNumber (type number): 0
+ 		columnNumber (type number): 0
+ 		String(error) (type string): null
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      cross (with whitelisting)
+Description: Parsing error: Syntax
+ Got an error:
+ 		message (type string): Uncaught SyntaxError: Unexpected token true
+ 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js?cors=true
+ 		lineNumber (type number): 4
+ 		columnNumber (type number): 9
+ 		String(error) (type string): SyntaxError: Unexpected token true
+ 		error.name (type string): SyntaxError
+ 		error.message (type string): Unexpected token true
+ 		error.stack (type string): SyntaxError: Unexpected token true
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      cross (with whitelisting)
+Description: Parsing error: Undefined variable
+ Got an error:
+ 		message (type string): Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+ 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true
+ 		lineNumber (type number): 4
+ 		columnNumber (type number): 3
+ 		String(error) (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+ 		error.name (type string): ReferenceError
+ 		error.message (type string): thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+ 		error.stack (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+    at http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true:4:3
+ 		artificial backtrace (type string): onErrorTracker
+
+
+
+#####################################
+Origin:      cross (with whitelisting)
+Description: Runtime error
+ Got an error:
+ 		message (type string): Uncaught Error: This is an expected runtime error.
+ 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true
+ 		lineNumber (type number): 12
+ 		columnNumber (type number): 9
+ 		String(error) (type string): Error: This is an expected runtime error.
+ 		error.name (type string): Error
+ 		error.message (type string): This is an expected runtime error.
+ 		error.stack (type string): Error: This is an expected runtime error.
+    at c (http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:12:9)
+    at b (http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:8:3)
+    at a (http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:4:3)
+    at http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:15:1
+ 		artificial backtrace (type string): onErrorTracker

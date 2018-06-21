@@ -18,7 +18,7 @@
     "test:e2e": "protractor protractor.config.js",
     "test:lint": "eslint lib/**/*.js test/**/*.js",
     "test:flow": "flow; test $? -eq 0 -o $? -eq 2",
-    "devServer": "BEACON_SERVER_PORTS='3009,3010' node test/server/server",
+    "devServer": "BEACON_SERVER_PORTS='3009,3010,3011' node test/server/server",
     "fileStats": "echo \"\nFile Stats:\" && ls target/*.js | xargs -I '%' bash -c 'echo \"%: $(./node_modules/.bin/gzip-size % | ./node_modules/.bin/pretty-bytes) (gzip)\"'"
   },
   "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",

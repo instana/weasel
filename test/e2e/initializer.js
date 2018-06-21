@@ -7,6 +7,8 @@
     script = '/target/eum.debug.js';
   }
 
+  window.config = getGlobalConfigObject();
+
   (function(i,s,o,g,r,a,m){i['EumObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -21,5 +23,27 @@
 
   if (window.onEumLoad) {
     window.onEumLoad(eum);
+  }
+
+  function getGlobalConfigObject() {
+    var ownPort = parseInt(window.location.port || '80', 10);
+    var ports = [ownPort];
+    var otherPort = 'noCrossOriginPortDefinedViaPortsQueryString';
+
+    var portsMatch = window.location.href.match(/(\?|\&)ports=([0-9,]+)/i);
+    if (portsMatch) {
+      var portsRaw = portsMatch[2].split(',');
+      for (var i = 0; i < portsRaw.length; i++) {
+        ports[i] = parseInt(portsRaw[i], 10);
+        if (ports[i] !== ownPort) {
+          otherPort = ports[i];
+        }
+      }
+    }
+
+    return {
+      sameOrigin: 'http://127.0.0.1:' + ownPort,
+      crossOrigin: 'http://127.0.0.1:' + otherPort
+    };
   }
 })();

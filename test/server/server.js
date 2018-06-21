@@ -1,6 +1,7 @@
-const uuidV4 = require('uuid/v4');
 const bodyParser = require('body-parser');
+const serveIndex = require('serve-index');
 const express = require('express');
+const uuidV4 = require('uuid/v4');
 const path = require('path');
 
 const app = express();
@@ -15,8 +16,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/target', express.static(path.join(__dirname, '..', '..', 'target')));
-app.use('/e2e', express.static(path.join(__dirname, '..', 'e2e')));
+[
+  path.join(__dirname, '..', '..', 'target'),
+  path.join(__dirname, '..', 'e2e')
+].forEach(p =>
+  app.use(`/${path.basename(p)}`, express.static(p), serveIndex(p, {
+    icons: true
+  }))
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -63,6 +70,7 @@ app.get('/ajaxRequests', (req, res) => {
   res.json(ajaxRequests);
 });
 
-const port = process.env.BEACON_SERVER_PORT;
-app.listen(port, () => {
-});
+process.env.BEACON_SERVER_PORTS
+  .split(',')
+  .map(v => parseInt(v, 10))
+  .forEach(port => app.listen(port, () => console.log('Test server available via http://127.0.0.1:%s/e2e', port)));

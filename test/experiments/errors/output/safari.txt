@@ -1,130 +1,277 @@
+ (errors, line 17)
 
+##################################### (errors, line 18)
+Origin:      same (errors, line 19)
+Description: Parsing error: Syntax (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/parsingError.js" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 4 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition." (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "SyntaxError" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "Unexpected keyword 'true'. Expected '(' to start a while loop condition." (unhandledErrorHandler.js, line 23)
+		error.stack (type string): – "" (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition.
+	(anonymous function) (parsingError.js:4)
+ (errors, line 17)
 
-#####################################
-Origin:      same
-Description: Parsing error: Syntax
-Got an error:
-		message (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
-		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/parsingError.js"
-		lineNumber (type number): – 4
-		columnNumber (type number): – 0
-		String(error) (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
-		error.name (type string): – "SyntaxError"
-		error.message (type string): – "Unexpected keyword 'true'. Expected '(' to start a while loop condition."
-		error.stack (type string): – ""
-		artificial backtrace (type string): – "onErrorTracker↵"
-
-
-#####################################
-Origin:      same
-Description: Parsing error: Undefined variable
-Got an error:
-		message (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
-		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js"
-		lineNumber (type number): – 4
-		columnNumber (type number): – 64
-		String(error) (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
-		error.name (type string): – "ReferenceError"
-		error.message (type string): – "Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
-		error.stack (type string): (1)
+##################################### (errors, line 18)
+Origin:      same (errors, line 19)
+Description: Parsing error: Undefined variable (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing" (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 4 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 64 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "ReferenceError" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing" (unhandledErrorHandler.js, line 23)
+		error.stack (type string): (1) (unhandledErrorHandler.js, line 23)
 Global Code — undefinedVariable.js:4
-		artificial backtrace (type string): – "onErrorTracker↵"
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing
+	Global Code (undefinedVariable.js:4)
+ (errors, line 17)
 
+##################################### (errors, line 18)
+Origin:      same (errors, line 19)
+Description: Runtime error: Thrown error (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "Error: This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/thrownError.js" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 12 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 56 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "Error: This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "Error" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		error.stack (type string): (1) (unhandledErrorHandler.js, line 23)
+c — thrownError.js:12b — thrownError.js:8a — thrownError.js:4Global Code — thrownError.js:15
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] Error: This is an expected runtime error.
+	c (thrownError.js:12)
+	b (thrownError.js:8)
+	a (thrownError.js:4)
+	Global Code (thrownError.js:15)
+ (errors, line 17)
 
-#####################################
-Origin:      same
-Description: Runtime error
-Got an error:
-		message (type string): – "Error: This is an expected runtime error."
-		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js"
-		lineNumber (type number): – 12
-		columnNumber (type number): – 56
-		String(error) (type string): – "Error: This is an expected runtime error."
-		error.name (type string): – "Error"
-		error.message (type string): – "This is an expected runtime error."
-		error.stack (type string): (1)
-c — runtimeError.js:12b — runtimeError.js:8a — runtimeError.js:4Global Code — runtimeError.js:15
-		artificial backtrace (type string): – "onErrorTracker↵"
+##################################### (errors, line 18)
+Origin:      same (errors, line 19)
+Description: Runtime error: Thrown string (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3009/experiments/errors/errorTypes/thrownString.js" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 12 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 45 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "string" (unhandledErrorHandler.js, line 23)
+		error.name (type undefined): – undefined (unhandledErrorHandler.js, line 23)
+		error.message (type undefined): – undefined (unhandledErrorHandler.js, line 23)
+		error.stack (type undefined): – undefined (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] This is an expected runtime error.
+	c (thrownString.js:12)
+	b (thrownString.js:8)
+	a (thrownString.js:4)
+	Global Code (thrownString.js:15)
+ (errors, line 17)
 
+##################################### (errors, line 18)
+Origin:      same (errors, line 19)
+Description: Runtime error: tryCatchWrapped (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type number): – 0 (unhandledErrorHandler.js, line 23)
+		fileName (type number): – 0 (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "Error: This is an expected runtime error within setTimeout" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "Error" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "This is an expected runtime error within setTimeout" (unhandledErrorHandler.js, line 23)
+		error.stack (type string): (1) (unhandledErrorHandler.js, line 23)
+(anonymous function) — tryCatchWrapped.js:4tryCatchAndReport — unhandledErrorHandler.js:36Global Code — tryCatchWrapped.js:3
+		artificial backtrace (type string): – "onErrorTracker↵tryCatchAndReport↵" (unhandledErrorHandler.js, line 23)
+ (errors, line 17)
 
-#####################################
-Origin:      cross
-Description: Parsing error: Syntax
-Got an error:
-		message (type string): – "Script error."
-		fileName (type string): – ""
-		lineNumber (type number): – 0
-		columnNumber (type number): – 0
-		String(error) (type string): – "null"
-		artificial backtrace (type string): – "onErrorTracker↵"
+##################################### (errors, line 18)
+Origin:      cross (errors, line 19)
+Description: Parsing error: Syntax (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "Script error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "null" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition.
+	(anonymous function) (parsingError.js:4)
+ (errors, line 17)
 
+##################################### (errors, line 18)
+Origin:      cross (errors, line 19)
+Description: Parsing error: Undefined variable (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "Script error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "null" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing
+	Global Code (undefinedVariable.js:4)
+ (errors, line 17)
 
-#####################################
-Origin:      cross
-Description: Parsing error: Undefined variable
-Got an error:
-		message (type string): – "Script error."
-		fileName (type string): – ""
-		lineNumber (type number): – 0
-		columnNumber (type number): – 0
-		String(error) (type string): – "null"
-		artificial backtrace (type string): – "onErrorTracker↵"
+##################################### (errors, line 18)
+Origin:      cross (errors, line 19)
+Description: Runtime error: Thrown error (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "Script error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "null" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] Error: This is an expected runtime error.
+	c (thrownError.js:12)
+	b (thrownError.js:8)
+	a (thrownError.js:4)
+	Global Code (thrownError.js:15)
+ (errors, line 17)
 
+##################################### (errors, line 18)
+Origin:      cross (errors, line 19)
+Description: Runtime error: Thrown string (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "Script error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "null" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] This is an expected runtime error.
+	c (thrownString.js:12)
+	b (thrownString.js:8)
+	a (thrownString.js:4)
+	Global Code (thrownString.js:15)
+ (errors, line 17)
 
-#####################################
-Origin:      cross
-Description: Runtime error
-Got an error:
-		message (type string): – "Script error."
-		fileName (type string): – ""
-		lineNumber (type number): – 0
-		columnNumber (type number): – 0
-		String(error) (type string): – "null"
-		artificial backtrace (type string): – "onErrorTracker↵"
+##################################### (errors, line 18)
+Origin:      cross (errors, line 19)
+Description: Runtime error: tryCatchWrapped (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type number): – 0 (unhandledErrorHandler.js, line 23)
+		fileName (type number): – 0 (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "Error: This is an expected runtime error within setTimeout" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "Error" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "This is an expected runtime error within setTimeout" (unhandledErrorHandler.js, line 23)
+		error.stack (type string): (1) (unhandledErrorHandler.js, line 23)
+(anonymous function) — tryCatchWrapped.js:4tryCatchAndReport — unhandledErrorHandler.js:36Global Code — tryCatchWrapped.js:3
+		artificial backtrace (type string): – "onErrorTracker↵tryCatchAndReport↵" (unhandledErrorHandler.js, line 23)
+ (errors, line 17)
 
+##################################### (errors, line 18)
+Origin:      cross (with whitelisting) (errors, line 19)
+Description: Parsing error: Syntax (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js?cors=true" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 4 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition." (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "SyntaxError" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "Unexpected keyword 'true'. Expected '(' to start a while loop condition." (unhandledErrorHandler.js, line 23)
+		error.stack (type string): – "" (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition.
+	(anonymous function) (parsingError.js:4)
+ (errors, line 17)
 
-#####################################
-Origin:      cross (with whitelisting)
-Description: Parsing error: Syntax
-Got an error:
-		message (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
-		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js?cors=true"
-		lineNumber (type number): – 4
-		columnNumber (type number): – 0
-		String(error) (type string): – "SyntaxError: Unexpected keyword 'true'. Expected '(' to start a while loop condition."
-		error.name (type string): – "SyntaxError"
-		error.message (type string): – "Unexpected keyword 'true'. Expected '(' to start a while loop condition."
-		error.stack (type string): – ""
-		artificial backtrace (type string): – "onErrorTracker↵"
-
-
-#####################################
-Origin:      cross (with whitelisting)
-Description: Parsing error: Undefined variable
-Got an error:
-		message (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
-		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true"
-		lineNumber (type number): – 4
-		columnNumber (type number): – 64
-		String(error) (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
-		error.name (type string): – "ReferenceError"
-		error.message (type string): – "Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing"
-		error.stack (type string): (1)
+##################################### (errors, line 18)
+Origin:      cross (with whitelisting) (errors, line 19)
+Description: Parsing error: Undefined variable (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing" (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 4 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 64 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "ReferenceError" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing" (unhandledErrorHandler.js, line 23)
+		error.stack (type string): (1) (unhandledErrorHandler.js, line 23)
 Global Code — undefinedVariable.js:4
-		artificial backtrace (type string): – "onErrorTracker↵"
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] ReferenceError: Can't find variable: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing
+	Global Code (undefinedVariable.js:4)
+ (errors, line 17)
 
+##################################### (errors, line 18)
+Origin:      cross (with whitelisting) (errors, line 19)
+Description: Runtime error: Thrown error (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "Error: This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js?cors=true" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 12 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 56 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "Error: This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "Error" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		error.stack (type string): (1) (unhandledErrorHandler.js, line 23)
+c — thrownError.js:12b — thrownError.js:8a — thrownError.js:4Global Code — thrownError.js:15
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] Error: This is an expected runtime error.
+	c (thrownError.js:12)
+	b (thrownError.js:8)
+	a (thrownError.js:4)
+	Global Code (thrownError.js:15)
+ (errors, line 17)
 
-#####################################
-Origin:      cross (with whitelisting)
-Description: Runtime error
-Got an error:
-		message (type string): – "Error: This is an expected runtime error."
-		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true"
-		lineNumber (type number): – 12
-		columnNumber (type number): – 56
-		String(error) (type string): – "Error: This is an expected runtime error."
-		error.name (type string): – "Error"
-		error.message (type string): – "This is an expected runtime error."
-		error.stack (type string): (1)
-c — runtimeError.js:12b — runtimeError.js:8a — runtimeError.js:4Global Code — runtimeError.js:15
-		artificial backtrace (type string): – "onErrorTracker↵"
+##################################### (errors, line 18)
+Origin:      cross (with whitelisting) (errors, line 19)
+Description: Runtime error: Thrown string (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type string): – "This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		fileName (type string): – "http://127.0.0.1:3011/experiments/errors/errorTypes/thrownString.js?cors=true" (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 12 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 45 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "This is an expected runtime error." (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "string" (unhandledErrorHandler.js, line 23)
+		error.name (type undefined): – undefined (unhandledErrorHandler.js, line 23)
+		error.message (type undefined): – undefined (unhandledErrorHandler.js, line 23)
+		error.stack (type undefined): – undefined (unhandledErrorHandler.js, line 23)
+		artificial backtrace (type string): – "onErrorTracker↵" (unhandledErrorHandler.js, line 23)
+[Error] This is an expected runtime error.
+	c (thrownString.js:12)
+	b (thrownString.js:8)
+	a (thrownString.js:4)
+	Global Code (thrownString.js:15)
+ (errors, line 17)
+
+##################################### (errors, line 18)
+Origin:      cross (with whitelisting) (errors, line 19)
+Description: Runtime error: tryCatchWrapped (errors, line 20)
+Got an error: (unhandledErrorHandler.js, line 5)
+		message (type number): – 0 (unhandledErrorHandler.js, line 23)
+		fileName (type number): – 0 (unhandledErrorHandler.js, line 23)
+		lineNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		columnNumber (type number): – 0 (unhandledErrorHandler.js, line 23)
+		String(error) (type string): – "Error: This is an expected runtime error within setTimeout" (unhandledErrorHandler.js, line 23)
+		typeof error (type string): – "object" (unhandledErrorHandler.js, line 23)
+		error.name (type string): – "Error" (unhandledErrorHandler.js, line 23)
+		error.message (type string): – "This is an expected runtime error within setTimeout" (unhandledErrorHandler.js, line 23)
+		error.stack (type string): (1) (unhandledErrorHandler.js, line 23)
+(anonymous function) — tryCatchWrapped.js:4tryCatchAndReport — unhandledErrorHandler.js:36Global Code — tryCatchWrapped.js:3
+		artificial backtrace (type string): – "onErrorTracker↵tryCatchAndReport↵" (unhandledErrorHandler.js, line 23)

@@ -1,144 +1,318 @@
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      same
+(index):20 Description: Parsing error: Syntax
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught SyntaxError: Unexpected token true
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/parsingError.js
+unhandledErrorHandler.js:23 		lineNumber (type number): 4
+unhandledErrorHandler.js:23 		columnNumber (type number): 9
+unhandledErrorHandler.js:23 		String(error) (type string): SyntaxError: Unexpected token true
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): SyntaxError
+unhandledErrorHandler.js:23 		error.message (type string): Unexpected token true
+unhandledErrorHandler.js:23 		error.stack (type string): SyntaxError: Unexpected token true
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
-#####################################
-Origin:      same
-Description: Parsing error: Syntax
- Got an error:
- 		message (type string): Uncaught SyntaxError: Unexpected token true
- 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/parsingError.js
- 		lineNumber (type number): 4
- 		columnNumber (type number): 9
- 		String(error) (type string): SyntaxError: Unexpected token true
- 		error.name (type string): SyntaxError
- 		error.message (type string): Unexpected token true
- 		error.stack (type string): SyntaxError: Unexpected token true
- 		artificial backtrace (type string): onErrorTracker
+parsingError.js:4 Uncaught SyntaxError: Unexpected token true
+(index):17
 
-
-
-#####################################
-Origin:      same
-Description: Parsing error: Undefined variable
- Got an error:
- 		message (type string): Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
- 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js
- 		lineNumber (type number): 4
- 		columnNumber (type number): 3
- 		String(error) (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
- 		error.name (type string): ReferenceError
- 		error.message (type string): thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
- 		error.stack (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+(index):18 #####################################
+(index):19 Origin:      same
+(index):20 Description: Parsing error: Undefined variable
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js
+unhandledErrorHandler.js:23 		lineNumber (type number): 4
+unhandledErrorHandler.js:23 		columnNumber (type number): 3
+unhandledErrorHandler.js:23 		String(error) (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): ReferenceError
+unhandledErrorHandler.js:23 		error.message (type string): thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+unhandledErrorHandler.js:23 		error.stack (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
     at http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js:4:3
- 		artificial backtrace (type string): onErrorTracker
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
+undefinedVariable.js:4 Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+    at undefinedVariable.js:4
+(anonymous) @ undefinedVariable.js:4
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      same
+(index):20 Description: Runtime error: Thrown error
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught Error: This is an expected runtime error.
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/thrownError.js
+unhandledErrorHandler.js:23 		lineNumber (type number): 12
+unhandledErrorHandler.js:23 		columnNumber (type number): 9
+unhandledErrorHandler.js:23 		String(error) (type string): Error: This is an expected runtime error.
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): Error
+unhandledErrorHandler.js:23 		error.message (type string): This is an expected runtime error.
+unhandledErrorHandler.js:23 		error.stack (type string): Error: This is an expected runtime error.
+    at c (http://127.0.0.1:3009/experiments/errors/errorTypes/thrownError.js:12:9)
+    at b (http://127.0.0.1:3009/experiments/errors/errorTypes/thrownError.js:8:3)
+    at a (http://127.0.0.1:3009/experiments/errors/errorTypes/thrownError.js:4:3)
+    at http://127.0.0.1:3009/experiments/errors/errorTypes/thrownError.js:15:1
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
-#####################################
-Origin:      same
-Description: Runtime error
- Got an error:
- 		message (type string): Uncaught Error: This is an expected runtime error.
- 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js
- 		lineNumber (type number): 12
- 		columnNumber (type number): 9
- 		String(error) (type string): Error: This is an expected runtime error.
- 		error.name (type string): Error
- 		error.message (type string): This is an expected runtime error.
- 		error.stack (type string): Error: This is an expected runtime error.
-    at c (http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:12:9)
-    at b (http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:8:3)
-    at a (http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:4:3)
-    at http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js:15:1
- 		artificial backtrace (type string): onErrorTracker
+thrownError.js:12 Uncaught Error: This is an expected runtime error.
+    at c (thrownError.js:12)
+    at b (thrownError.js:8)
+    at a (thrownError.js:4)
+    at thrownError.js:15
+c @ thrownError.js:12
+b @ thrownError.js:8
+a @ thrownError.js:4
+(anonymous) @ thrownError.js:15
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      same
+(index):20 Description: Runtime error: Thrown string
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught This is an expected runtime error.
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3009/experiments/errors/errorTypes/thrownString.js
+unhandledErrorHandler.js:23 		lineNumber (type number): 12
+unhandledErrorHandler.js:23 		columnNumber (type number): 3
+unhandledErrorHandler.js:23 		String(error) (type string): This is an expected runtime error.
+unhandledErrorHandler.js:23 		typeof error (type string): string
+unhandledErrorHandler.js:23 		error.name (type undefined): undefined
+unhandledErrorHandler.js:23 		error.message (type undefined): undefined
+unhandledErrorHandler.js:23 		error.stack (type undefined): undefined
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
+thrownString.js:12 Uncaught This is an expected runtime error.
+c @ thrownString.js:12
+b @ thrownString.js:8
+a @ thrownString.js:4
+(anonymous) @ thrownString.js:15
+(index):17
 
-#####################################
-Origin:      cross
-Description: Parsing error: Syntax
- Got an error:
- 		message (type string): Script error.
- 		fileName (type string):
- 		lineNumber (type number): 0
- 		columnNumber (type number): 0
- 		String(error) (type string): null
- 		artificial backtrace (type string): onErrorTracker
+(index):18 #####################################
+(index):19 Origin:      same
+(index):20 Description: Runtime error: tryCatchWrapped
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type number): 0
+unhandledErrorHandler.js:23 		fileName (type number): 0
+unhandledErrorHandler.js:23 		lineNumber (type number): 0
+unhandledErrorHandler.js:23 		columnNumber (type number): 0
+unhandledErrorHandler.js:23 		String(error) (type string): Error: This is an expected runtime error within setTimeout
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): Error
+unhandledErrorHandler.js:23 		error.message (type string): This is an expected runtime error within setTimeout
+unhandledErrorHandler.js:23 		error.stack (type string): Error: This is an expected runtime error within setTimeout
+    at http://127.0.0.1:3009/experiments/errors/errorTypes/tryCatchWrapped.js:4:9
+    at tryCatchAndReport (http://127.0.0.1:3010/experiments/errors/unhandledErrorHandler.js:36:7)
+    at http://127.0.0.1:3009/experiments/errors/errorTypes/tryCatchWrapped.js:3:1
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
+tryCatchAndReport
 
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      cross
+(index):20 Description: Parsing error: Syntax
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Script error.
+unhandledErrorHandler.js:23 		fileName (type string):
+unhandledErrorHandler.js:23 		lineNumber (type number): 0
+unhandledErrorHandler.js:23 		columnNumber (type number): 0
+unhandledErrorHandler.js:23 		String(error) (type string): null
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
-#####################################
-Origin:      cross
-Description: Parsing error: Undefined variable
- Got an error:
- 		message (type string): Script error.
- 		fileName (type string):
- 		lineNumber (type number): 0
- 		columnNumber (type number): 0
- 		String(error) (type string): null
- 		artificial backtrace (type string): onErrorTracker
+parsingError.js:4 Uncaught SyntaxError: Unexpected token true
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      cross
+(index):20 Description: Parsing error: Undefined variable
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Script error.
+unhandledErrorHandler.js:23 		fileName (type string):
+unhandledErrorHandler.js:23 		lineNumber (type number): 0
+unhandledErrorHandler.js:23 		columnNumber (type number): 0
+unhandledErrorHandler.js:23 		String(error) (type string): null
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
+undefinedVariable.js:4 Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+    at undefinedVariable.js:4
+(anonymous) @ undefinedVariable.js:4
+(index):17
 
-#####################################
-Origin:      cross
-Description: Runtime error
- Got an error:
- 		message (type string): Script error.
- 		fileName (type string):
- 		lineNumber (type number): 0
- 		columnNumber (type number): 0
- 		String(error) (type string): null
- 		artificial backtrace (type string): onErrorTracker
+(index):18 #####################################
+(index):19 Origin:      cross
+(index):20 Description: Runtime error: Thrown error
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Script error.
+unhandledErrorHandler.js:23 		fileName (type string):
+unhandledErrorHandler.js:23 		lineNumber (type number): 0
+unhandledErrorHandler.js:23 		columnNumber (type number): 0
+unhandledErrorHandler.js:23 		String(error) (type string): null
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
+thrownError.js:12 Uncaught Error: This is an expected runtime error.
+    at c (thrownError.js:12)
+    at b (thrownError.js:8)
+    at a (thrownError.js:4)
+    at thrownError.js:15
+c @ thrownError.js:12
+b @ thrownError.js:8
+a @ thrownError.js:4
+(anonymous) @ thrownError.js:15
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      cross
+(index):20 Description: Runtime error: Thrown string
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Script error.
+unhandledErrorHandler.js:23 		fileName (type string):
+unhandledErrorHandler.js:23 		lineNumber (type number): 0
+unhandledErrorHandler.js:23 		columnNumber (type number): 0
+unhandledErrorHandler.js:23 		String(error) (type string): null
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
-#####################################
-Origin:      cross (with whitelisting)
-Description: Parsing error: Syntax
- Got an error:
- 		message (type string): Uncaught SyntaxError: Unexpected token true
- 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js?cors=true
- 		lineNumber (type number): 4
- 		columnNumber (type number): 9
- 		String(error) (type string): SyntaxError: Unexpected token true
- 		error.name (type string): SyntaxError
- 		error.message (type string): Unexpected token true
- 		error.stack (type string): SyntaxError: Unexpected token true
- 		artificial backtrace (type string): onErrorTracker
+thrownString.js:12 Uncaught This is an expected runtime error.
+c @ thrownString.js:12
+b @ thrownString.js:8
+a @ thrownString.js:4
+(anonymous) @ thrownString.js:15
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      cross
+(index):20 Description: Runtime error: tryCatchWrapped
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type number): 0
+unhandledErrorHandler.js:23 		fileName (type number): 0
+unhandledErrorHandler.js:23 		lineNumber (type number): 0
+unhandledErrorHandler.js:23 		columnNumber (type number): 0
+unhandledErrorHandler.js:23 		String(error) (type string): Error: This is an expected runtime error within setTimeout
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): Error
+unhandledErrorHandler.js:23 		error.message (type string): This is an expected runtime error within setTimeout
+unhandledErrorHandler.js:23 		error.stack (type string): Error: This is an expected runtime error within setTimeout
+    at http://127.0.0.1:3011/experiments/errors/errorTypes/tryCatchWrapped.js:4:9
+    at tryCatchAndReport (http://127.0.0.1:3010/experiments/errors/unhandledErrorHandler.js:36:7)
+    at http://127.0.0.1:3011/experiments/errors/errorTypes/tryCatchWrapped.js:3:1
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
+tryCatchAndReport
 
+(index):17
 
-#####################################
-Origin:      cross (with whitelisting)
-Description: Parsing error: Undefined variable
- Got an error:
- 		message (type string): Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
- 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true
- 		lineNumber (type number): 4
- 		columnNumber (type number): 3
- 		String(error) (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
- 		error.name (type string): ReferenceError
- 		error.message (type string): thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
- 		error.stack (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+(index):18 #####################################
+(index):19 Origin:      cross (with whitelisting)
+(index):20 Description: Parsing error: Syntax
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught SyntaxError: Unexpected token true
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/parsingError.js?cors=true
+unhandledErrorHandler.js:23 		lineNumber (type number): 4
+unhandledErrorHandler.js:23 		columnNumber (type number): 9
+unhandledErrorHandler.js:23 		String(error) (type string): SyntaxError: Unexpected token true
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): SyntaxError
+unhandledErrorHandler.js:23 		error.message (type string): Unexpected token true
+unhandledErrorHandler.js:23 		error.stack (type string): SyntaxError: Unexpected token true
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
+
+parsingError.js?cors=true:4 Uncaught SyntaxError: Unexpected token true
+(index):17
+
+(index):18 #####################################
+(index):19 Origin:      cross (with whitelisting)
+(index):20 Description: Parsing error: Undefined variable
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true
+unhandledErrorHandler.js:23 		lineNumber (type number): 4
+unhandledErrorHandler.js:23 		columnNumber (type number): 3
+unhandledErrorHandler.js:23 		String(error) (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): ReferenceError
+unhandledErrorHandler.js:23 		error.message (type string): thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+unhandledErrorHandler.js:23 		error.stack (type string): ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
     at http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true:4:3
- 		artificial backtrace (type string): onErrorTracker
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
+undefinedVariable.js?cors=true:4 Uncaught ReferenceError: thisThingIsNotDefinedAndWillThereforeBreakDuringScriptParsing is not defined
+    at undefinedVariable.js?cors=true:4
+(anonymous) @ undefinedVariable.js?cors=true:4
+(index):17
 
+(index):18 #####################################
+(index):19 Origin:      cross (with whitelisting)
+(index):20 Description: Runtime error: Thrown error
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught Error: This is an expected runtime error.
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js?cors=true
+unhandledErrorHandler.js:23 		lineNumber (type number): 12
+unhandledErrorHandler.js:23 		columnNumber (type number): 9
+unhandledErrorHandler.js:23 		String(error) (type string): Error: This is an expected runtime error.
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): Error
+unhandledErrorHandler.js:23 		error.message (type string): This is an expected runtime error.
+unhandledErrorHandler.js:23 		error.stack (type string): Error: This is an expected runtime error.
+    at c (http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js?cors=true:12:9)
+    at b (http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js?cors=true:8:3)
+    at a (http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js?cors=true:4:3)
+    at http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js?cors=true:15:1
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
 
-#####################################
-Origin:      cross (with whitelisting)
-Description: Runtime error
- Got an error:
- 		message (type string): Uncaught Error: This is an expected runtime error.
- 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true
- 		lineNumber (type number): 12
- 		columnNumber (type number): 9
- 		String(error) (type string): Error: This is an expected runtime error.
- 		error.name (type string): Error
- 		error.message (type string): This is an expected runtime error.
- 		error.stack (type string): Error: This is an expected runtime error.
-    at c (http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:12:9)
-    at b (http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:8:3)
-    at a (http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:4:3)
-    at http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true:15:1
- 		artificial backtrace (type string): onErrorTracker
+thrownError.js?cors=true:12 Uncaught Error: This is an expected runtime error.
+    at c (thrownError.js?cors=true:12)
+    at b (thrownError.js?cors=true:8)
+    at a (thrownError.js?cors=true:4)
+    at thrownError.js?cors=true:15
+c @ thrownError.js?cors=true:12
+b @ thrownError.js?cors=true:8
+a @ thrownError.js?cors=true:4
+(anonymous) @ thrownError.js?cors=true:15
+(index):17
+
+(index):18 #####################################
+(index):19 Origin:      cross (with whitelisting)
+(index):20 Description: Runtime error: Thrown string
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type string): Uncaught This is an expected runtime error.
+unhandledErrorHandler.js:23 		fileName (type string): http://127.0.0.1:3011/experiments/errors/errorTypes/thrownString.js?cors=true
+unhandledErrorHandler.js:23 		lineNumber (type number): 12
+unhandledErrorHandler.js:23 		columnNumber (type number): 3
+unhandledErrorHandler.js:23 		String(error) (type string): This is an expected runtime error.
+unhandledErrorHandler.js:23 		typeof error (type string): string
+unhandledErrorHandler.js:23 		error.name (type undefined): undefined
+unhandledErrorHandler.js:23 		error.message (type undefined): undefined
+unhandledErrorHandler.js:23 		error.stack (type undefined): undefined
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
+
+thrownString.js?cors=true:12 Uncaught This is an expected runtime error.
+c @ thrownString.js?cors=true:12
+b @ thrownString.js?cors=true:8
+a @ thrownString.js?cors=true:4
+(anonymous) @ thrownString.js?cors=true:15
+(index):17
+
+(index):18 #####################################
+(index):19 Origin:      cross (with whitelisting)
+(index):20 Description: Runtime error: tryCatchWrapped
+unhandledErrorHandler.js:5 Got an error:
+unhandledErrorHandler.js:23 		message (type number): 0
+unhandledErrorHandler.js:23 		fileName (type number): 0
+unhandledErrorHandler.js:23 		lineNumber (type number): 0
+unhandledErrorHandler.js:23 		columnNumber (type number): 0
+unhandledErrorHandler.js:23 		String(error) (type string): Error: This is an expected runtime error within setTimeout
+unhandledErrorHandler.js:23 		typeof error (type string): object
+unhandledErrorHandler.js:23 		error.name (type string): Error
+unhandledErrorHandler.js:23 		error.message (type string): This is an expected runtime error within setTimeout
+unhandledErrorHandler.js:23 		error.stack (type string): Error: This is an expected runtime error within setTimeout
+    at http://127.0.0.1:3011/experiments/errors/errorTypes/tryCatchWrapped.js?cors=true:4:9
+    at tryCatchAndReport (http://127.0.0.1:3010/experiments/errors/unhandledErrorHandler.js:36:7)
+    at http://127.0.0.1:3011/experiments/errors/errorTypes/tryCatchWrapped.js?cors=true:3:1
+unhandledErrorHandler.js:23 		artificial backtrace (type string): onErrorTracker
+tryCatchAndReport

@@ -20,7 +20,7 @@
       console.log('Description: %s', description);
     };
   </script>
-  <script src="unhandledErrorHandler.js"></script>
+  <script src="http://127.0.0.1:3010/experiments/errors/unhandledErrorHandler.js"></script>
 
 
 
@@ -30,8 +30,17 @@
   <script>introduceTestCase('same', 'Parsing error: Undefined variable');</script>
   <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/undefinedVariable.js"></script>
 
-  <script>introduceTestCase('same', 'Runtime error');</script>
-  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/runtimeError.js"></script>
+  <script>introduceTestCase('same', 'Runtime error: Thrown error');</script>
+  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/thrownError.js"></script>
+
+  <script>introduceTestCase('same', 'Runtime error: Thrown string');</script>
+  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/thrownString.js"></script>
+
+  <script>introduceTestCase('same', 'Runtime error: tryCatchWrapped');</script>
+  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/tryCatchWrapped.js"></script>
+
+  <!-- <script>introduceTestCase('same', 'Runtime error: setTimeout');</script>
+  <script src="http://127.0.0.1:3009/experiments/errors/errorTypes/setTimeout.js"></script> -->
 
 
 
@@ -41,9 +50,17 @@
   <script>introduceTestCase('cross', 'Parsing error: Undefined variable');</script>
   <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js"></script>
 
-  <script>introduceTestCase('cross', 'Runtime error');</script>
-  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js"></script>
+  <script>introduceTestCase('cross', 'Runtime error: Thrown error');</script>
+  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js"></script>
 
+  <script>introduceTestCase('cross', 'Runtime error: Thrown string');</script>
+  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/thrownString.js"></script>
+
+  <script>introduceTestCase('cross', 'Runtime error: tryCatchWrapped');</script>
+  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/tryCatchWrapped.js"></script>
+
+  <!-- <script>introduceTestCase('cross', 'Runtime error: setTimeout');</script>
+  <script src="http://127.0.0.1:3011/experiments/errors/errorTypes/setTimeout.js"></script> -->
 
 
   <script>introduceTestCase('cross (with whitelisting)', 'Parsing error: Syntax');</script>
@@ -52,7 +69,16 @@
   <script>introduceTestCase('cross (with whitelisting)', 'Parsing error: Undefined variable');</script>
   <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/undefinedVariable.js?cors=true"></script>
 
-  <script>introduceTestCase('cross (with whitelisting)', 'Runtime error');</script>
-  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/runtimeError.js?cors=true"></script>
+  <script>introduceTestCase('cross (with whitelisting)', 'Runtime error: Thrown error');</script>
+  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/thrownError.js?cors=true"></script>
+
+  <script>introduceTestCase('cross (with whitelisting)', 'Runtime error: Thrown string');</script>
+  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/thrownString.js?cors=true"></script>
+
+  <script>introduceTestCase('cross (with whitelisting)', 'Runtime error: tryCatchWrapped');</script>
+  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/tryCatchWrapped.js?cors=true"></script>
+
+  <!-- <script>introduceTestCase('cross (with whitelisting)', 'Runtime error: setTimeout');</script>
+  <script crossorigin="anonymous" src="http://127.0.0.1:3011/experiments/errors/errorTypes/setTimeout.js?cors=true"></script> -->
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>xhr test</title>
+  <title>fetch test</title>
 
   <script src="/e2e/initializer.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -10,25 +10,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
-  ignored ajax call
+  fetch after page load
 
   <div id="result"></div>
 
   <script>
     $(window).on('load', function() {
       setTimeout(function() {
-        $.ajax({
-          url: '/ajax' + '?pleaseIgnoreThis&cacheBust=' + (new Date()).getTime(),
-          success: function() {
-            $.ajax({
-              url: '/ajax' + '?cacheBust=' + (new Date()).getTime(),
-              success: function(result) {
-                $('#result').text(result);
-              }
-            });
-          }
-        });
-      }, 100);
+        if (self.fetch) {
+          fetch('/ajax' + '?cacheBust=' + (new Date()).getTime())
+          .then(function(response) {
+            return response.text();
+          })
+          .then(function(responseBody) {
+            $('#result').text(responseBody);
+          })
+          .catch(function(e) {
+            $('#result').text('error: ' + JSON.stringify(e));
+          });
+        } else {
+            $('#result').text('The Fetch API is not supported by this browser.');
+        }
+      }, 200);
     });
   </script>
 </body>

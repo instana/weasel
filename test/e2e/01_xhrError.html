@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
-  ignored ajax call
+  ajax error
 
   <div id="result"></div>
 
@@ -18,14 +18,12 @@
     $(window).on('load', function() {
       setTimeout(function() {
         $.ajax({
-          url: '/ajax' + '?pleaseIgnoreThis&cacheBust=' + (new Date()).getTime(),
+          url: 'invalidprotocol://lets-cause-a-network-error-shall-we/?cacheBust=' + (new Date()).getTime(),
           success: function() {
-            $.ajax({
-              url: '/ajax' + '?cacheBust=' + (new Date()).getTime(),
-              success: function(result) {
-                $('#result').text(result);
-              }
-            });
+            $('#result').text('unexpected success');
+          },
+          error: function(e) {
+            $('#result').text('expected error');
           }
         });
       }, 100);

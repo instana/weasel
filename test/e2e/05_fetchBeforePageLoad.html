@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>fetch test</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  fetch before page load
+
+  <div id="result"></div>
+
+  <script>
+    // Ensuring that the EUM script is not loaded asynchronously to make
+    // tests much more reliable.
+    (function(i, s, o, g, r, a, m) {
+      i['EumObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+    })(window, document, 'script', null, 'eum');
+
+    eum('reportingUrl', '/beacon');
+  </script>
+  <script src="/target/eum.min.js"></script>
+  <script>
+    if (self.fetch) {
+      fetch('/ajax' + '?cacheBust=' + (new Date()).getTime())
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(responseBody) {
+        $('#result').text(responseBody);
+      })
+      .catch(function(e) {
+        $('#result').text('error: ' + JSON.stringify(e));
+      });
+    } else {
+        $('#result').text('The Fetch API is not supported by this browser.');
+    }
+  </script>
+</body>
+</html>

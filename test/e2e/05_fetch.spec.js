@@ -4,19 +4,17 @@ const {retry, expectOneMatching} = require('../util');
 
 const cexpect = require('chai').expect;
 
-describe('01_xhr', () => {
+describe('05_fetch', () => {
   registerTestServerHooks();
   registerBaseHooks();
 
-  // disable for IE8 and below
-
-  describe('01_xhrAfterPageLoad', () => {
+  describe('05_fetchAfterPageLoad', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrAfterPageLoad'));
+      browser.get(getE2ETestBaseUrl('05_fetchAfterPageLoad'));
     });
 
-    it('must send beacons for XHR requests happening after page load', () => {
-      return whenXhrInstrumentationIsSupported(() =>
+    it('must send beacons for fetch requests happening after page load', () => {
+      return whenFetchIsSupported(() =>
         retry(() => {
           return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
             .then(([beacons, ajaxRequests, result]) => {
@@ -33,7 +31,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhrAfterPageLoad'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchAfterPageLoad'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');
@@ -41,6 +39,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.a).to.equal('1');
                 cexpect(beacon.st).to.equal('200');
                 cexpect(beacon.bc).to.equal('1');
+                cexpect(beacon.e).to.be.undefined;
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -49,6 +48,7 @@ describe('01_xhr', () => {
                 cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
                 cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
               });
 
               cexpect(result).to.equal(ajaxRequest.response);
@@ -59,13 +59,13 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_xhrBeforePageLoad', () => {
+  describe('05_fetchRequestObject', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrBeforePageLoad'));
+      browser.get(getE2ETestBaseUrl('05_fetchRequestObject'));
     });
 
-    it('must send beacons for XHR requests happening before page load', () => {
-      return whenXhrInstrumentationIsSupported(() =>
+    it('must send beacons for fetch requests with a Request object', () => {
+      return whenFetchIsSupported(() =>
         retry(() => {
           return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
             .then(([beacons, ajaxRequests, result]) => {
@@ -77,91 +77,32 @@ describe('01_xhr', () => {
               });
 
               const ajaxBeacon = expectOneMatching(beacons, beacon => {
-                cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
-                cexpect(beacon.t).not.to.equal(beacon.s);
-                cexpect(beacon.t).to.equal(pageLoadBeacon.t);
-                cexpect(beacon.ty).to.equal('xhr');
-              });
-
-              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
-                cexpect(ajaxRequest.method).to.equal('GET');
-                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
-                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(pageLoadBeacon.t);
-                cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
-                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
-              });
-
-              cexpect(result).to.equal(ajaxRequest.response);
-            });
-        })
-      );
-    });
-  });
-
-
-  describe('01_xhrBeforePageLoadSynchronous', () => {
-    beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrBeforePageLoadSynchronous'));
-    });
-
-    it('must send beacons for XHR requests happening before page load', () => {
-      return whenXhrInstrumentationIsSupported(() =>
-        retry(() => {
-          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
-            .then(([beacons, ajaxRequests, result]) => {
-              cexpect(beacons).to.have.lengthOf(2);
-              cexpect(ajaxRequests).to.have.lengthOf(1);
-
-              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
-                cexpect(beacon.s).to.equal(undefined);
-              });
-
-              const ajaxBeacon = expectOneMatching(beacons, beacon => {
-                cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
-                cexpect(beacon.t).not.to.equal(beacon.s);
-                cexpect(beacon.t).to.equal(pageLoadBeacon.t);
-                cexpect(beacon.ty).to.equal('xhr');
-              });
-
-              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
-                cexpect(ajaxRequest.method).to.equal('GET');
-                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
-                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(pageLoadBeacon.t);
-                cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
-                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
-              });
-
-              cexpect(result).to.equal(ajaxRequest.response);
-            });
-        })
-      );
-    });
-  });
-
-
-  describe('01_xhrTimeout', () => {
-    beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrTimeout'));
-    });
-
-    it('must send error status when XHR times out', () => {
-      return whenXhrInstrumentationIsSupported(config =>
-        retry(() => {
-          return Promise.all([getBeacons(), getResultElementContent()])
-            .then(([beacons, result]) => {
-
-              let expectedStatus = '-101';
-              if (config.capabilities.browserName === 'internet explorer' && Number(config.capabilities.version) < 10) {
-                expectedStatus = '-103';
-              }
-
-              expectOneMatching(beacons, beacon => {
-                cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
+                cexpect(beacon.t).to.match(/^[0-9A-F]{1,16}$/i);
                 cexpect(beacon.t).to.equal(beacon.s);
-                cexpect(beacon.st).to.equal(expectedStatus);
+                cexpect(beacon.r).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.d).not.to.be.NaN;
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchRequestObject'));
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.m).to.equal('POST');
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.a).to.equal('1');
+                cexpect(beacon.st).to.equal('200');
+                cexpect(beacon.bc).to.equal('1');
+                cexpect(beacon.e).to.be.undefined;
               });
 
-              cexpect(result).to.equal('error');
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('POST');
+                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
+                cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
             });
         })
       );
@@ -169,13 +110,105 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_ignoredXhr', () => {
+  describe('05_fetchRequestObjectAndInitObject', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_ignoredXhr'));
+      browser.get(getE2ETestBaseUrl('05_fetchRequestObjectAndInitObject'));
     });
 
-    it('must ignore certain XHR calls', () => {
-      return whenXhrInstrumentationIsSupported(() =>
+    it('must handle request and init object correctly', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.s).to.equal(undefined);
+              });
+
+              const ajaxBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.t).to.match(/^[0-9A-F]{1,16}$/i);
+                cexpect(beacon.t).to.equal(beacon.s);
+                cexpect(beacon.r).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.d).not.to.be.NaN;
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchRequestObjectAndInitObject'));
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.m).to.equal('POST');
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.a).to.equal('1');
+                cexpect(beacon.st).to.equal('200');
+                cexpect(beacon.bc).to.equal('1');
+                cexpect(beacon.e).to.be.undefined;
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('POST');
+                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
+                cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+            });
+        })
+      );
+    });
+  });
+
+
+  describe('05_fetchBeforePageLoad', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetchBeforePageLoad'));
+    });
+
+    it('must send beacons for fetch requests happening before page load', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.s).to.equal(undefined);
+              });
+
+              const ajaxBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
+                cexpect(beacon.t).not.to.equal(beacon.s);
+                cexpect(beacon.t).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.e).to.be.undefined;
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('GET');
+                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(pageLoadBeacon.t);
+                cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+            });
+        })
+      );
+    });
+  });
+
+
+  describe('05_ignoredFetch', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_ignoredFetch'));
+    });
+
+    it('must ignore certain fetch calls', () => {
+      return whenFetchIsSupported(() =>
         retry(() => {
           return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
             .then(([beacons, ajaxRequests, result]) => {
@@ -188,6 +221,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.e).to.be.undefined;
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -206,15 +240,13 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_xhrError', () => {
+  describe('05_fetchError', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrError'));
+      browser.get(getE2ETestBaseUrl('05_fetchError'));
     });
 
-    it('must send erroneous beacons for failed XHR requests', () => {
-      // This test fails reproducible on IE 9, so we exclude it there. The better alternative would be to analyze this
-      // thoroughly, but with IE 9 usage at 0.13% the cost/value ratio simply does not justify the effort.
-      return whenXhrInstrumentationWithErrorHandlingIsSupported(() =>
+    it('must send erroneous beacons for failed fetch requests', () => {
+      return whenFetchIsSupported(() =>
         retry(() => {
           return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
             .then(([beacons, ajaxRequests, result]) => {
@@ -231,17 +263,30 @@ describe('01_xhr', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhrError'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchError'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');
                 cexpect(beacon.u).to.match(/^invalidprotocol:\/\/lets-cause-a-network-error-shall-we\/\?cacheBust=\d+$/);
                 cexpect(beacon.a).to.equal('1');
-                cexpect(beacon.st).to.be.oneOf(['-103', '-102']);
+                cexpect(beacon.st).to.equal('0');
                 cexpect(beacon.bc).to.equal('0');
+                cexpect(beacon.e).to.be.oneOf([
+                  // Chrome says:
+                  'Failed to fetch',
+                  // IE says:
+                  'NetworkError when attempting to fetch resource.',
+                  // Safari 11.1 complains about CORS (because it is an absolute URL) before even attempting to do
+                  // the network request:
+                  'Cross origin requests are only supported for HTTP.',
+                  // Safari 10.1 and 11.0 say:
+                  'Type error',
+                  // MS Edge 14.x says:
+                  'TypeMismatchError'
+                ]);
               });
 
-              cexpect(result).to.equal('expected error');
+              cexpect(result).to.equal('catched an error');
             });
         })
       );
@@ -249,17 +294,17 @@ describe('01_xhr', () => {
   });
 
 
-  function whenXhrInstrumentationIsSupported(fn) {
+  function whenFetchIsSupported(fn) {
     return whenConfigMatches(
-      config => config.capabilities.browserName !== 'internet explorer' || Number(config.capabilities.version) > 8,
-      fn
-    );
-  }
-
-
-  function whenXhrInstrumentationWithErrorHandlingIsSupported(fn) {
-    return whenConfigMatches(
-      config => config.capabilities.browserName !== 'internet explorer' || Number(config.capabilities.version) > 9,
+      config => {
+        if (config.capabilities.browserName === 'internet explorer') {
+          return false;
+        }
+        if (config.capabilities.browserName === 'safari' && Number(config.capabilities.version) < 10) {
+          return false;
+        }
+        return true;
+      },
       fn
     );
   }

@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
-  fetch after page load
+  fetch with request object
 
   <div id="result"></div>
 
@@ -20,8 +20,8 @@
         if (self.fetch && self.Request) {
           var request = new Request('/ajax' + '?cacheBust=' + (new Date()).getTime(), {
           	headers: new Headers({
-              // add a test header to the request object to check if headers from the request object and from the init
-              // object (added by fetch instrumentation) are both correctly handled.
+              // add a test header to the request object to check if headers from the request object and those added by
+              // the fetch instrumentation are both correctly handled.
               'From': 'stan@instana.com'
             })
           });

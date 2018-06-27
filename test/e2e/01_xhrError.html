@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>fetch test</title>
+  <title>xhr test</title>
 
   <script src="/e2e/initializer.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -10,28 +10,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
-  fetch error
+  ajax error
 
   <div id="result"></div>
 
   <script>
     $(window).on('load', function() {
       setTimeout(function() {
-        if (self.fetch) {
-          $('#result').text('START');
-          fetch('invalidprotocol://lets-cause-a-network-error-shall-we/?cacheBust=' + (new Date()).getTime())
-          .then(function(response) {
-            return response.text();
-          })
-          .then(function(responseBody) {
-            $('#result').text(responseBody);
-          })
-          .catch(function(e) {
-            $('#result').text('catched an error');
-          });
-        } else {
-            $('#result').text('The Fetch API is not supported by this browser.');
-        }
+        $.ajax({
+          url: 'invalidprotocol://lets-cause-a-network-error-shall-we/?cacheBust=' + (new Date()).getTime(),
+          success: function() {
+            $('#result').text('unexpected success');
+          },
+          error: function(e) {
+            $('#result').text('expected error');
+          }
+        });
       }, 100);
     });
   </script>

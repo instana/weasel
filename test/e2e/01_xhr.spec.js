@@ -206,6 +206,47 @@ describe('01_xhr', () => {
   });
 
 
+  describe('01_xhrError', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('01_xhrError'));
+    });
+
+    it('must send erroneous beacons for failed XHR requests', () => {
+      return whenXhrInstrumentationIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(0);
+
+              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.s).to.equal(undefined);
+              });
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon.t).to.match(/^[0-9A-F]{1,16}$/i);
+                cexpect(beacon.t).to.equal(beacon.s);
+                cexpect(beacon.r).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.d).not.to.be.NaN;
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhrError'));
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.m).to.equal('GET');
+                cexpect(beacon.u).to.match(/^invalidprotocol:\/\/lets-cause-a-network-error-shall-we\/\?cacheBust=\d+$/);
+                cexpect(beacon.a).to.equal('1');
+                cexpect(beacon.st).to.be.oneOf(['-103', '-102']);
+                cexpect(beacon.bc).to.equal('0');
+              });
+
+              cexpect(result).to.equal('expected error');
+            });
+        })
+      );
+    });
+  });
+
+
   function whenXhrInstrumentationIsSupported(fn) {
     return whenConfigMatches(
       config => config.capabilities.browserName !== 'internet explorer' || Number(config.capabilities.version) > 8,

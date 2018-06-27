@@ -164,7 +164,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');
-                cexpect(beacon.u).to.match(/^invalidprotocol:\/\/lets-cause-a-network-error-shall-we\?cacheBust=\d+$/);
+                cexpect(beacon.u).to.match(/^invalidprotocol:\/\/lets-cause-a-network-error-shall-we\/\?cacheBust=\d+$/);
                 cexpect(beacon.a).to.equal('1');
                 cexpect(beacon.st).to.equal('0');
                 cexpect(beacon.bc).to.equal('0');

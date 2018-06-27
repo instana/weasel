@@ -17,12 +17,16 @@
   <script>
     $(window).on('load', function() {
       setTimeout(function() {
-        if (self.fetch) {
-          fetch('/ajax' + '?cacheBust=' + (new Date()).getTime(), {
-            headers: {
+        if (self.fetch && self.Request) {
+          var request = new Request('/ajax' + '?cacheBust=' + (new Date()).getTime(), {
+          	headers: new Headers({
+              // add a test header to the request object to check if headers from the request object and from the init
+              // object (added by fetch instrumentation) are both correctly handled.
               'From': 'stan@instana.com'
-            }
-          })
+            })
+          });
+
+          fetch(request)
           .then(function(response) {
             return response.text();
           })
@@ -33,7 +37,7 @@
             $('#result').text('error: ' + JSON.stringify(e));
           });
         } else {
-            $('#result').text('The Fetch API is not supported by this browser.');
+            $('#result').text('The Fetch/Request object API is not supported by this browser.');
         }
       }, 100);
     });

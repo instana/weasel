@@ -48,6 +48,58 @@ describe('05_fetch', () => {
                 cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
                 cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+            });
+        })
+      );
+    });
+  });
+
+
+  describe('05_fetchRequestObject', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetchRequestObject'));
+    });
+
+    it('must send beacons for fetch requests with a Request object', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.s).to.equal(undefined);
+              });
+
+              const ajaxBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.t).to.match(/^[0-9A-F]{1,16}$/i);
+                cexpect(beacon.t).to.equal(beacon.s);
+                cexpect(beacon.r).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.d).not.to.be.NaN;
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchRequestObject'));
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.m).to.equal('GET');
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.a).to.equal('1');
+                cexpect(beacon.st).to.equal('200');
+                cexpect(beacon.bc).to.equal('1');
+                cexpect(beacon.e).to.be.undefined;
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('GET');
+                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
+                cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
               });
 
               cexpect(result).to.equal(ajaxRequest.response);

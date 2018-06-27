@@ -3,9 +3,19 @@ exports.registerBaseHooks = () => {
     // we are not using Angular.js
     browser.ignoreSynchronization = true;
   });
+
+  afterEach(async () => {
+    // Wait until the page is disposed to ensure that we don't have any
+    // more beacons that are in flight before the next test starts.
+    await browser.get('about:blank');
+  });
 };
 
 exports.getCapabilities = () => browser.getProcessedConfig().then(config => config.capabilities);
+
+exports.exportCapabilities = exporter => {
+  beforeEach(() => browser.getProcessedConfig().then(config => exporter(config.capabilities)));
+};
 
 exports.whenConfigMatches = (predicate, fn) => {
   return browser.getProcessedConfig()

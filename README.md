@@ -21,8 +21,8 @@ By design, this means that Weasel won't include all the metrics that tools such 
 Features are categorized into beacon types that weasel is able to emit. Currently, it supports multiple beacon type:
 
  - **Page load beacon:** The page load beacon will be transmitted once the page load (`window.onload`) event has fired. It includes various information, e.g. the API token, navigation and resource timings, first paint time and configurable meta data.
- - **XHR beacon:** Transmitted for occuring XMLHttpRequests
- - **Error beacon:** Transmitted when unhandled errors occur.
+ - **XHR beacon:** Transmitted for occurring `XMLHttpRequest`s and `fetch`s
+ - **Error beacon:** Transmitted when unhandled errors occur
  - **SPA beacon:** Transmitted when navigating within single-page applications (SPAs).
 
 ## Weasel's approach to tracing

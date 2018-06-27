@@ -221,8 +221,17 @@ describe('05_fetch', () => {
                 cexpect(beacon.st).to.equal('0');
                 cexpect(beacon.bc).to.equal('0');
                 cexpect(beacon.e).to.be.oneOf([
+                  // Chrome says:
                   'Failed to fetch',
-                  'NetworkError when attempting to fetch resource.'
+                  // IE says:
+                  'NetworkError when attempting to fetch resource.',
+                  // Safari 11.1 complains about CORS (because it is an absolute URL) before even attempting to do
+                  // the network request:
+                  'Cross origin requests are only supported for HTTP.',
+                  // Safari 10.1 and 11.0 say:
+                  'Type error',
+                  // MS Edge 14.x says:
+                  'TypeMismatchError'
                 ]);
               });
 
@@ -236,7 +245,15 @@ describe('05_fetch', () => {
 
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(
-      config => config.capabilities.browserName !== 'internet explorer',
+      config => {
+        if (config.capabilities.browserName === 'internet explorer') {
+          return false;
+        }
+        if (config.capabilities.browserName === 'safari' && Number(config.capabilities.version) < 10) {
+          return false;
+        }
+        return true;
+      },
       fn
     );
   }

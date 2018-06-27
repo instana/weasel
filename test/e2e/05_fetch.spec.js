@@ -39,6 +39,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.a).to.equal('1');
                 cexpect(beacon.st).to.equal('200');
                 cexpect(beacon.bc).to.equal('1');
+                cexpect(beacon.e).to.be.undefined;
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -79,6 +80,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.t).not.to.equal(beacon.s);
                 cexpect(beacon.t).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.e).to.be.undefined;
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -116,6 +118,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.e).to.be.undefined;
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -127,6 +130,51 @@ describe('05_fetch', () => {
 
               cexpect(ajaxRequests.length).to.equal(2);
               cexpect(beacons.length).to.equal(2);
+            });
+        })
+      );
+    });
+  });
+
+
+  describe('05_fetchError', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetchError'));
+    });
+
+    it('must send erroneous beacons for failed fetch requests', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(0);
+
+              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.s).to.equal(undefined);
+              });
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon.t).to.match(/^[0-9A-F]{1,16}$/i);
+                cexpect(beacon.t).to.equal(beacon.s);
+                cexpect(beacon.r).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.d).not.to.be.NaN;
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchError'));
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.m).to.equal('GET');
+                cexpect(beacon.u).to.match(/^invalidprotocol:\/\/lets-cause-a-network-error-shall-we\?cacheBust=\d+$/);
+                cexpect(beacon.a).to.equal('1');
+                cexpect(beacon.st).to.equal('0');
+                cexpect(beacon.bc).to.equal('0');
+                cexpect(beacon.e).to.be.oneOf([
+                  'Failed to fetch',
+                  'NetworkError when attempting to fetch resource.'
+                ]);
+              });
+
+              cexpect(result).to.equal('catched an error');
             });
         })
       );

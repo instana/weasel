@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
-  fetch after page load
+  fetch error
 
   <div id="result"></div>
 
@@ -18,7 +18,8 @@
     $(window).on('load', function() {
       setTimeout(function() {
         if (self.fetch) {
-          fetch('/ajax' + '?cacheBust=' + (new Date()).getTime())
+          $('#result').text('START');
+          fetch('invalidprotocol://lets-cause-a-network-error-shall-we?cacheBust=' + (new Date()).getTime())
           .then(function(response) {
             return response.text();
           })
@@ -26,7 +27,7 @@
             $('#result').text(responseBody);
           })
           .catch(function(e) {
-            $('#result').text('error: ' + JSON.stringify(e));
+            $('#result').text('catched an error');
           });
         } else {
             $('#result').text('The Fetch API is not supported by this browser.');

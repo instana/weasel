@@ -10,7 +10,8 @@ module.exports = {
   globals: {
     DEBUG: false,
     EumState: false,
-    EumEvent: false
+    EumEvent: false,
+    ErrorLike: false
   },
   rules: {
     indent: [

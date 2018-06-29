@@ -3,6 +3,7 @@
 const request = require('request-promise');
 const spawn = require('child_process').spawn;
 const path = require('path');
+const qs = require('qs');
 
 const util = require('../util');
 
@@ -39,7 +40,10 @@ function waitUntilServerIsUp() {
 }
 
 exports.getServerBaseUrl = () => `http://127.0.0.1:${ports[0]}`;
-exports.getE2ETestBaseUrl = file => `http://127.0.0.1:${ports[0]}/e2e/${file}.html?ports=${ports.join(',')}`;
+exports.getE2ETestBaseUrl = (file, query={}) => {
+  query.ports = ports.join(',');
+  return `http://127.0.0.1:${ports[0]}/e2e/${file}.html?${qs.stringify(query)}`;
+};
 
 exports.getBeacons = () => {
   return request({

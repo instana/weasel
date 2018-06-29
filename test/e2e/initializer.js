@@ -30,9 +30,9 @@
     var ports = [ownPort];
     var otherPort = 'noCrossOriginPortDefinedViaPortsQueryString';
 
-    var portsMatch = window.location.href.match(/(\?|\&)ports=([0-9,]+)/i);
+    var portsMatch = window.location.href.match(/(\?|\&)ports=([^$&#]+)/i);
     if (portsMatch) {
-      var portsRaw = portsMatch[2].split(',');
+      var portsRaw = decodeURIComponent(portsMatch[2]).split(',');
       for (var i = 0; i < portsRaw.length; i++) {
         ports[i] = parseInt(portsRaw[i], 10);
         if (ports[i] !== ownPort) {
@@ -42,8 +42,14 @@
     }
 
     return {
-      sameOrigin: 'http://127.0.0.1:' + ownPort,
-      crossOrigin: 'http://127.0.0.1:' + otherPort
+      sameOrigin: 'http://' + window.location.hostname + ':' + ownPort,
+      crossOrigin: 'http://' + window.location.hostname + ':' + otherPort
     };
+  }
+
+  window.addCrossOriginScript = function addCrossOriginScript(absolutePath) {
+    var script = document.createElement('script');
+    script.src = window.config.crossOrigin + absolutePath;
+    document.body.appendChild(script);
   }
 })();

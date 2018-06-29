@@ -81,4 +81,8 @@ app.get('/ajaxRequests', (req, res) => {
 process.env.BEACON_SERVER_PORTS
   .split(',')
   .map(v => parseInt(v, 10))
-  .forEach(port => app.listen(port, () => console.log('Test server available via http://127.0.0.1:%s (check /e2e, /experiments or /target)', port)));
+  .forEach(port => app.listen(port, () => {
+    if (process.env.IS_TEST !== 'true') {
+      console.log('Test server available via http://127.0.0.1:%s (check /e2e, /experiments or /target)', port);
+    }
+  }));

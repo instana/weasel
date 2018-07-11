@@ -1,6 +1,6 @@
-const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../server/controls');
-const {registerBaseHooks, whenConfigMatches} = require('./base');
-const {retry, expectOneMatching} = require('../util');
+const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../../server/controls');
+const {registerBaseHooks, whenConfigMatches} = require('../base');
+const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
 
@@ -10,7 +10,7 @@ describe('05_fetch', () => {
 
   describe('05_fetchAfterPageLoad', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('05_fetchAfterPageLoad'));
+      browser.get(getE2ETestBaseUrl('05_fetch/afterPageLoad'));
     });
 
     it('must send beacons for fetch requests happening after page load', () => {
@@ -31,7 +31,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchAfterPageLoad'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetch/afterPageLoad'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');
@@ -61,7 +61,7 @@ describe('05_fetch', () => {
 
   describe('05_fetchRequestObject', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('05_fetchRequestObject'));
+      browser.get(getE2ETestBaseUrl('05_fetch/requestObject'));
     });
 
     it('must send beacons for fetch requests with a Request object', () => {
@@ -82,7 +82,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchRequestObject'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetch/requestObject'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('POST');
@@ -112,7 +112,7 @@ describe('05_fetch', () => {
 
   describe('05_fetchRequestObjectAndInitObject', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('05_fetchRequestObjectAndInitObject'));
+      browser.get(getE2ETestBaseUrl('05_fetch/requestObjectAndInitObject'));
     });
 
     it('must handle request and init object correctly', () => {
@@ -133,7 +133,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchRequestObjectAndInitObject'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetch/requestObjectAndInitObject'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('POST');
@@ -163,7 +163,7 @@ describe('05_fetch', () => {
 
   describe('05_fetchBeforePageLoad', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('05_fetchBeforePageLoad'));
+      browser.get(getE2ETestBaseUrl('05_fetch/beforePageLoad'));
     });
 
     it('must send beacons for fetch requests happening before page load', () => {
@@ -204,7 +204,7 @@ describe('05_fetch', () => {
 
   describe('05_ignoredFetch', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('05_ignoredFetch'));
+      browser.get(getE2ETestBaseUrl('05_fetch/ignoredFetch'));
     });
 
     it('must ignore certain fetch calls', () => {
@@ -242,7 +242,7 @@ describe('05_fetch', () => {
 
   describe('05_fetchError', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('05_fetchError'));
+      browser.get(getE2ETestBaseUrl('05_fetch/error'));
     });
 
     it('must send erroneous beacons for failed fetch requests', () => {
@@ -263,7 +263,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetchError'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetch/error'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');
@@ -294,6 +294,80 @@ describe('05_fetch', () => {
   });
 
 
+  describe('05_withPolyfill', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/withPolyfill'));
+    });
+
+    it('must send only send beacons once, not for fetch and XHR', () => {
+      // Note: No whenFetchIsSupported here, this must work in all browsers
+      // that support XHR instrumentation.
+      return whenXhrInstrumentationIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.s).to.equal(undefined);
+              });
+
+              const ajaxBeacon = expectOneMatching(beacons, beacon => {
+                cexpect(beacon.t).to.match(/^[0-9A-F]{1,16}$/i);
+                cexpect(beacon.t).to.equal(beacon.s);
+                cexpect(beacon.r).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.d).not.to.be.NaN;
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetch/withPolyfill'));
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.m).to.equal('GET');
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon.a).to.equal('1');
+                cexpect(beacon.st).to.equal('200');
+                cexpect(beacon.bc).to.equal('1');
+                cexpect(beacon.e).to.be.undefined;
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('GET');
+                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
+                cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+            });
+        })
+      );
+    });
+  });
+
+
+  // This does not test the actual weasel code, it just valiates an assumption
+  // we make when trying to figure out if window.fetch is a native fetch
+  // implementation or a polyfill.
+  describe('05_fetchToString', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/fetchToString'));
+    });
+
+    it('must detect native fetch, if supported', () => {
+      return retry(() => {
+        return getResultElementContent()
+          .then(fetchString => {
+            if (fetchString !== 'unsupported') {
+              cexpect(fetchString).to.include('[native code]');
+            }
+          });
+      });
+    });
+  });
+
+
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(
       config => {
@@ -305,6 +379,14 @@ describe('05_fetch', () => {
         }
         return true;
       },
+      fn
+    );
+  }
+
+
+  function whenXhrInstrumentationIsSupported(fn) {
+    return whenConfigMatches(
+      config => config.capabilities.browserName !== 'internet explorer' || Number(config.capabilities.version) > 9,
       fn
     );
   }

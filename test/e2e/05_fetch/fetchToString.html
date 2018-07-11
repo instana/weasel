@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Native Fetch - fetch.toString()</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  This page does not include weasel. It is used to check what
+  <code>window.fetch.toString()</code> evaluates to when fetch has
+  not been polyfilled.
+
+  <div id="result"></div>
+  <script>
+    $(window).on('load', function() {
+      setTimeout(function() {
+        if (self.fetch) {
+          var fetchString = self.fetch.toString();
+          $('#result').text(fetchString);
+        } else {
+          $('#result').text('unsupported');
+        }
+      }, 100);
+    });
+  </script>
+
+</body>
+</html>

@@ -347,27 +347,6 @@ describe('05_fetch', () => {
   });
 
 
-  // This does not test the actual weasel code, it just valiates an assumption
-  // we make when trying to figure out if window.fetch is a native fetch
-  // implementation or a polyfill.
-  describe('05_fetchToString', () => {
-    beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('05_fetch/fetchToString'));
-    });
-
-    it('must detect native fetch, if supported', () => {
-      return retry(() => {
-        return getResultElementContent()
-          .then(fetchString => {
-            if (fetchString !== 'unsupported') {
-              cexpect(fetchString).to.include('[native code]');
-            }
-          });
-      });
-    });
-  });
-
-
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(
       config => {

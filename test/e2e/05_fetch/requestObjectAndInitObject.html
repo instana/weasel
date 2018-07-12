@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>fetch test</title>
-
   <script src="/e2e/initializer.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
@@ -18,16 +15,14 @@
     $(window).on('load', function() {
       setTimeout(function() {
         if (self.fetch && self.Request) {
-          var request = new Request('/ajax' + '?cacheBust=' + (new Date()).getTime(), {
+          var request = new Request('/ajax' + '?cacheBust=' + (new Date()).getTime());
+
+          fetch(request, {
             method: 'POST',
-            headers: new Headers({
-              // add a test header to the request object to check if headers from the request object and those added by
-              // the fetch instrumentation are both correctly handled.
+          	headers: new Headers({
               'From': 'stan@instana.com'
             })
-          });
-
-          fetch(request)
+          })
           .then(function(response) {
             return response.text();
           })

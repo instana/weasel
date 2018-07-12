@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>fetch polyfill test</title>
+  <script>
+    // force polyfill usage
+    delete window.fetch;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.4/fetch.min.js"></script>
+  <script src="/e2e/initializer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  fetch with a polyfill
+
+  <div id="result"></div>
+
+  <script>
+    $(window).on('load', function() {
+      setTimeout(function() {
+        // Note: no if (self.fetch) here, as this should work in all browsers
+        // due to the polyfill.
+        fetch('/ajax' + '?cacheBust=' + (new Date()).getTime(), {
+          headers: {
+            'From': 'stan@instana.com'
+          }
+        })
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(responseBody) {
+          $('#result').text(responseBody);
+        })
+        .catch(function(e) {
+          $('#result').text('error: ' + JSON.stringify(e));
+        });
+      }, 100);
+    });
+  </script>
+</body>
+</html>

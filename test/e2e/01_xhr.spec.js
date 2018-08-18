@@ -56,6 +56,22 @@ describe('01_xhr', () => {
         })
       );
     });
+
+    it('must report visibility state at time of request execution', () => {
+      // This test fails reproducible on IE 9, so we exclude it there. The better alternative would be to analyze this
+      // thoroughly, but with IE 9 usage at 0.13% the cost/value ratio simply does not justify the effort.
+      return whenDocumentVisibilityApiIsSupported(() =>
+        retry(() => {
+          return getBeacons()
+            .then(beacons => {
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.h).to.equal('0');
+              });
+            });
+        })
+      );
+    });
   });
 
 
@@ -260,6 +276,14 @@ describe('01_xhr', () => {
   function whenXhrInstrumentationWithErrorHandlingIsSupported(fn) {
     return whenConfigMatches(
       config => config.capabilities.browserName !== 'internet explorer' || Number(config.capabilities.version) > 9,
+      fn
+    );
+  }
+
+
+  function whenDocumentVisibilityApiIsSupported(fn) {
+    return whenConfigMatches(
+      config => config.capabilities.browserName === 'chrome',
       fn
     );
   }

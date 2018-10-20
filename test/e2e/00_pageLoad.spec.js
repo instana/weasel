@@ -57,8 +57,10 @@ describe('00_pageLoad', () => {
       return util.retry(() => {
         return getBeacons()
           .then(([beacon]) => {
-
-            cexpect(beacon['m_user']).to.equal('tom.mason@example.com');
+            cexpect(beacon['m_foo']).to.equal('bar');
+            cexpect(beacon['ui']).to.equal('321');
+            cexpect(beacon['un']).to.equal('Tom Anderson');
+            cexpect(beacon['ue']).to.equal('tom.anderson@example.com');
           });
       });
     });

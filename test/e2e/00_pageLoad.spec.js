@@ -28,22 +28,26 @@ describe('00_pageLoad', () => {
       });
     });
 
-    it('must include basic page load information', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(([beacon]) => {
-            cexpect(beacon.t).to.match(/[0-9a-f]{1,16}/i);
+    it('must include basic page load information', async () => {
+      const capabilities = await getCapabilities();
+      return util.retry(async () => {
+        const [beacon] = await getBeacons();
+        cexpect(beacon.t).to.match(/[0-9a-f]{1,16}/i);
 
-            // We cannot compare with start time due to saucelabs platforms not having
-            // NTP properly configured…
-            cexpect(beacon.r.length).to.be.at.least(String(start).length);
-            cexpect(beacon.ts.length).to.be.below(6);
-            cexpect(beacon.d.length).to.be.below(6);
-            cexpect(beacon.ty).to.equal('pl');
-            cexpect(beacon.k).to.equal(undefined);
-            cexpect(beacon.p).to.equal(undefined);
-            cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
-          });
+        // We cannot compare with start time due to saucelabs platforms not having
+        // NTP properly configured…
+        cexpect(beacon.r.length).to.be.at.least(String(start).length);
+        cexpect(beacon.ts.length).to.be.below(6);
+        cexpect(beacon.d.length).to.be.below(6);
+        cexpect(beacon.ty).to.equal('pl');
+        cexpect(beacon.k).to.equal(undefined);
+        cexpect(beacon.p).to.equal(undefined);
+        cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
+
+        if (capabilities.browserName === 'chrome') {
+          cexpect(beacon.ul).to.be.a('string');
+          cexpect(beacon.ul.split(',').length).to.be.at.least(1);
+        }
       });
     });
   });

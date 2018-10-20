@@ -86,3 +86,12 @@ process.env.BEACON_SERVER_PORTS
       console.log('Test server available via http://127.0.0.1:%s (check /e2e, /experiments or /target)', port);
     }
   }));
+
+if (process.env.IS_TEST !== 'true') {
+  console.log('\nOpen http://127.0.0.1:%s/e2e?ports=%s to check cross-origin cases',
+    process.env.BEACON_SERVER_PORTS.split(',')[0],
+    process.env.BEACON_SERVER_PORTS);
+
+  console.log('Please ensure that you retain the ?ports query parameters when opening\n' +
+    'cross-origin test cases manually. As this is a required parameter for them.\n\n');
+}

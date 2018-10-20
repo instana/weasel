@@ -29,13 +29,6 @@ describe('02_error', () => {
                 cexpect(beacon.c).to.equal('1');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
               });
-
-              // must send at most one epv beacon per page load
-              cexpect(beacons.filter(beacon => beacon.ty === 'epv').length).to.equal(1);
-              expectOneMatching(beacons, beacon => {
-                cexpect(beacon.ty).to.equal('epv');
-                cexpect(beacon.ts).to.equal(String(parseInt(pageLoadBeacon.ts, 10) + parseInt(pageLoadBeacon.r, 10)));
-              });
             });
           });
         });
@@ -57,9 +50,6 @@ describe('02_error', () => {
                 cexpect(beacon.e).to.match(/Another error type/);
                 cexpect(beacon.c).to.equal('1');
               });
-
-              // must send at most one epv beacon per page load
-              cexpect(beacons.filter(beacon => beacon.ty === 'epv').length).to.equal(1);
             });
           });
         });
@@ -84,13 +74,6 @@ describe('02_error', () => {
             cexpect(beacon.st).to.be.a('string');
             cexpect(beacon.c).to.equal('1');
             cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-          });
-
-          // must send at most one epv beacon per page load
-          cexpect(beacons.filter(beacon => beacon.ty === 'epv').length).to.equal(1);
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('epv');
-            cexpect(beacon.ts).to.equal(String(parseInt(pageLoadBeacon.ts, 10) + parseInt(pageLoadBeacon.r, 10)));
           });
         });
       });

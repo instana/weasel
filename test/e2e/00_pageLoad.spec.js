@@ -43,6 +43,7 @@ describe('00_pageLoad', () => {
         cexpect(beacon.k).to.equal(undefined);
         cexpect(beacon.p).to.equal(undefined);
         cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
+        cexpect(beacon.ph).to.equal('pl');
 
         if (capabilities.browserName === 'chrome') {
           cexpect(beacon.ul).to.be.a('string');

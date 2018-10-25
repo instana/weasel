@@ -41,6 +41,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.a).to.equal('1');
                 cexpect(beacon.st).to.equal('200');
                 cexpect(beacon.bc).to.equal('1');
+                cexpect(beacon.ph).to.equal(undefined);
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -97,6 +98,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.t).not.to.equal(beacon.s);
                 cexpect(beacon.t).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.ph).to.equal('pl');
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {

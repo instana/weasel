@@ -231,7 +231,7 @@ describe('05_fetch', () => {
 
               cexpect(result).to.equal(ajaxRequest.response);
 
-              cexpect(ajaxRequests.length).to.equal(2);
+              cexpect(ajaxRequests.length).to.equal(3);
               cexpect(beacons.length).to.equal(2);
             });
         })

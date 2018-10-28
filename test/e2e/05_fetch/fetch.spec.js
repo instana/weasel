@@ -269,7 +269,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.m).to.equal('GET');
                 cexpect(beacon.u).to.match(/^invalidprotocol:\/\/lets-cause-a-network-error-shall-we\/\?cacheBust=\d+$/);
                 cexpect(beacon.a).to.equal('1');
-                cexpect(beacon.st).to.equal('0');
+                cexpect(beacon.st).to.equal('-103');
                 cexpect(beacon.bc).to.equal('0');
                 cexpect(beacon.e).to.be.oneOf([
                   // Chrome says:

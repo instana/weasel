@@ -30,6 +30,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.t).to.equal(beacon.s);
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.equal('0');
                 cexpect(beacon.d).not.to.be.NaN;
                 cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetch/afterPageLoad'));
                 cexpect(beacon.ty).to.equal('xhr');

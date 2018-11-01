@@ -235,7 +235,7 @@ describe('00_pageLoad', () => {
           return getBeacons()
             .then(([beacon]) => {
               const timings = JSON.parse(beacon.res);
-              replaceTimingValuesWithNumberOfValues(timings);
+              replaceTimingValuesWithNumberOfValues(timings, 5);
               cexpect(timings).to.deep.equal({
                 http: {
                   's://': {
@@ -256,13 +256,13 @@ describe('00_pageLoad', () => {
       });
     });
 
-    function replaceTimingValuesWithNumberOfValues(node) {
+    function replaceTimingValuesWithNumberOfValues(node, max) {
       if (node instanceof Array) {
-        node.forEach((entry, i) => node[i] = entry.split(',').length);
+        node.forEach((entry, i) => node[i] = Math.min(max, entry.split(',').length));
         return;
       }
 
-      Object.keys(node).forEach(key => replaceTimingValuesWithNumberOfValues(node[key]));
+      Object.keys(node).forEach(key => replaceTimingValuesWithNumberOfValues(node[key], max));
     }
 
     function hasEnhancedResourceTimingLevel3Support(capabilities) {

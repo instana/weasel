@@ -24,6 +24,11 @@
     </button>
 
     <button type="button"
+            id="ignored">
+      An ignored error
+    </button>
+
+    <button type="button"
             id="many">
       Throw a bunch of errors
     </button>
@@ -36,6 +41,10 @@
 
     $('#second').on('click', function myClickHandler() {
       throw new Error('Another error type.');
+    });
+
+    $('#ignored').on('click', function myClickHandler() {
+      throw new Error('Foo pleaseIgnoreThisError bar.');
     });
 
     $('#many').on('click', function manyButtonClickHandler() {

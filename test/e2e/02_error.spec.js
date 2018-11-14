@@ -54,6 +54,21 @@ describe('02_error', () => {
           });
         });
     });
+
+    it('must ignore specific error messages', async () => {
+      await element(by.id('ignored')).click();
+      await element(by.id('second')).click();
+
+      await retry(async () => {
+        const beacons = await getBeacons();
+        cexpect(beacons.length).to.equal(2);
+        expectOneMatching(beacons, beacon => {
+          cexpect(beacon.ty).to.equal('err');
+          cexpect(beacon.e).to.match(/Another error type/);
+          cexpect(beacon.c).to.equal('1');
+        });
+      });
+    });
   });
 
   describe('02_manualErrorReporting', () => {

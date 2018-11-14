@@ -16,6 +16,7 @@
 
   eum('reportingUrl', '/beacon');
   eum('ignoreUrls', [/.*pleaseIgnoreThis.*/]);
+  eum('ignoreErrorMessages', [/.*pleaseIgnoreThisError.*/]);
 
   if (window.location.href.indexOf('debug=true') !== -1) {
     eum('autoClearResourceTimings', false);

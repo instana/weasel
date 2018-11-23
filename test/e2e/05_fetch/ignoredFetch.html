@@ -15,7 +15,14 @@
     $(window).on('load', function() {
       setTimeout(function() {
         if (self.fetch) {
-          fetch('/ajax' + '?pleaseIgnoreThis?cacheBust=' + (new Date()).getTime())
+          fetch('/ajax?pleaseIgnoreThis?cacheBust=' + (new Date()).getTime())
+          .then(function() {
+            var req = new Request('/ajax?pleaseIgnoreThis&cacheBust=' + (new Date()).getTime(), {
+              method: 'POST',
+              body: new Blob([JSON.stringify({'foo': 'bar'}, null, 2)], {type : 'application/json'})
+            });
+            return fetch(req);
+          })
           .then(function(response1) {
             return fetch('/ajax' + '?cacheBust=' + (new Date()).getTime())
           })
@@ -26,6 +33,7 @@
             $('#result').text(responseBody);
           })
           .catch(function(e) {
+            console.error(e);
             $('#result').text('error: ' + JSON.stringify(e));
           });
         } else {

@@ -28,22 +28,33 @@ describe('00_pageLoad', () => {
       });
     });
 
-    it('must include basic page load information', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(([beacon]) => {
-            cexpect(beacon.t).to.match(/[0-9a-f]{1,16}/i);
+    it('must include basic page load information', async () => {
+      const capabilities = await getCapabilities();
+      return util.retry(async () => {
+        const [beacon] = await getBeacons();
+        cexpect(beacon.t).to.match(/[0-9a-f]{1,16}/i);
 
-            // We cannot compare with start time due to saucelabs platforms not having
-            // NTP properly configured…
-            cexpect(beacon.r.length).to.be.at.least(String(start).length);
-            cexpect(beacon.ts.length).to.be.below(6);
-            cexpect(beacon.d.length).to.be.below(6);
-            cexpect(beacon.ty).to.equal('pl');
-            cexpect(beacon.k).to.equal(undefined);
-            cexpect(beacon.p).to.equal(undefined);
-            cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
-          });
+        // We cannot compare with start time due to saucelabs platforms not having
+        // NTP properly configured…
+        cexpect(beacon.r.length).to.be.at.least(String(start).length);
+        cexpect(beacon.ts.length).to.be.below(6);
+        cexpect(beacon.d.length).to.be.below(6);
+        cexpect(beacon.ty).to.equal('pl');
+        cexpect(beacon.k).to.equal(undefined);
+        cexpect(beacon.p).to.equal(undefined);
+        cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
+        cexpect(beacon.ph).to.equal('pl');
+
+        // IE 8 doesn't support innerWidth and innerHeight
+        if (capabilities.browserName !== 'internet explorer') {
+          cexpect(beacon.ww).to.match(/^\d+$/);
+          cexpect(beacon.wh).to.match(/^\d+$/);
+        }
+
+        if (capabilities.browserName === 'chrome') {
+          cexpect(beacon.ul).to.be.a('string');
+          cexpect(beacon.ul.split(',').length).to.be.at.least(1);
+        }
       });
     });
   });
@@ -57,8 +68,10 @@ describe('00_pageLoad', () => {
       return util.retry(() => {
         return getBeacons()
           .then(([beacon]) => {
-
-            cexpect(beacon['m_user']).to.equal('tom.mason@example.com');
+            cexpect(beacon['m_foo']).to.equal('bar');
+            cexpect(beacon['ui']).to.equal('321');
+            cexpect(beacon['un']).to.equal('Tom Anderson');
+            cexpect(beacon['ue']).to.equal('tom.anderson@example.com');
           });
       });
     });
@@ -222,25 +235,23 @@ describe('00_pageLoad', () => {
           return true;
         }
 
-        const hasLevel3Support = hasEnhancedResourceTimingLevel3Support(capabilities);
-
         return util.retry(() => {
           return getBeacons()
             .then(([beacon]) => {
               const timings = JSON.parse(beacon.res);
-              replaceTimingValuesWithNumberOfValues(timings);
+              replaceTimingValuesWithNumberOfValues(timings, 3);
               cexpect(timings).to.deep.equal({
                 http: {
                   's://': {
                     'maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap': {
-                      '.min.css': [3],
-                      '-theme.min.css': [3]
+                      '.min.css': [true],
+                      '-theme.min.css': [true]
                     },
-                    'cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js': [3]
+                    'cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js': [true]
                   },
                   '://127.0.0.1:8000/': {
-                    'e2e/initializer.js': [hasLevel3Support ? 5 : 3],
-                    'target/eum.min.js': [hasLevel3Support ? 5 : 3]
+                    'e2e/initializer.js': [true],
+                    'target/eum.min.js': [true]
                   }
                 }
               }, `Got the following timing: ${JSON.stringify(JSON.parse(beacon.res), 0, 2)}.`);
@@ -251,20 +262,11 @@ describe('00_pageLoad', () => {
 
     function replaceTimingValuesWithNumberOfValues(node) {
       if (node instanceof Array) {
-        node.forEach((entry, i) => node[i] = entry.split(',').length);
+        node.forEach((entry, i) => node[i] = true);
         return;
       }
 
       Object.keys(node).forEach(key => replaceTimingValuesWithNumberOfValues(node[key]));
-    }
-
-    function hasEnhancedResourceTimingLevel3Support(capabilities) {
-      const version = Number(capabilities.version);
-      return hasResourceTimingSupport(capabilities) &&
-        capabilities.browserName !== 'internet explorer' &&
-        capabilities.browserName !== 'MicrosoftEdge' &&
-        (capabilities.browserName !== 'chrome' ||
-          (capabilities.browserName === 'chrome' && (capabilities.version == null || version >= 50)));
     }
   });
 });

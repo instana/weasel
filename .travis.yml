@@ -11,7 +11,7 @@ env:
   - secure: M/p4pkAIfFMIkMwUP2iZbh0v9xKss4UBnIEKh0wqYYk4ox0uBLr0WIcJi/+ufnhw4h4EXV4iosJoybhMdZSKoj5QfVSxNtGHoWoHArC9tuS4159EN1Ng/wrJWR/ZGfOdvBD4fLP7QkrQHz9h6s1+m+TfQs+vI97Ks/YjUiDv5H+w+rc48dgO2xBUihZ69fh0w3ivi/86zj8rMAwpfTl4IaGQTXYEiDHiq7lbRnXwSZLa2/rvCUGv4CdMt/exDcDoTVLMX6c5IM8OBv+OWaAyp8yoTjowOLRJfV2RcFISGmigCyaaRbLkXn6h4d+x1ToqaOS7ll2zcda347jfQ5ezePa+mScrc+on16Q9Nwl0qXq5dFv9t5tRDwt80cJzGpGpEL4aWIDldwYO/wX57FhzN7spM7VTnvc+SWkTLmdhagX+hdlX+t9ltnM/tF+rVCnLqzyDvv/I+TIfsoBjNSAIRS8UB/PYcNORb1h8nCqdV+DkjewdjztX+wofKIJ4fuKGBUiSg9KgjikIU5kyI8lj246D5zUKJkQ0EHy73ejubxQ/ZdrkVuSlVtZb94oBdhRwGzbs7lVS7DQ+AVDsCohFkLWffEOjPswmx8CR5KBCGBMdr3LaxsYBkOKbjK92PvGj4yyFBdn0WSx7y67jpesV9KzOtAkjm52Tl2S/hejoqWc=
 install:
 - nvm install $NODE_VERSION
-- npm install -g yarn
+- npm install -g yarn@1.10.1
 - yarn
 script:
 - yarn run build

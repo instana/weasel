@@ -30,6 +30,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.t).to.equal(beacon.s);
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
+                cexpect(beacon.ts).not.to.equal('0');
                 cexpect(beacon.d).not.to.be.NaN;
                 cexpect(beacon.l).to.equal(getE2ETestBaseUrl('05_fetch/afterPageLoad'));
                 cexpect(beacon.ty).to.equal('xhr');
@@ -231,7 +232,7 @@ describe('05_fetch', () => {
 
               cexpect(result).to.equal(ajaxRequest.response);
 
-              cexpect(ajaxRequests.length).to.equal(2);
+              cexpect(ajaxRequests.length).to.equal(3);
               cexpect(beacons.length).to.equal(2);
             });
         })
@@ -269,7 +270,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.m).to.equal('GET');
                 cexpect(beacon.u).to.match(/^invalidprotocol:\/\/lets-cause-a-network-error-shall-we\/\?cacheBust=\d+$/);
                 cexpect(beacon.a).to.equal('1');
-                cexpect(beacon.st).to.equal('0');
+                cexpect(beacon.st).to.equal('-103');
                 cexpect(beacon.bc).to.equal('0');
                 cexpect(beacon.e).to.be.oneOf([
                   // Chrome says:

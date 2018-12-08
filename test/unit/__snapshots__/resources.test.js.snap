@@ -1,0 +1,56 @@
+exports[`resources/timingSerializer serializeEntry must identify cache validation 1`] = `
+Object {
+  "appcache": "",
+  "cachingType": "validated",
+  "decodedBodySize": "16786",
+  "dns": "",
+  "duration": "232",
+  "encodedBodySize": "16786",
+  "initiator": "img",
+  "redirect": "",
+  "request": "187",
+  "response": "39",
+  "ssl": "",
+  "tcp": "",
+  "time": "1137",
+  "transferSize": "4320",
+}
+`;
+
+exports[`resources/timingSerializer serializeEntry must identify full asset retrieval 1`] = `
+Object {
+  "appcache": "",
+  "cachingType": "fullLoad",
+  "decodedBodySize": "16786",
+  "dns": "",
+  "duration": "232",
+  "encodedBodySize": "16786",
+  "initiator": "img",
+  "redirect": "",
+  "request": "187",
+  "response": "39",
+  "ssl": "",
+  "tcp": "",
+  "time": "1137",
+  "transferSize": "16835",
+}
+`;
+
+exports[`resources/timingSerializer serializeEntry must identify retrieval from cache 1`] = `
+Object {
+  "appcache": "",
+  "cachingType": "cached",
+  "decodedBodySize": "16786",
+  "dns": "",
+  "duration": "4",
+  "encodedBodySize": "16786",
+  "initiator": "img",
+  "redirect": "",
+  "request": "0",
+  "response": "1",
+  "ssl": "",
+  "tcp": "",
+  "time": "435",
+  "transferSize": "0",
+}
+`;

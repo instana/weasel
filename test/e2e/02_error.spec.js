@@ -89,6 +89,7 @@ describe('02_error', () => {
             cexpect(beacon.st).to.be.a('string');
             cexpect(beacon.c).to.equal('1');
             cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+            cexpect(beacon.cs).to.equal('a component stack');
           });
         });
       });

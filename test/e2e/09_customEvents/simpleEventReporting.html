@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>error test</title>
+
+  <script src="/e2e/initializer.js"></script>
+  <script>
+    eum('meta', 'name', 'Tom');
+    eum('meta', 'age', 23);
+    eum('meta', 'kind', 'newbie');
+
+    eum('reportEvent', 'myTestEvent', {
+      duration: 42,
+      backendTraceId: 'ab87128kja1kl',
+      error: new Error('Testing 123'),
+      componentStack: 'a component stack',
+      meta: {
+        // one-off overwrite
+        kind: 'experienced',
+        state: 'broken'
+      }
+    });
+  </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  simple event reporting
+</body>
+</html>

@@ -14,7 +14,6 @@ if (process.env.TRAVIS) {
       newSaucelabsCapability('firefox', '48.0', 'Windows 7'),
       newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
       newSaucelabsCapability('internet explorer', '9.0', 'Windows 7'),
-      newSaucelabsCapability('internet explorer', '8.0', 'Windows 7'),
       newSaucelabsCapability('safari', '11.1', 'macOS 10.13'),
       newSaucelabsCapability('safari', '11.0', 'macOS 10.12'),
       newSaucelabsCapability('safari', '10.1', 'macOS 10.12'),

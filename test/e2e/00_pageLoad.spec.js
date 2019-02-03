@@ -69,6 +69,14 @@ describe('00_pageLoad', () => {
         return getBeacons()
           .then(([beacon]) => {
             cexpect(beacon['m_foo']).to.equal('bar');
+            cexpect(beacon['m_a']).to.equal('true');
+            cexpect(beacon['m_b']).to.equal('false');
+            cexpect(beacon['m_c']).to.equal('42');
+            cexpect(beacon['m_d'].startsWith('42.')).to.equal(true);
+            cexpect(beacon['m_e']).to.equal('null');
+            cexpect(beacon['m_f']).to.equal('undefined');
+            cexpect(beacon['m_g']).to.equal('[1,2,3]');
+            cexpect(beacon['m_h']).to.equal('{"a":true,"b":"42"}');
             cexpect(beacon['ui']).to.equal('321');
             cexpect(beacon['un']).to.equal('Tom Anderson');
             cexpect(beacon['ue']).to.equal('tom.anderson@example.com');

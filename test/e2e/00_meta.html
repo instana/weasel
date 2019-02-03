@@ -10,6 +10,18 @@
   <script>
     window.onEumLoad = function(eum) {
       eum('meta', 'foo', 'bar');
+      eum('meta', 'a', true);
+      eum('meta', 'b', false);
+      eum('meta', 'c', 42);
+      eum('meta', 'd', 42.56);
+      eum('meta', 'e', null);
+      eum('meta', 'f', undefined);
+      eum('meta', 'g', [1, 2, 3]);
+      eum('meta', 'h', {
+        a: true,
+        b: '42'
+      });
+
       eum('user', '321', 'Tom Anderson', 'tom.anderson@example.com');
     };
   </script>

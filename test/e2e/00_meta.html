@@ -9,6 +9,9 @@
 
   <script>
     window.onEumLoad = function(eum) {
+      var circularMeta = {};
+      circularMeta.meta = circularMeta;
+
       eum('meta', 'foo', 'bar');
       eum('meta', 'a', true);
       eum('meta', 'b', false);
@@ -17,6 +20,7 @@
       eum('meta', 'e', null);
       eum('meta', 'f', undefined);
       eum('meta', 'g', [1, 2, 3]);
+      eum('meta', 'circularMeta', circularMeta);
       eum('meta', 'h', {
         a: true,
         b: '42'

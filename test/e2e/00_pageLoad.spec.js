@@ -67,7 +67,10 @@ describe('00_pageLoad', () => {
     it('must send simple meta data information', () => {
       return util.retry(() => {
         return getBeacons()
-          .then(([beacon]) => {
+          .then(beacons => {
+            cexpect(beacons.length).to.equal(1);
+
+            const [beacon] = beacons;
             cexpect(beacon['m_foo']).to.equal('bar');
             cexpect(beacon['m_a']).to.equal('true');
             cexpect(beacon['m_b']).to.equal('false');
@@ -77,6 +80,7 @@ describe('00_pageLoad', () => {
             cexpect(beacon['m_f']).to.equal('undefined');
             cexpect(beacon['m_g']).to.equal('[1,2,3]');
             cexpect(beacon['m_h']).to.equal('{"a":true,"b":"42"}');
+            cexpect(beacon['m_circularMeta']).to.equal(undefined);
             cexpect(beacon['ui']).to.equal('321');
             cexpect(beacon['un']).to.equal('Tom Anderson');
             cexpect(beacon['ue']).to.equal('tom.anderson@example.com');

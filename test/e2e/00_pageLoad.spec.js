@@ -89,6 +89,29 @@ describe('00_pageLoad', () => {
     });
   });
 
+  fdescribe('00_tooMuchMeta', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_tooMuchMeta'));
+    });
+
+    it('must restrict the number of meta data entries', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(beacons => {
+            cexpect(beacons.length).to.equal(1);
+
+            const [beacon] = beacons;
+
+            cexpect(Object
+              .keys(beacon)
+              .filter(k => k.startsWith('m_'))
+              .length).to.equal(50);
+            cexpect(beacon['m_longValue']).to.match(/^a{256,256}$/);
+          });
+      });
+    });
+  });
+
   describe('00_customPage', () => {
     beforeEach(() => {
       browser.get(getE2ETestBaseUrl('00_customPage'));

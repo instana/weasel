@@ -89,7 +89,7 @@ describe('00_pageLoad', () => {
     });
   });
 
-  fdescribe('00_tooMuchMeta', () => {
+  describe('00_tooMuchMeta', () => {
     beforeEach(() => {
       browser.get(getE2ETestBaseUrl('00_tooMuchMeta'));
     });

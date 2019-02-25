@@ -95,16 +95,16 @@ describe('01_xhr', () => {
 
               const ajaxBeacon = expectOneMatching(beacons, beacon => {
                 cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
-                cexpect(beacon.t).not.to.equal(beacon.s);
-                cexpect(beacon.t).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.t).to.equal(beacon.s);
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.ph).to.equal('pl');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
                 cexpect(ajaxRequest.method).to.equal('GET');
                 cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
-                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(pageLoadBeacon.t);
+                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
                 cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
               });
@@ -136,15 +136,15 @@ describe('01_xhr', () => {
 
               const ajaxBeacon = expectOneMatching(beacons, beacon => {
                 cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
-                cexpect(beacon.t).not.to.equal(beacon.s);
-                cexpect(beacon.t).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.t).to.equal(beacon.s);
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.ty).to.equal('xhr');
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
                 cexpect(ajaxRequest.method).to.equal('GET');
                 cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
-                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(pageLoadBeacon.t);
+                cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
                 cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
               });

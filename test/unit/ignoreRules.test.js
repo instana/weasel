@@ -43,6 +43,10 @@ describe('ignoreRules', () => {
       expect(isUrlIgnored('http://ping.com/shop')).to.equal(false);
       expect(isUrlIgnored('http://example.com/ping?foo=bar')).to.equal(false);
     });
+
+    it('must ignore data URLs by default', () => {
+      expect(isUrlIgnored('data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E')).to.equal(true);
+    });
   });
 
   describe('isErrorMessageIgnored', () => {

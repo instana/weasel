@@ -9,6 +9,8 @@
 
   <script>
     window.onEumLoad = function(eum) {
+      // test that we do not throw on unknown commands.
+      eum('unknownCommand', 'unknownParam', {foo: 'bar'});
       eum('meta', 'user', 'tom.mason@example.com');
       eum('meta', 'No&way', 'Ifyou\nHaveTo&DoThis');
     };

@@ -28,18 +28,38 @@ app.use((req, res, next) => {
   path.join(__dirname, '..', 'e2e'),
   path.join(__dirname, '..', 'experiments')
 ].forEach(p =>
-  app.use(`/${path.basename(p)}`, express.static(p), serveIndex(p, {
-    icons: true
-  }))
+  app.use(
+    `/${path.basename(p)}`,
+    express.static(p),
+    serveIndex(p, {
+      icons: true
+    })
+  )
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  bodyParser.json({
+    extended: true,
+    type: [
+      // simple JSON transmission via XHR
+      'application/json',
+      // content-type cannot be changed for sendBeacon API
+      'text/plain'
+    ]
+  })
+);
 
 app.get('/', (req, res) => res.send('OK'));
 
 const beaconRequests = [];
 app.post('/beacon', (req, res) => {
-  beaconRequests.push(req.body);
+  if (req.body instanceof Array) {
+    // modern (batched) JSON transmission
+    beaconRequests.push.apply(beaconRequests, req.body);
+  } else {
+    beaconRequests.push(req.body);
+  }
   res.send('OK');
 });
 
@@ -78,20 +98,25 @@ app.get('/ajaxRequests', (req, res) => {
   res.json(ajaxRequests);
 });
 
-process.env.BEACON_SERVER_PORTS
-  .split(',')
+process.env.BEACON_SERVER_PORTS.split(',')
   .map(v => parseInt(v, 10))
-  .forEach(port => app.listen(port, () => {
-    if (process.env.IS_TEST !== 'true') {
-      console.log('Test server available via http://127.0.0.1:%s (check /e2e, /experiments or /target)', port);
-    }
-  }));
+  .forEach(port =>
+    app.listen(port, () => {
+      if (process.env.IS_TEST !== 'true') {
+        console.log('Test server available via http://127.0.0.1:%s (check /e2e, /experiments or /target)', port);
+      }
+    })
+  );
 
 if (process.env.IS_TEST !== 'true') {
-  console.log('\nOpen http://127.0.0.1:%s/e2e?ports=%s to check cross-origin cases',
+  console.log(
+    '\nOpen http://127.0.0.1:%s/e2e?ports=%s to check cross-origin cases',
     process.env.BEACON_SERVER_PORTS.split(',')[0],
-    process.env.BEACON_SERVER_PORTS);
+    process.env.BEACON_SERVER_PORTS
+  );
 
-  console.log('Please ensure that you retain the ?ports query parameters when opening\n' +
-    'cross-origin test cases manually. As this is a required parameter for them.\n\n');
+  console.log(
+    'Please ensure that you retain the ?ports query parameters when opening\n' +
+      'cross-origin test cases manually. As this is a required parameter for them.\n\n'
+  );
 }

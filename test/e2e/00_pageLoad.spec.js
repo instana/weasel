@@ -4,7 +4,7 @@ const util = require('../util');
 
 const cexpect = require('chai').expect;
 
-describe('00_pageLoad', () => {
+fdescribe('00_pageLoad', () => {
   registerTestServerHooks();
   registerBaseHooks();
 
@@ -273,7 +273,7 @@ describe('00_pageLoad', () => {
         return util.retry(() => {
           return getBeacons()
             .then(([beacon]) => {
-              const timings = JSON.parse(beacon.res);
+              const timings = typeof beacon.res === 'string' ? JSON.parse(beacon.res) : beacon.res;
               replaceTimingValuesWithNumberOfValues(timings, 3);
               cexpect(timings).to.deep.equal({
                 http: {
@@ -289,7 +289,7 @@ describe('00_pageLoad', () => {
                     'target/eum.min.js': [true]
                   }
                 }
-              }, `Got the following timing: ${JSON.stringify(JSON.parse(beacon.res), 0, 2)}.`);
+              }, `Got the following timing: ${JSON.stringify(timings, 0, 2)}.`);
             });
         });
       });

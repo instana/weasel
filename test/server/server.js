@@ -4,6 +4,8 @@ const express = require('express');
 const uuidV4 = require('uuid/v4');
 const path = require('path');
 
+const {decode} = require('./lineEncodingParser');
+
 const app = express();
 
 app.use((req, res, next) => {
@@ -38,25 +40,16 @@ app.use((req, res, next) => {
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  bodyParser.json({
-    extended: true,
-    type: [
-      // simple JSON transmission via XHR
-      'application/json',
-      // content-type cannot be changed for sendBeacon API
-      'text/plain'
-    ]
-  })
-);
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.raw({ type: 'text/plain' }));
 
 app.get('/', (req, res) => res.send('OK'));
 
 const beaconRequests = [];
 app.post('/beacon', (req, res) => {
-  if (req.body instanceof Array) {
-    // modern (batched) JSON transmission
-    beaconRequests.push.apply(beaconRequests, req.body);
+  if (req.is('text/plain')) {
+    const str = req.body.toString('utf8');
+    beaconRequests.push.apply(beaconRequests, decode(str));
   } else {
     beaconRequests.push(req.body);
   }

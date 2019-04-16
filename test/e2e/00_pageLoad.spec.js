@@ -4,7 +4,7 @@ const util = require('../util');
 
 const cexpect = require('chai').expect;
 
-fdescribe('00_pageLoad', () => {
+describe('00_pageLoad', () => {
   registerTestServerHooks();
   registerBaseHooks();
 

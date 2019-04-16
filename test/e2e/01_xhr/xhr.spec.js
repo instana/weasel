@@ -1,18 +1,18 @@
-const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../server/controls');
-const {registerBaseHooks, whenConfigMatches} = require('./base');
-const {retry, expectOneMatching} = require('../util');
+const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../../server/controls');
+const {registerBaseHooks, whenConfigMatches} = require('../base');
+const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
 
-describe('01_xhr', () => {
+describe('xhr', () => {
   registerTestServerHooks();
   registerBaseHooks();
 
   // disable for IE8 and below
 
-  describe('01_xhrAfterPageLoad', () => {
+  describe('xhrAfterPageLoad', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrAfterPageLoad'));
+      browser.get(getE2ETestBaseUrl('01_xhr/xhrAfterPageLoad'));
     });
 
     it('must send beacons for XHR requests happening after page load', () => {
@@ -33,7 +33,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhrAfterPageLoad'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhr/xhrAfterPageLoad'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');
@@ -76,9 +76,9 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_xhrBeforePageLoad', () => {
+  describe('xhrBeforePageLoad', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrBeforePageLoad'));
+      browser.get(getE2ETestBaseUrl('01_xhr/xhrBeforePageLoad'));
     });
 
     it('must send beacons for XHR requests happening before page load', () => {
@@ -117,9 +117,9 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_xhrBeforePageLoadSynchronous', () => {
+  describe('xhrBeforePageLoadSynchronous', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrBeforePageLoadSynchronous'));
+      browser.get(getE2ETestBaseUrl('01_xhr/xhrBeforePageLoadSynchronous'));
     });
 
     it('must send beacons for XHR requests happening before page load', () => {
@@ -157,9 +157,9 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_xhrTimeout', () => {
+  describe('xhrTimeout', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrTimeout'));
+      browser.get(getE2ETestBaseUrl('01_xhr/xhrTimeout'));
     });
 
     it('must send error status when XHR times out', () => {
@@ -187,9 +187,9 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_ignoredXhr', () => {
+  describe('ignoredXhr', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_ignoredXhr'));
+      browser.get(getE2ETestBaseUrl('01_xhr/ignoredXhr'));
     });
 
     it('must ignore certain XHR calls', () => {
@@ -224,9 +224,9 @@ describe('01_xhr', () => {
   });
 
 
-  describe('01_xhrError', () => {
+  describe('xhrError', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('01_xhrError'));
+      browser.get(getE2ETestBaseUrl('01_xhr/xhrError'));
     });
 
     it('must send erroneous beacons for failed XHR requests', () => {
@@ -249,7 +249,7 @@ describe('01_xhr', () => {
                 cexpect(beacon.r).not.to.be.NaN;
                 cexpect(beacon.ts).not.to.be.NaN;
                 cexpect(beacon.d).not.to.be.NaN;
-                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhrError'));
+                cexpect(beacon.l).to.equal(getE2ETestBaseUrl('01_xhr/xhrError'));
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
                 cexpect(beacon.m).to.equal('GET');

@@ -1,10 +1,10 @@
-const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../server/controls');
-const {registerBaseHooks, getCapabilities, hasResourceTimingSupport} = require('./base');
-const util = require('../util');
+const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../../server/controls');
+const {registerBaseHooks, getCapabilities, hasResourceTimingSupport} = require('../base');
+const util = require('../../util');
 
 const cexpect = require('chai').expect;
 
-describe('00_pageLoad', () => {
+describe('pageLoad', () => {
   registerTestServerHooks();
   registerBaseHooks();
 
@@ -14,9 +14,9 @@ describe('00_pageLoad', () => {
     start = Date.now();
   });
 
-  describe('00_pageLoad', () => {
+  describe('pageLoad', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_pageLoad'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/pageLoad'));
     });
 
     it('must send pageLoad beacon', () => {
@@ -42,7 +42,7 @@ describe('00_pageLoad', () => {
         cexpect(beacon.ty).to.equal('pl');
         cexpect(beacon.k).to.equal(undefined);
         cexpect(beacon.p).to.equal(undefined);
-        cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad'));
+        cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad/pageLoad'));
         cexpect(beacon.ph).to.equal('pl');
 
         // IE 8 doesn't support innerWidth and innerHeight
@@ -59,9 +59,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_meta', () => {
+  describe('meta', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_meta'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/meta'));
     });
 
     it('must send simple meta data information', () => {
@@ -89,9 +89,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_tooMuchMeta', () => {
+  describe('tooMuchMeta', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_tooMuchMeta'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/tooMuchMeta'));
     });
 
     it('must restrict the number of meta data entries', () => {
@@ -112,9 +112,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_customPage', () => {
+  describe('customPage', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_customPage'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/customPage'));
     });
 
     it('must send user configured page', () => {
@@ -127,9 +127,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_multiComplicatedMeta', () => {
+  describe('multiComplicatedMeta', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_multiComplicatedMeta'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/multiComplicatedMeta'));
     });
 
     it('must send complicated meta data information', () => {
@@ -143,9 +143,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_apiKey', () => {
+  describe('apiKey', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_apiKey'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/apiKey'));
     });
 
     it('must send user provided API key', () => {
@@ -156,9 +156,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_apiKeyViaKey', () => {
+  describe('apiKeyViaKey', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_apiKeyViaKey'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/apiKeyViaKey'));
     });
 
     it('must send user provided API key', () => {
@@ -169,9 +169,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_backendTraceId', () => {
+  describe('backendTraceId', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_backendTraceId'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/backendTraceId'));
     });
 
     it('must send user provided backend trace ID', () => {
@@ -182,9 +182,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_manualPageLoad', () => {
+  describe('manualPageLoad', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_manualPageLoad'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/manualPageLoad'));
     });
 
     it('must send user triggered page load beacon', () => {
@@ -200,9 +200,9 @@ describe('00_pageLoad', () => {
     });
   });
 
-  describe('00_navigationTimings', () => {
+  describe('navigationTimings', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_navigationTimings'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/navigationTimings'));
     });
 
     it('must send navigation timings', () => {
@@ -259,9 +259,9 @@ describe('00_pageLoad', () => {
     }
   });
 
-  describe('00_resourceTimings', () => {
+  describe('resourceTimings', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_resourceTimings'));
+      browser.get(getE2ETestBaseUrl('00_pageLoad/resourceTimings'));
     });
 
     it('must send resource timing data', () => {

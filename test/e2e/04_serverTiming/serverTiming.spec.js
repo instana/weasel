@@ -1,6 +1,6 @@
-const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../server/controls');
-const {registerBaseHooks, getCapabilities} = require('./base');
-const util = require('../util');
+const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../../server/controls');
+const {registerBaseHooks, getCapabilities} = require('../base');
+const util = require('../../util');
 
 const cexpect = require('chai').expect;
 
@@ -9,7 +9,7 @@ describe('04_serverTiming', () => {
   registerBaseHooks();
 
   beforeEach(() => {
-    browser.get(getE2ETestBaseUrl('04_serverTiming'));
+    browser.get(getE2ETestBaseUrl('04_serverTiming/serverTiming'));
   });
 
   it('must read backend trace ID when available from server timing header', () => {

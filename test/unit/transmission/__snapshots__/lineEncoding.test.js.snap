@@ -1,5 +1,3 @@
-/* eslint-disable quotes */
-
 exports[`transmission/lineEncoding must encode just one beacon 1`] = `
 "page	landing
 key	abcdefg

@@ -35,8 +35,15 @@ describe('transmission/batched', () => {
 
   describe('with sendBeacon API', () => {
     beforeEach(() => {
+      jest.resetModules();
+
+      browserMock = require('../../../lib/browser');
+      browserMock.reset();
       // simulate availability of the sendBeacon API
       browserMock.nav.sendBeacon = () => {};
+      varsMock = require('../../../lib/vars').default;
+
+      sendBeacon = require('../../../lib/transmission/batched').sendBeacon;
     });
 
     afterEach(() => {
@@ -112,6 +119,19 @@ describe('transmission/batched', () => {
           setVisibilityState('prerender');
         }
       });
+
+      it('must send early when window becomes hidden', () => {
+        try {
+          setVisibilityState('visible');
+          sendBeacon(firstBeacon);
+          sendBeacon(secondBeacon);
+          assertMatchesSnapshot();
+          setVisibilityState('hidden');
+          assertMatchesSnapshot();
+        } finally {
+          setVisibilityState('prerender');
+        }
+      });
     });
   }
 
@@ -128,5 +148,7 @@ describe('transmission/batched', () => {
       value: state,
       configurable: true
     });
+
+    browserMock.doc.dispatchEvent(new Event('visibilitychange'));
   }
 });

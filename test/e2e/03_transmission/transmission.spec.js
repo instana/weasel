@@ -4,7 +4,7 @@ const {registerBaseHooks} = require('../base');
 
 const cexpect = require('chai').expect;
 
-fdescribe('03_transmission', () => {
+describe('03_transmission', () => {
   registerTestServerHooks();
   registerBaseHooks();
 

@@ -71,6 +71,35 @@ error	true",
 }
 `;
 
+exports[`transmission/batched with sendBeacon API with batching must send early when window is unloaded 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API with batching must send early when window is unloaded 2`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "ty	pl
+page	landing
+ts	123456789
+error	false
+
+ty	xhr
+page	cart
+ts	123456789
+error	true",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
 exports[`transmission/batched with sendBeacon API without batching must do nothing when there is nothing to transmit 1`] = `
 Object {
   "beaconRequests": Array [],
@@ -226,6 +255,22 @@ Object {
 `;
 
 exports[`transmission/batched with unsupported sendBeacon API with batching must send early when window becomes hidden 2`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must send early when window is unloaded 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must send early when window is unloaded 2`] = `
 Object {
   "beaconRequests": Array [],
   "imageRequests": Array [],

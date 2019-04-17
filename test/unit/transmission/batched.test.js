@@ -132,6 +132,19 @@ describe('transmission/batched', () => {
           setVisibilityState('prerender');
         }
       });
+
+      it('must send early when window is unloaded', () => {
+        try {
+          setVisibilityState('visible');
+          sendBeacon(firstBeacon);
+          sendBeacon(secondBeacon);
+          assertMatchesSnapshot();
+          browserMock.win.dispatchEvent(new Event('beforeunload'));
+          assertMatchesSnapshot();
+        } finally {
+          setVisibilityState('prerender');
+        }
+      });
     });
   }
 

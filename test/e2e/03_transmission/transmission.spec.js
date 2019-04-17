@@ -32,7 +32,7 @@ describe('03_transmission', () => {
     it('must report beacons', async () => {
       await retry(async () => {
         const beacons = await getBeacons();
-        cexpect(beacons).to.have.lengthOf(2);
+        cexpect(beacons).to.have.lengthOf(3);
 
         const pageLoadBeacon = expectOneMatching(beacons, beacon => {
           cexpect(beacon.s).to.equal(undefined);
@@ -40,10 +40,19 @@ describe('03_transmission', () => {
         });
 
         expectOneMatching(beacons, beacon => {
-          cexpect(beacon.s).to.match(/^[0-9A-F]{1,16}$/i);
-          cexpect(beacon.t).to.equal(beacon.s);
-          cexpect(beacon.ty).to.equal('xhr');
+          cexpect(beacon.ty).to.equal('cus');
           cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+          cexpect(beacon.d).to.equal('42');
+          cexpect(beacon.n).to.equal('firstEvent');
+          cexpect(beacon.m_customEvent).to.equal('1');
+        });
+
+        expectOneMatching(beacons, beacon => {
+          cexpect(beacon.ty).to.equal('cus');
+          cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+          cexpect(beacon.d).to.equal('43');
+          cexpect(beacon.n).to.equal('secondEvent');
+          cexpect(beacon.m_foo).to.equal('bar');
         });
       });
     });

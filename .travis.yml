@@ -15,7 +15,8 @@ install:
 - yarn
 script:
 - yarn run build
-- yarn run test
+- IS_TEST=true yarn run test:quick
+- IS_TEST=true yarn run test:e2e:saucelabs
 notifications:
   slack:
     rooms:

@@ -1,0 +1,395 @@
+exports[`transmission/batched with sendBeacon API with batching must batch when window is visible 1`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "ty	pl
+page	landing
+ts	123456789
+error	false
+
+ty	xhr
+page	cart
+ts	123456789
+error	true",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API with batching must not attempt batching when window is hidden 1`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "ty	pl
+page	landing
+ts	123456789
+error	false",
+      "url": "http://eum.example.com",
+    },
+    Object {
+      "data": "ty	xhr
+page	cart
+ts	123456789
+error	true",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API with batching must send early when window becomes hidden 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API with batching must send early when window becomes hidden 2`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "ty	pl
+page	landing
+ts	123456789
+error	false
+
+ty	xhr
+page	cart
+ts	123456789
+error	true",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API with batching must send early when window is unloaded 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API with batching must send early when window is unloaded 2`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "ty	pl
+page	landing
+ts	123456789
+error	false
+
+ty	xhr
+page	cart
+ts	123456789
+error	true",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API without batching must do nothing when there is nothing to transmit 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API without batching must only transmit own props 1`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "page	cart",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API without batching must transmit larger payloads 1`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "page	cart
+id	42
+m_featureFlags	{\"developerMode\":false}
+longKey	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with sendBeacon API without batching must transmit multiple beacons 1`] = `
+Object {
+  "beaconRequests": Array [
+    Object {
+      "data": "ty	pl
+page	landing
+ts	123456789
+error	false",
+      "url": "http://eum.example.com",
+    },
+    Object {
+      "data": "ty	xhr
+page	cart
+ts	123456789
+error	true",
+      "url": "http://eum.example.com",
+    },
+  ],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must batch when window is visible 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [
+    Object {
+      "open": Array [
+        "POST",
+        "http://eum.example.com",
+        true,
+      ],
+      "requestHeader": Array [
+        Array [
+          "Content-type",
+          "text/plain;charset=UTF-8",
+        ],
+      ],
+      "responseType": "text",
+      "send": Array [
+        "ty	pl
+page	landing
+ts	123456789
+error	false
+
+ty	xhr
+page	cart
+ts	123456789
+error	true",
+      ],
+      "timeout": 5432,
+    },
+  ],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must not attempt batching when window is hidden 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [
+    Object {
+      "open": Array [
+        "POST",
+        "http://eum.example.com",
+        true,
+      ],
+      "requestHeader": Array [
+        Array [
+          "Content-type",
+          "text/plain;charset=UTF-8",
+        ],
+      ],
+      "responseType": "text",
+      "send": Array [
+        "ty	pl
+page	landing
+ts	123456789
+error	false",
+      ],
+      "timeout": 5432,
+    },
+    Object {
+      "open": Array [
+        "POST",
+        "http://eum.example.com",
+        true,
+      ],
+      "requestHeader": Array [
+        Array [
+          "Content-type",
+          "text/plain;charset=UTF-8",
+        ],
+      ],
+      "responseType": "text",
+      "send": Array [
+        "ty	xhr
+page	cart
+ts	123456789
+error	true",
+      ],
+      "timeout": 5432,
+    },
+  ],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must send early when window becomes hidden 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must send early when window becomes hidden 2`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must send early when window is unloaded 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API with batching must send early when window is unloaded 2`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API without batching must do nothing when there is nothing to transmit 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API without batching must only transmit own props 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [
+    Object {
+      "open": Array [
+        "POST",
+        "http://eum.example.com",
+        true,
+      ],
+      "requestHeader": Array [
+        Array [
+          "Content-type",
+          "text/plain;charset=UTF-8",
+        ],
+      ],
+      "responseType": "text",
+      "send": Array [
+        "page	cart",
+      ],
+      "timeout": 5432,
+    },
+  ],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API without batching must transmit larger payloads 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [
+    Object {
+      "open": Array [
+        "POST",
+        "http://eum.example.com",
+        true,
+      ],
+      "requestHeader": Array [
+        Array [
+          "Content-type",
+          "text/plain;charset=UTF-8",
+        ],
+      ],
+      "responseType": "text",
+      "send": Array [
+        "page	cart
+id	42
+m_featureFlags	{\"developerMode\":false}
+longKey	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      ],
+      "timeout": 5432,
+    },
+  ],
+}
+`;
+
+exports[`transmission/batched with unsupported sendBeacon API without batching must transmit multiple beacons 1`] = `
+Object {
+  "beaconRequests": Array [],
+  "imageRequests": Array [],
+  "xhrRequests": Array [
+    Object {
+      "open": Array [
+        "POST",
+        "http://eum.example.com",
+        true,
+      ],
+      "requestHeader": Array [
+        Array [
+          "Content-type",
+          "text/plain;charset=UTF-8",
+        ],
+      ],
+      "responseType": "text",
+      "send": Array [
+        "ty	pl
+page	landing
+ts	123456789
+error	false",
+      ],
+      "timeout": 5432,
+    },
+    Object {
+      "open": Array [
+        "POST",
+        "http://eum.example.com",
+        true,
+      ],
+      "requestHeader": Array [
+        Array [
+          "Content-type",
+          "text/plain;charset=UTF-8",
+        ],
+      ],
+      "responseType": "text",
+      "send": Array [
+        "ty	xhr
+page	cart
+ts	123456789
+error	true",
+      ],
+      "timeout": 5432,
+    },
+  ],
+}
+`;

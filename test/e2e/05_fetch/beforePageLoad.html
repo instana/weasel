@@ -21,6 +21,8 @@
     })(window, document, 'script', null, 'eum');
 
     eum('reportingUrl', '/beacon');
+    // Set a rather low batching time as the tests will otherwise take ages.
+    eum('beaconBatchingTime', 100);
   </script>
   <script src="/target/eum.min.js"></script>
   <script>

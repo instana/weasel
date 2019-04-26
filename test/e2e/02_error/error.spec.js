@@ -1,6 +1,6 @@
-const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../server/controls');
-const {retry, expectOneMatching} = require('../util');
-const {registerBaseHooks} = require('./base');
+const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../../server/controls');
+const {retry, expectOneMatching} = require('../../util');
+const {registerBaseHooks} = require('../base');
 
 const cexpect = require('chai').expect;
 
@@ -8,9 +8,9 @@ describe('02_error', () => {
   registerTestServerHooks();
   registerBaseHooks();
 
-  describe('02_error', () => {
+  describe('automatic reporting', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('02_error'));
+      browser.get(getE2ETestBaseUrl('02_error/automatic'));
     });
 
     it('must send single error beacon', () => {
@@ -71,9 +71,9 @@ describe('02_error', () => {
     });
   });
 
-  describe('02_manualErrorReporting', () => {
+  describe('manual reporting with error object', () => {
     beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('02_manualErrorReporting'));
+      browser.get(getE2ETestBaseUrl('02_error/manualWithErrorObject'));
     });
 
     it('must support manual error reporting', () => {
@@ -90,6 +90,31 @@ describe('02_error', () => {
             cexpect(beacon.c).to.equal('1');
             cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
             cexpect(beacon.cs).to.equal('a component stack');
+          });
+        });
+      });
+    });
+  });
+
+  describe('manual reporting with error string', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('02_error/manualWithErrorString'));
+    });
+
+    it('must support manual error reporting', () => {
+      return retry(() => {
+        return getBeacons().then(beacons => {
+          const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('pl');
+          });
+
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('err');
+            cexpect(beacon.e).to.equal('Failed to change route');
+            cexpect(beacon.st).to.equal('');
+            cexpect(beacon.c).to.equal('1');
+            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+            cexpect(beacon.cs).to.equal(undefined);
           });
         });
       });

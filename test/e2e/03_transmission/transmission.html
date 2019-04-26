@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>transmission test</title>
+
+  <script src="/e2e/initializer.js"></script>
+  <script>
+    if (window.location.href.indexOf('withRequestBatching=true') !== -1) {
+      eum('beaconBatchingTime', 1000);
+    } else {
+      eum('beaconBatchingTime', 0);
+    }
+
+    eum('reportEvent', 'firstEvent', {
+      duration: 42,
+      meta: {
+        customEvent: '1'
+      }
+    });
+
+    eum('reportEvent', 'secondEvent', {
+      duration: 43,
+      meta: {
+        foo: 'bar'
+      }
+    });
+  </script>
+</head>
+<body>
+  ajax after page load
+
+  <div id="result"></div>
+</body>
+</html>

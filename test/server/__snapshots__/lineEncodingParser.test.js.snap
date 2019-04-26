@@ -1,0 +1,33 @@
+/* eslint-disable quotes */
+
+exports[`lineEncodingParser must decode beacons 1`] = `
+Array [
+  Object {
+    "id": "42",
+    "key": "abcdefg",
+    "page": "landing",
+    "pageVisible": "true",
+  },
+  Object {
+    "id": "43",
+    "key": "abcdefg",
+    "m_spec": "{\"signedIn\":true}",
+    "page": "product-details",
+    "pageVisible": "false",
+  },
+  Object {
+    "key	with	tabstop": "b",
+    "key
+with
+new
+line": "a",
+    "key\\with
+all	reserved\\ncharacters": "value\\ with
+all	reserved\\ncharacter",
+    "value with new line": "a
+b
+c",
+    "value with tabstop": "a	b	c",
+  },
+]
+`;

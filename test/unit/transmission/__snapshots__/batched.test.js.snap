@@ -166,6 +166,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -190,9 +193,6 @@ ts	123456789
 error	true",
       ],
       "timeout": 5432,
-      "undefined": Object {
-        "ignored": true,
-      },
     },
   ],
 }
@@ -204,6 +204,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -223,11 +226,11 @@ ts	123456789
 error	false",
       ],
       "timeout": 5432,
-      "undefined": Object {
-        "ignored": true,
-      },
     },
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -247,9 +250,6 @@ ts	123456789
 error	true",
       ],
       "timeout": 5432,
-      "undefined": Object {
-        "ignored": true,
-      },
     },
   ],
 }
@@ -301,6 +301,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -317,9 +320,6 @@ Object {
         "page	cart",
       ],
       "timeout": 5432,
-      "undefined": Object {
-        "ignored": true,
-      },
     },
   ],
 }
@@ -331,6 +331,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -350,9 +353,6 @@ m_featureFlags	{\"developerMode\":false}
 longKey	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       ],
       "timeout": 5432,
-      "undefined": Object {
-        "ignored": true,
-      },
     },
   ],
 }
@@ -364,6 +364,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -383,11 +386,11 @@ ts	123456789
 error	false",
       ],
       "timeout": 5432,
-      "undefined": Object {
-        "ignored": true,
-      },
     },
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -407,9 +410,6 @@ ts	123456789
 error	true",
       ],
       "timeout": 5432,
-      "undefined": Object {
-        "ignored": true,
-      },
     },
   ],
 }

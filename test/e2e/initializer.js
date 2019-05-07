@@ -9,10 +9,11 @@
 
   window.config = getGlobalConfigObject();
 
-  (function(i,s,o,g,r,a,m){i['EumObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script',script,'eum');
+  (function(c,e,f,k,g,h,b,a,d){c[g]||(c[g]=h,b=c[h]=function(){
+  b.q.push(arguments)},b.q=[],b.l=1*new Date,a=e.createElement(f),a.async=1,
+  a.src=k,a.setAttribute("crossorigin", "anonymous"),d=e.getElementsByTagName(f)[0],
+  d.parentNode.insertBefore(a,d))})(window,document,"script",
+  script,"EumObject","eum");
 
   eum('reportingUrl', '/beacon');
   eum('ignoreUrls', [/.*pleaseIgnoreThis.*/]);

@@ -166,6 +166,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -201,6 +204,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -222,6 +228,9 @@ error	false",
       "timeout": 5432,
     },
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -292,6 +301,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -319,6 +331,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -349,6 +364,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",
@@ -370,6 +388,9 @@ error	false",
       "timeout": 5432,
     },
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",

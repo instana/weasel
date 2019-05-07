@@ -19,6 +19,9 @@ Object {
   "imageRequests": Array [],
   "xhrRequests": Array [
     Object {
+      "__secret__": Object {
+        "ignored": true,
+      },
       "open": Array [
         "POST",
         "http://eum.example.com",

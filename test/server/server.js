@@ -21,6 +21,17 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+  if (req.query.csp) {
+    const hosts = process.env.BEACON_SERVER_PORTS
+      .split(',')
+      .map(p => `http://127.0.0.1:${p}`)
+      .join(' ');
+    res.set('Content-Security-Policy', `default-src ${hosts}; script-src 'unsafe-inline' ${hosts};`);
+  }
+  next();
+});
+
+app.use((req, res, next) => {
   res.set('Server-Timing', 'intid;desc=aFakeBackendTraceIdForTests');
   next();
 });

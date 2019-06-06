@@ -4,7 +4,7 @@ const { retry, expectOneMatching } = require('../../util');
 
 const cexpect = require('chai').expect;
 
-fdescribe('11_csp', () => {
+describe('11_csp', () => {
   registerTestServerHooks();
   registerBaseHooks();
 

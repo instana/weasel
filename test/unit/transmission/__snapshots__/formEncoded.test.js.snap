@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`transmission/formEncoded must do nothing when there is nothing to transmit 1`] = `
 Object {
   "imageRequests": Array [],

@@ -30,5 +30,7 @@ function getPlugins() {
   const content = fs.readFileSync(path.join(__dirname, '.babelrc'), {encoding: 'utf8'});
   const config = JSON.parse(content);
   return config.plugins
-    .filter(plugin => plugin !== 'transform-es2015-modules-commonjs');
+    // Rollup works with commonjs module. If we would transpile them, then rollup
+    // could not do its job.
+    .filter(plugin => plugin !== '@babel/plugin-transform-modules-commonjs');
 }

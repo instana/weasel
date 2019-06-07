@@ -1,4 +1,4 @@
-/* eslint-disable quotes */
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`lineEncodingParser must decode beacons 1`] = `
 Array [
@@ -11,7 +11,7 @@ Array [
   Object {
     "id": "43",
     "key": "abcdefg",
-    "m_spec": "{\"signedIn\":true}",
+    "m_spec": "{\\"signedIn\\":true}",
     "page": "product-details",
     "pageVisible": "false",
   },
@@ -21,9 +21,9 @@ Array [
 with
 new
 line": "a",
-    "key\\with
-all	reserved\\ncharacters": "value\\ with
-all	reserved\\ncharacter",
+    "key\\\\with
+all	reserved\\\\ncharacters": "value\\\\ with
+all	reserved\\\\ncharacter",
     "value with new line": "a
 b
 c",

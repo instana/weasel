@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`resources/timingSerializer serializeEntry must identify cache validation 1`] = `
 Object {
   "appcache": "",

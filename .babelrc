@@ -1,9 +1,8 @@
 {
   "plugins": [
-    "transform-es2015-modules-commonjs",
-    "transform-flow-strip-types",
-    "transform-es2015-shorthand-properties",
-    "check-es2015-constants",
-    ["transform-es2015-block-scoping", {"throwIfClosureRequired": true}]
+    "@babel/plugin-transform-modules-commonjs",
+    "@babel/plugin-transform-flow-strip-types",
+    "@babel/plugin-transform-shorthand-properties",
+    ["@babel/plugin-transform-block-scoping", {"throwIfClosureRequired": true, "tdzEnabled": true}]
   ]
 }

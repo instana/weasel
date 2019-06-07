@@ -8,9 +8,11 @@ const fs = require('fs');
 const isDebugBuild = process.env.NODE_ENV !== 'production';
 
 export default {
-  entry: 'lib/index.js',
-  dest: `target/${process.env.FILENAME}.js`,
-  format: 'iife',
+  input: 'lib/index.js',
+  output: {
+    file: `target/${process.env.FILENAME}.js`,
+    format: 'iife'
+  },
   plugins:[
     babel({
       babelrc: false,

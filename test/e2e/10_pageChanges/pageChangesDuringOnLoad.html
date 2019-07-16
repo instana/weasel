@@ -13,15 +13,12 @@
   <div id="result"></div>
 
   <script>
+    eum('page', 'first');
+    eum('page', 'second');
+
     $(window).on('load', function() {
       setTimeout(function() {
-        eum('page', 'first');
-        eum('page', 'first');
-
-        setTimeout(function() {
-          eum('page', 'second');
-          eum('page', 'second');
-        }, 100);
+        eum('page', 'third');
       }, 100);
     });
   </script>

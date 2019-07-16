@@ -13,12 +13,16 @@
   <div id="result"></div>
 
   <script>
-    eum('page', 'first');
-    eum('page', 'second');
-    // Ensure that tests work when they are really fast
-    // (otherwise the browser HTTP cache makes testing hard).
-    eum('meta', 'foo', 'bar');
-    eum('page', 'first');
+    $(window).on('load', function() {
+      setTimeout(function() {
+        eum('page', 'first');
+        eum('page', 'second');
+        // Ensure that tests work when they are really fast
+        // (otherwise the browser HTTP cache makes testing hard).
+        eum('meta', 'foo', 'bar');
+        eum('page', 'first');
+      }, 100);
+    });
   </script>
 </body>
 </html>

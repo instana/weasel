@@ -73,4 +73,39 @@ describe('10_pageChanges', () => {
       });
     });
   });
+
+  describe('pageChangesDuringOnLoad', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('10_pageChanges/pageChangesDuringOnLoad'));
+    });
+
+    it('must send page change events', () => {
+      return retry(async () => {
+        const beacons = await getBeacons();
+
+        const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+          cexpect(beacon.ty).to.equal('pl');
+          cexpect(beacon.p).to.equal('second');
+        });
+
+        expectOneMatching(beacons, beacon => {
+          cexpect(beacon.ty).to.equal('pc');
+          cexpect(beacon.ts).to.be.a('string');
+          cexpect(beacon.p).to.equal('second');
+          cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+        });
+
+        expectOneMatching(beacons, beacon => {
+          cexpect(beacon.ty).to.equal('pc');
+          cexpect(beacon.ts).to.be.a('string');
+          cexpect(beacon.p).to.equal('third');
+          cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+        });
+
+        cexpect(beacons.filter(b => b.p === 'first' && b.ty === 'pc')).to.have.lengthOf(0);
+        cexpect(beacons.filter(b => b.p === 'second' && b.ty === 'pc')).to.have.lengthOf(1);
+        cexpect(beacons.filter(b => b.p === 'third' && b.ty === 'pc')).to.have.lengthOf(1);
+      });
+    });
+  });
 });

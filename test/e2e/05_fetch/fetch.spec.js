@@ -251,7 +251,6 @@ describe('05_fetch', () => {
         retry(() => {
           return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
             .then(([beacons, ajaxRequests, result]) => {
-              cexpect(beacons).to.have.lengthOf(2);
               cexpect(ajaxRequests).to.have.lengthOf(0);
 
               const pageLoadBeacon = expectOneMatching(beacons, beacon => {
@@ -287,6 +286,7 @@ describe('05_fetch', () => {
                 ]);
               });
 
+              cexpect(beacons).to.have.lengthOf(2);
               cexpect(result).to.equal('catched an error');
             });
         })

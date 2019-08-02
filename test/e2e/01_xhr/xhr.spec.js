@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../../server/controls');
-const {registerBaseHooks, whenConfigMatches} = require('../base');
+const {registerBaseHooks, whenConfigMatches, getCapabilities, hasResourceTimingSupport} = require('../base');
 const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
@@ -18,8 +18,8 @@ describe('xhr', () => {
     it('must send beacons for XHR requests happening after page load', () => {
       return whenXhrInstrumentationIsSupported(() =>
         retry(() => {
-          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
-            .then(([beacons, ajaxRequests, result]) => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
+            .then(([beacons, ajaxRequests, result, capabilities]) => {
               cexpect(beacons).to.have.lengthOf(2);
               cexpect(ajaxRequests).to.have.lengthOf(1);
 
@@ -42,6 +42,11 @@ describe('xhr', () => {
                 cexpect(beacon.st).to.equal('200');
                 cexpect(beacon.bc).to.equal('1');
                 cexpect(beacon.ph).to.equal(undefined);
+
+                if (hasResourceTimingSupport(capabilities)) {
+                  cexpect(beacon.t_req).to.be.a('string');
+                  cexpect(beacon.t_rsp).to.be.a('string');
+                }
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {

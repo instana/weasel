@@ -39,5 +39,7 @@ exports.hasPerformanceObserverSupport = capabilities => {
   return (capabilities.browserName === 'safari' && version > 11) ||
     (capabilities.browserName === 'firefox' && version > 57) ||
     // NaN happens for local execution
-    (capabilities.browserName === 'chrome' && (version > 52 || isNaN(version)));
+    // Early versions of Chrome only had partial support for this data, e.g. it was not available for
+    // fetch.
+    (capabilities.browserName === 'chrome' && (version > 76 || isNaN(version)));
 };

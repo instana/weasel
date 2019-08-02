@@ -44,7 +44,6 @@ describe('05_fetch', () => {
 
                 if (hasPerformanceObserverSupport(capabilities)) {
                   cexpect(beacon.t_req).to.be.a('string');
-                  cexpect(beacon.t_rsp).to.be.a('string');
                 }
               });
 

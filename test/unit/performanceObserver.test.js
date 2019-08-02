@@ -347,6 +347,19 @@ describe.only('performanceObserver', () => {
     `);
     expectPendingTimers(0);
     expectRegisteredPerformanceObservers(0);
+
+    // Simulate another time to ensure that we unsubscribed
+    browserMock.doc.dispatchEvent(new Event('visibilitychange'));
+    expect(getResults()).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "duration": 42,
+            "resource": undefined,
+          },
+        ],
+      ]
+    `);
   });
 
   function simulateResource(resource) {

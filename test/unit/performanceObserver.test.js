@@ -5,9 +5,6 @@ import sinon from 'sinon';
 jest.mock('../../lib/browser');
 jest.mock('../../lib/performance');
 
-// TODO test no visibility observer registered at end of tests
-// TODO test visibility changes
-
 describe.only('performanceObserver', () => {
   let browserMock;
   let performanceMock;
@@ -60,14 +57,14 @@ describe.only('performanceObserver', () => {
     observer.onAfterResourceRetrieved();
     expectPendingTimers(0);
     expect(onEnd.mock.calls).toMatchInlineSnapshot(`
-                                                                              Array [
-                                                                                Array [
-                                                                                  Object {
-                                                                                    "duration": 42,
-                                                                                  },
-                                                                                ],
-                                                                              ]
-                                                    `);
+                                                                                          Array [
+                                                                                            Array [
+                                                                                              Object {
+                                                                                                "duration": 42,
+                                                                                              },
+                                                                                            ],
+                                                                                          ]
+                                                            `);
   });
 
   it('must handle performance timing before resource completes', () => {
@@ -98,20 +95,20 @@ describe.only('performanceObserver', () => {
     expectPendingTimers(0);
     expectRegisteredPerformanceObservers(0);
     expect(getResults()).toMatchInlineSnapshot(`
-                                    Array [
-                                      Array [
-                                        Object {
-                                          "duration": 42,
-                                          "resource": Object {
-                                            "duration": 42,
-                                            "name": "customResource",
-                                            "responseEnd": 42,
-                                            "startTime": 0,
-                                          },
-                                        },
-                                      ],
-                                    ]
-                        `);
+                                                Array [
+                                                  Array [
+                                                    Object {
+                                                      "duration": 42,
+                                                      "resource": Object {
+                                                        "duration": 42,
+                                                        "name": "customResource",
+                                                        "responseEnd": 42,
+                                                        "startTime": 0,
+                                                      },
+                                                    },
+                                                  ],
+                                                ]
+                                `);
   });
 
   it('must handle performance timing after resource completes', () => {
@@ -143,20 +140,20 @@ describe.only('performanceObserver', () => {
       duration: responseEnd - startTime
     });
     expect(getResults()).toMatchInlineSnapshot(`
-                              Array [
-                                Array [
-                                  Object {
-                                    "duration": 42,
-                                    "resource": Object {
-                                      "duration": 42,
-                                      "name": "customResource",
-                                      "responseEnd": 42,
-                                      "startTime": 0,
-                                    },
-                                  },
-                                ],
-                              ]
-                    `);
+                                          Array [
+                                            Array [
+                                              Object {
+                                                "duration": 42,
+                                                "resource": Object {
+                                                  "duration": 42,
+                                                  "name": "customResource",
+                                                  "responseEnd": 42,
+                                                  "startTime": 0,
+                                                },
+                                              },
+                                            ],
+                                          ]
+                            `);
     expectPendingTimers(0);
     expectRegisteredPerformanceObservers(0);
   });
@@ -182,15 +179,15 @@ describe.only('performanceObserver', () => {
 
     clock.tick(1000);
     expect(getResults()).toMatchInlineSnapshot(`
-                        Array [
-                          Array [
-                            Object {
-                              "duration": 42,
-                              "resource": undefined,
-                            },
-                          ],
-                        ]
-                `);
+                                    Array [
+                                      Array [
+                                        Object {
+                                          "duration": 42,
+                                          "resource": undefined,
+                                        },
+                                      ],
+                                    ]
+                        `);
     expectPendingTimers(0);
     expectRegisteredPerformanceObservers(0);
   });
@@ -246,20 +243,20 @@ describe.only('performanceObserver', () => {
     });
     observer.onAfterResourceRetrieved();
     expect(getResults()).toMatchInlineSnapshot(`
-            Array [
-              Array [
-                Object {
-                  "duration": 60,
-                  "resource": Object {
-                    "duration": 60,
-                    "name": "customResource",
-                    "responseEnd": 180,
-                    "startTime": 120,
-                  },
-                },
-              ],
-            ]
-        `);
+                        Array [
+                          Array [
+                            Object {
+                              "duration": 60,
+                              "resource": Object {
+                                "duration": 60,
+                                "name": "customResource",
+                                "responseEnd": 180,
+                                "startTime": 120,
+                              },
+                            },
+                          ],
+                        ]
+                `);
     expectRegisteredPerformanceObservers(0);
     expectPendingTimers(0);
   });
@@ -298,22 +295,58 @@ describe.only('performanceObserver', () => {
     });
     observer.onAfterResourceRetrieved();
     expect(getResults()).toMatchInlineSnapshot(`
-            Array [
-              Array [
-                Object {
-                  "duration": 60,
-                  "resource": Object {
-                    "duration": 60,
-                    "name": "customResource 2",
-                    "responseEnd": 180,
-                    "startTime": 120,
-                  },
-                },
-              ],
-            ]
-        `);
+                        Array [
+                          Array [
+                            Object {
+                              "duration": 60,
+                              "resource": Object {
+                                "duration": 60,
+                                "name": "customResource 2",
+                                "responseEnd": 180,
+                                "startTime": 120,
+                              },
+                            },
+                          ],
+                        ]
+                `);
     expectRegisteredPerformanceObservers(0);
     expectPendingTimers(0);
+  });
+
+  it('must stop waiting for resource timings when visibility changes to hidden', () => {
+    const observer = observeResourcePerformance({
+      entryTypes: ['resource'],
+      resourceMatcher,
+      maxWaitForResourceMillis: 1000,
+      onEnd
+    });
+    observer.onBeforeResourceRetrieval();
+    clock.tick(42);
+    observer.onAfterResourceRetrieved();
+    expectPendingTimers(1);
+    expectRegisteredPerformanceObservers(1);
+    expect(getResults()).toMatchInlineSnapshot(`Array []`);
+
+    // Simulate going hidden
+    Object.defineProperty(browserMock.doc, 'visibilityState', {
+      configurable: true,
+      get: function() {
+        return 'hidden';
+      }
+    });
+    browserMock.doc.dispatchEvent(new Event('visibilitychange'));
+    expect(getResults()).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "duration": 42,
+            "resource": undefined,
+          },
+        ],
+      ]
+    `);
+    expectPendingTimers(0);
+    expectRegisteredPerformanceObservers(0);
   });
 
   function simulateResource(resource) {

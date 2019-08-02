@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../../server/controls');
-const {registerBaseHooks, whenConfigMatches, getCapabilities, hasResourceTimingSupport} = require('../base');
+const {registerBaseHooks, whenConfigMatches, getCapabilities, hasPerformanceObserverSupport} = require('../base');
 const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
@@ -7,8 +7,6 @@ const cexpect = require('chai').expect;
 describe('xhr', () => {
   registerTestServerHooks();
   registerBaseHooks();
-
-  // disable for IE8 and below
 
   describe('xhrAfterPageLoad', () => {
     beforeEach(() => {
@@ -43,7 +41,7 @@ describe('xhr', () => {
                 cexpect(beacon.bc).to.equal('1');
                 cexpect(beacon.ph).to.equal(undefined);
 
-                if (hasResourceTimingSupport(capabilities)) {
+                if (hasPerformanceObserverSupport(capabilities)) {
                   cexpect(beacon.t_req).to.be.a('string');
                   cexpect(beacon.t_rsp).to.be.a('string');
                 }

@@ -33,3 +33,11 @@ exports.hasResourceTimingSupport = (capabilities) => {
   return (capabilities.browserName !== 'internet explorer' && capabilities.browserName !== 'safari') ||
     (capabilities.browserName === 'internet explorer' && version >= 10);
 };
+
+exports.hasPerformanceObserverSupport = capabilities => {
+  const version = Number(capabilities.version);
+  return (capabilities.browserName === 'safari' && version > 11) ||
+    (capabilities.browserName === 'firefox' && version > 57) ||
+    // NaN happens for local execution
+    (capabilities.browserName === 'chrome' && (version > 52 || isNaN(version)));
+};

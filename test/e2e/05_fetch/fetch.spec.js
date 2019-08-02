@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../../server/controls');
-const {registerBaseHooks, whenConfigMatches, getCapabilities, hasResourceTimingSupport} = require('../base');
+const {registerBaseHooks, whenConfigMatches, getCapabilities, hasPerformanceObserverSupport} = require('../base');
 const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
@@ -42,7 +42,7 @@ describe('05_fetch', () => {
                 cexpect(beacon.bc).to.equal('1');
                 cexpect(beacon.e).to.be.undefined;
 
-                if (hasResourceTimingSupport(capabilities)) {
+                if (hasPerformanceObserverSupport(capabilities)) {
                   cexpect(beacon.t_req).to.be.a('string');
                   cexpect(beacon.t_rsp).to.be.a('string');
                 }

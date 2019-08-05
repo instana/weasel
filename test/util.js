@@ -51,7 +51,7 @@ exports.expectOneMatching = function expectOneMatching(arr, fn) {
 
 exports.getTestTimeout = function() {
   if (process.env.CI) {
-    return 10000;
+    return 30000;
   }
-  return 5000;
+  return 20000;
 };

@@ -19,8 +19,9 @@
   eum('ignoreUrls', [/.*pleaseIgnoreThis.*/]);
   eum('ignoreErrorMessages', [/.*pleaseIgnoreThisError.*/]);
 
-  // Set a rather low batching time as the tests will otherwise take ages.
+  // Set a rather low batching / waiting times as the tests will otherwise take ages.
   eum('beaconBatchingTime', 100);
+  eum('maxWaitForResourceTimingsMillis', 1000);
 
   if (window.location.href.indexOf('debug=true') !== -1) {
     eum('autoClearResourceTimings', false);

@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons, getAjaxRequests} = require('../../server/controls');
-const {registerBaseHooks, whenConfigMatches} = require('../base');
+const {registerBaseHooks, whenConfigMatches, getCapabilities, hasPerformanceObserverSupport} = require('../base');
 const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
@@ -16,8 +16,8 @@ describe('05_fetch', () => {
     it('must send beacons for fetch requests happening after page load', () => {
       return whenFetchIsSupported(() =>
         retry(() => {
-          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
-            .then(([beacons, ajaxRequests, result]) => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
+            .then(([beacons, ajaxRequests, result, capabilities]) => {
               cexpect(beacons).to.have.lengthOf(2);
               cexpect(ajaxRequests).to.have.lengthOf(1);
 
@@ -41,6 +41,10 @@ describe('05_fetch', () => {
                 cexpect(beacon.st).to.equal('200');
                 cexpect(beacon.bc).to.equal('1');
                 cexpect(beacon.e).to.be.undefined;
+
+                if (hasPerformanceObserverSupport(capabilities)) {
+                  cexpect(beacon.t_req).to.be.a('string');
+                }
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
@@ -251,7 +255,6 @@ describe('05_fetch', () => {
         retry(() => {
           return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
             .then(([beacons, ajaxRequests, result]) => {
-              cexpect(beacons).to.have.lengthOf(2);
               cexpect(ajaxRequests).to.have.lengthOf(0);
 
               const pageLoadBeacon = expectOneMatching(beacons, beacon => {
@@ -287,6 +290,7 @@ describe('05_fetch', () => {
                 ]);
               });
 
+              cexpect(beacons).to.have.lengthOf(2);
               cexpect(result).to.equal('catched an error');
             });
         })

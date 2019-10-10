@@ -200,6 +200,20 @@ describe('pageLoad', () => {
     });
   });
 
+  describe('ignoredWindowLocation', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/ignoredWindowLocation'));
+    });
+
+    it('must not send any data', async () => {
+      await sleep(3000); // for lack of a better mechanism
+      await util.retry(async () => {
+        const beacons = await getBeacons();
+        cexpect(beacons.length).to.equal(0);
+      });
+    });
+  });
+
   describe('navigationTimings', () => {
     beforeEach(() => {
       browser.get(getE2ETestBaseUrl('00_pageLoad/navigationTimings'));
@@ -274,7 +288,7 @@ describe('pageLoad', () => {
           return getBeacons()
             .then(([beacon]) => {
               const timings = typeof beacon.res === 'string' ? JSON.parse(beacon.res) : beacon.res;
-              replaceTimingValuesWithNumberOfValues(timings, 3);
+              stripTimingValues(timings);
               cexpect(timings).to.deep.equal({
                 http: {
                   's://': {
@@ -294,14 +308,46 @@ describe('pageLoad', () => {
         });
       });
     });
+  });
 
-    function replaceTimingValuesWithNumberOfValues(node) {
-      if (node instanceof Array) {
-        node.forEach((entry, i) => node[i] = true);
+  describe('ignoredResources', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/ignoredResources'));
+    });
+
+    it('must send resource timing data', async() => {
+      const capabilities = await getCapabilities();
+      if (!hasResourceTimingSupport(capabilities)) {
         return;
       }
 
-      Object.keys(node).forEach(key => replaceTimingValuesWithNumberOfValues(node[key]));
-    }
+      await util.retry(async () => {
+        const beacons = await getBeacons();
+        const timings = typeof beacons[0].res === 'string' ? JSON.parse(beacons[0].res) : beacons[0].res;
+        stripTimingValues(timings);
+        cexpect(timings).to.deep.equal({
+          http: {
+            's://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js': [true],
+            '://127.0.0.1:8000/': {
+              'e2e/initializer.js': [true],
+              'target/eum.min.js': [true]
+            }
+          }
+        }, `Got the following timing: ${JSON.stringify(timings, 0, 2)}.`);
+      });
+    });
   });
 });
+
+function stripTimingValues(node) {
+  if (node instanceof Array) {
+    node.forEach((entry, i) => node[i] = true);
+    return;
+  }
+
+  Object.keys(node).forEach(key => stripTimingValues(node[key]));
+}
+
+function sleep(millis) {
+  return new Promise(resolve => setTimeout(resolve, millis));
+}

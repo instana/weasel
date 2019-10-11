@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>pageLoad test</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  resource timings
+
+  <script src="/e2e/initializer.js"></script>
+  <script>
+    // ignore all CSS files
+    eum('ignoreUrls', [/.*\.css$/i]);
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>pageLoad test</title>
+</head>
+<body>
+  Hello World!
+
+  <script src="/e2e/initializer.js"></script>
+  <script>
+    // ignore all the URLs
+    eum('ignoreUrls', [/.*/]);
+    eum('page', 'page 1');
+    eum('page', 'page 2');
+  </script>
+</body>
+</html>

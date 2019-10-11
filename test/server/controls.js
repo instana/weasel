@@ -50,7 +50,7 @@ exports.getBeacons = () => {
     method: 'GET',
     url: `http://127.0.0.1:${ports[0]}/transmittedBeacons`
   })
-    .then(responseBody => JSON.parse(responseBody));
+    .then(parseWithDevelopmentInsights);
 };
 
 exports.getAjaxRequests = () => {
@@ -58,5 +58,14 @@ exports.getAjaxRequests = () => {
     method: 'GET',
     url: `http://127.0.0.1:${ports[0]}/ajaxRequests`
   })
-    .then(responseBody => JSON.parse(responseBody));
+    .then(parseWithDevelopmentInsights);
 };
+
+function parseWithDevelopmentInsights(s) {
+  try {
+    return JSON.parse(s);
+  } catch (e) {
+    console.error('Failed to JSON parse', e, 'got: ', s);
+    throw e;
+  }
+}

@@ -192,6 +192,41 @@ describe.only('performanceObserver', () => {
     expectRegisteredPerformanceObservers(0);
   });
 
+  it('must work even when observe throws', () => {
+    PerformanceObserverMock.observe.mockImplementation(() => {throw new Error('entryTypes unsupported');});
+    const observer = observeResourcePerformance({
+      entryTypes: ['resource'],
+      resourceMatcher,
+      maxWaitForResourceMillis: 1000,
+      onEnd
+    });
+    expectPendingTimers(0);
+
+    observer.onBeforeResourceRetrieval();
+    expectRegisteredPerformanceObservers(1);
+    expectPendingTimers(1);
+
+    clock.tick(42);
+    observer.onAfterResourceRetrieved();
+    expectPendingTimers(1);
+    expectRegisteredPerformanceObservers(1);
+    expect(getResults()).toMatchInlineSnapshot(`Array []`);
+
+    clock.tick(1000);
+    expect(getResults()).toMatchInlineSnapshot(`
+                                    Array [
+                                      Array [
+                                        Object {
+                                          "duration": 42,
+                                          "resource": undefined,
+                                        },
+                                      ],
+                                    ]
+                        `);
+    expectPendingTimers(0);
+    expectRegisteredPerformanceObservers(0);
+  });
+
   it('must dispose all listeners when end is never called', () => {
     const observer = observeResourcePerformance({
       entryTypes: ['resource'],

@@ -84,6 +84,7 @@ describe('pageLoad', () => {
             cexpect(beacon['ui']).to.equal('321');
             cexpect(beacon['un']).to.equal('Tom Anderson');
             cexpect(beacon['ue']).to.equal('tom.anderson@example.com');
+            cexpect(beacon['sid']).to.be.a('string');
           });
       });
     });

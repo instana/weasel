@@ -23,10 +23,6 @@
   eum('beaconBatchingTime', 100);
   eum('maxWaitForResourceTimingsMillis', 1000);
 
-  if (window.location.href.indexOf('debug=true') !== -1) {
-    eum('autoClearResourceTimings', false);
-  }
-
   if (window.onEumLoad) {
     window.onEumLoad(eum);
   }

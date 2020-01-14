@@ -15,11 +15,13 @@ describe('transmission/batched', () => {
     browserMock.reset();
     varsMock = require('../../lib/vars').default;
     recordSessionInformation = require('../../lib/session').recordSessionInformation;
+    global.DEBUG = false;
   });
 
   afterEach(() => {
     browserMock.reset();
     varsMock.sessionId = undefined;
+    delete global.DEBUG;
   });
 
   it('must not store a session ID by default', () => {

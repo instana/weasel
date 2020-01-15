@@ -7,6 +7,7 @@ describe('transmission/batched', () => {
   let browserMock;
   let varsMock;
   let trackSessions;
+  let terminateSession;
 
   beforeEach(() => {
     utilMock = require('../../lib/util');
@@ -14,7 +15,9 @@ describe('transmission/batched', () => {
     browserMock = require('../../lib/browser');
     browserMock.reset();
     varsMock = require('../../lib/vars').default;
-    trackSessions = require('../../lib/session').trackSessions;
+    const mod = require('../../lib/session');
+    trackSessions = mod.trackSessions;
+    terminateSession = mod.terminateSession;
     global.DEBUG = false;
   });
 
@@ -26,6 +29,7 @@ describe('transmission/batched', () => {
 
   it('must not store a session ID by default', () => {
     expect(varsMock.sessionId).toEqual(undefined);
+    expect(browserMock.localStorage.getItem('session')).toEqual(undefined);
   });
 
   it('must create and serialize a new session when asked to', () => {
@@ -100,5 +104,12 @@ describe('transmission/batched', () => {
     };
     trackSessions();
     expect(varsMock.sessionId).toEqual(undefined);
+  });
+
+  it('must terminate sessions', () => {
+    trackSessions();
+    terminateSession();
+    expect(varsMock.sessionId).toEqual(undefined);
+    expect(browserMock.localStorage.getItem('session')).toEqual(undefined);
   });
 });

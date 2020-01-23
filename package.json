@@ -24,7 +24,7 @@
     "devServer": "BEACON_SERVER_PORTS='3009,3010,3011' node test/server/server",
     "fileStats": "echo \"\nFile Stats:\" && ls target/*.js | xargs -I '%' bash -c 'echo \"%: $(./node_modules/.bin/gzip-size % | ./node_modules/.bin/pretty-bytes) (gzip)\"'"
   },
-  "author": "Ben Ripkens <bripkens@gmail.com> (http://bripkens.de/)",
+  "author": "Ben Blackmore <ben@instana.com>",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.0.0",

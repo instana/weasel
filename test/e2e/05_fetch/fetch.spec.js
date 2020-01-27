@@ -52,7 +52,7 @@ describe('05_fetch', () => {
                 cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
                 cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
-                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1,correlationType=web;correlationId=' + ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
               });
 
@@ -103,7 +103,7 @@ describe('05_fetch', () => {
                 cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
                 cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
-                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1,correlationType=web;correlationId=' + ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
               });
 
@@ -154,7 +154,7 @@ describe('05_fetch', () => {
                 cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
                 cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
-                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1,correlationType=web;correlationId=' + ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
               });
 
@@ -196,7 +196,7 @@ describe('05_fetch', () => {
                 cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
                 cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
-                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1,correlationType=web;correlationId=' + ajaxBeacon.t);
               });
 
               cexpect(result).to.equal(ajaxRequest.response);
@@ -340,7 +340,7 @@ describe('05_fetch', () => {
                 cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
                 cexpect(ajaxRequest.headers['x-instana-t']).to.equal(ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['x-instana-s']).to.equal(ajaxBeacon.s);
-                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1');
+                cexpect(ajaxRequest.headers['x-instana-l']).to.equal('1,correlationType=web;correlationId=' + ajaxBeacon.t);
                 cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
               });
 

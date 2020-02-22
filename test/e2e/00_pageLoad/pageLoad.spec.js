@@ -183,24 +183,6 @@ describe('pageLoad', () => {
     });
   });
 
-  describe('manualPageLoad', () => {
-    beforeEach(() => {
-      browser.get(getE2ETestBaseUrl('00_pageLoad/manualPageLoad'));
-    });
-
-    it('must send user triggered page load beacon', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(beacons => {
-            cexpect(beacons).to.have.lengthOf(1);
-            const [beacon] = beacons;
-            cexpect(beacon.ty).to.equal('pl');
-            cexpect(beacon.m_afterLoad).to.equal('123');
-          });
-      });
-    });
-  });
-
   describe('ignoredWindowLocation', () => {
     beforeEach(() => {
       browser.get(getE2ETestBaseUrl('00_pageLoad/ignoredWindowLocation'));

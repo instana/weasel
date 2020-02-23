@@ -17,6 +17,8 @@
 
     $(window).on('load', function() {
       performance.mark('startWork');
+      // simulate React
+      performance.mark('⚛ App [mount]');
       setTimeout(function() {
         performance.mark('endWork');
         performance.measure('work', 'startWork', 'endWork');

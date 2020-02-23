@@ -58,6 +58,12 @@ describe('11_userTiming', () => {
           cexpect(beacon.d).not.to.equal('0');
           cexpect(beacon.m_userTimingType).to.equal('measure');
         });
+
+        beacons.forEach(beacon => {
+          if (beacon.ty === 'cus') {
+            cexpect(beacon.n).not.to.have.string('⚛');
+          }
+        });
       });
     });
   });

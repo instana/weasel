@@ -62,6 +62,7 @@ describe('11_userTiming', () => {
         beacons.forEach(beacon => {
           if (beacon.ty === 'cus') {
             cexpect(beacon.n).not.to.have.string('⚛');
+            cexpect(beacon.n).not.to.have.string('⛔');
           }
         });
       });

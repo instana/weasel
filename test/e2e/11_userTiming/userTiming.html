@@ -19,6 +19,7 @@
       performance.mark('startWork');
       // simulate React
       performance.mark('⚛ App [mount]');
+      performance.mark('⛔ Component.componentDidMount Warning: Scheduled a cascading update');
       setTimeout(function() {
         performance.mark('endWork');
         performance.measure('work', 'startWork', 'endWork');

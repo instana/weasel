@@ -20,6 +20,10 @@
       // simulate React
       performance.mark('⚛ App [mount]');
       performance.mark('⛔ Component.componentDidMount Warning: Scheduled a cascading update');
+      // simulate Angular
+      performance.mark('Zone');
+      performance.mark('Zone:toString');
+      performance.mark('Zone:ZoneAwarePromise');
       setTimeout(function() {
         performance.mark('endWork');
         performance.measure('work', 'startWork', 'endWork');

@@ -90,6 +90,10 @@ describe('02_error', () => {
             cexpect(beacon.c).to.equal('1');
             cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
             cexpect(beacon.cs).to.equal('a component stack');
+            cexpect(beacon['m_configuration']).to.equal(JSON.stringify({
+              type: 'chart',
+              y1: true
+            }));
           });
         });
       });

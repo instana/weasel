@@ -145,6 +145,23 @@ describe('transmission/batched', () => {
           setVisibilityState('prerender');
         }
       });
+
+      it('must have an upper limit on the number of batched beacons', () => {
+        try {
+          setVisibilityState('visible');
+          for (let i = 0; i < 15; i++) {
+            sendBeacon(firstBeacon);
+          }
+          for (let i = 0; i < 5; i++) {
+            sendBeacon(secondBeacon);
+          }
+          assertMatchesSnapshot();
+          browserMock.win.dispatchEvent(new Event('beforeunload'));
+          assertMatchesSnapshot();
+        } finally {
+          setVisibilityState('prerender');
+        }
+      });
     });
   }
 

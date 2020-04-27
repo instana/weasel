@@ -106,8 +106,8 @@ describe('pageLoad', () => {
             cexpect(Object
               .keys(beacon)
               .filter(k => k.startsWith('m_'))
-              .length).to.equal(50);
-            cexpect(beacon['m_longValue']).to.match(/^a{256,256}$/);
+              .length).to.equal(25);
+            cexpect(beacon['m_longValue']).to.match(/^a{1024,1024}$/);
           });
       });
     });

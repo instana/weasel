@@ -1,0 +1,45 @@
+<!doctype html>
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>fetch no zone impact test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.9.1/zone.min.js"></script>
+    <script src="/e2e/initializer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+  </head>
+  <body>
+    fetch after page load
+
+    <div id="result"></div>
+
+    <script>
+      $(window).on('load', function() {
+        window.tasksScheduled = 0;
+        window.testZone = Zone.current.fork({
+          name: 'testZone',
+          onScheduleTask: function(delegate, current, target, task) {
+            window.tasksScheduled++;
+            delegate.scheduleTask(target, task);
+          }
+        });
+
+        window.testZone.run(function() {
+          if (self.fetch) {
+            fetch('/ajax' + '?cacheBust=' + (new Date()).getTime(), {
+              headers: {
+                'From': 'stan@instana.com'
+              }
+            })
+            .catch(function(e) {
+              console.error('Fetch error', e);
+            });
+
+            $('#result').text(window.tasksScheduled);
+          } else {
+            $('#result').text('The Fetch API is not supported by this browser.');
+          }
+        });
+      });
+    </script>
+  </body>
+  </html>

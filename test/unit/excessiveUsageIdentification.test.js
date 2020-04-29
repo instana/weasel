@@ -1,13 +1,15 @@
 import { expect } from 'chai';
 
-import { createExcessiveUsageIdentifier } from '../../lib/excessiveUsageIdentification';
-
 jest.useFakeTimers();
 
 describe('excessiveUsageIdentification', () => {
+  let createExcessiveUsageIdentifier;
   let isExcessiveUsage;
 
   beforeEach(() => {
+    jest.resetModules();
+    self.DEBUG = false;
+    createExcessiveUsageIdentifier = require('../../lib/excessiveUsageIdentification').createExcessiveUsageIdentifier;
     isExcessiveUsage = null;
   });
 

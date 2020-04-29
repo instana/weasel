@@ -1,11 +1,6 @@
 /* eslint-disable quotes */
 
-import sinon from 'sinon';
-
-jest.mock('../../lib/browser');
-jest.mock('../../lib/performance');
-
-describe.only('performanceObserver', () => {
+describe('performanceObserver', () => {
   let browserMock;
   let performanceMock;
   let observeResourcePerformance;
@@ -16,7 +11,16 @@ describe.only('performanceObserver', () => {
   let clock;
 
   beforeEach(() => {
-    clock = sinon.useFakeTimers();
+    self.DEBUG = false;
+    jest.resetModules();
+    clock = require('sinon').useFakeTimers();
+    jest.mock('../../lib/browser');
+    const {win} = require('../../lib/browser');
+    win.setTimeout = setTimeout;
+    win.clearTimeout = clearTimeout;
+    win.setInterval = setInterval;
+    win.clearInterval = clearInterval;
+    jest.mock('../../lib/performance');
     resourceMatcher = jest.fn();
     resourceMatcher.mockReturnValue(true);
     browserMock = require('../../lib/browser');

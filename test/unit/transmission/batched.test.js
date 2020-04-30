@@ -23,6 +23,7 @@ describe('transmission/batched', () => {
   let sendBeacon;
 
   beforeEach(() => {
+    self.DEBUG = false;
     browserMock = require('../../../lib/browser');
     browserMock.reset();
     varsMock = require('../../../lib/vars').default;

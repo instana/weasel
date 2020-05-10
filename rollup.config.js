@@ -1,5 +1,6 @@
 /* eslint-env node */
 
+const resolve = require ('@rollup/plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
 const babel = require('rollup-plugin-babel');
 const path = require('path');
@@ -21,6 +22,9 @@ export default {
     }),
     replace({
       DEBUG: JSON.stringify(isDebugBuild)
+    }),
+    resolve({
+      browser: true
     })
   ]
 };

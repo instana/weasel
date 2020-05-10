@@ -16,7 +16,9 @@ const columnMappings = [
   'tcp',
   'ssl',
   'request',
-  'response'
+  'response',
+  'backendTraceId',
+  'ttfb'
 ];
 
 const columnValueResolvers = {
@@ -81,7 +83,12 @@ describe('resources/timingSerializer', () => {
         transferSize: 16835,
         encodedBodySize: 16786,
         decodedBodySize: 16786,
-        serverTiming: []
+        serverTiming: [
+          {
+            name: 'intid',
+            description: 'jkdlasj31kjjkl'
+          }
+        ]
       };
       expect(toHumanReadableEntry(serializeEntry(entry))).toMatchSnapshot();
     });

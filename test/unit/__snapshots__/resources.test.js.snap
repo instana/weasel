@@ -3,6 +3,7 @@
 exports[`resources/timingSerializer serializeEntry must identify cache validation 1`] = `
 Object {
   "appcache": "",
+  "backendTraceId": "",
   "cachingType": "validated",
   "decodedBodySize": "16786",
   "dns": "",
@@ -16,12 +17,14 @@ Object {
   "tcp": "",
   "time": "1137",
   "transferSize": "4320",
+  "ttfb": "192",
 }
 `;
 
 exports[`resources/timingSerializer serializeEntry must identify full asset retrieval 1`] = `
 Object {
   "appcache": "",
+  "backendTraceId": "jkdlasj31kjjkl",
   "cachingType": "fullLoad",
   "decodedBodySize": "16786",
   "dns": "",
@@ -35,12 +38,14 @@ Object {
   "tcp": "",
   "time": "1137",
   "transferSize": "16835",
+  "ttfb": "192",
 }
 `;
 
 exports[`resources/timingSerializer serializeEntry must identify retrieval from cache 1`] = `
 Object {
   "appcache": "",
+  "backendTraceId": "",
   "cachingType": "cached",
   "decodedBodySize": "16786",
   "dns": "",
@@ -54,5 +59,6 @@ Object {
   "tcp": "",
   "time": "435",
   "transferSize": "0",
+  "ttfb": "3",
 }
 `;

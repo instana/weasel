@@ -220,6 +220,7 @@ describe('pageLoad', () => {
               testIsPositiveInteger(beacon.t_rsp);
               testIsPositiveInteger(beacon.t_dom);
               testIsPositiveInteger(beacon.t_chi);
+              testIsPositiveInteger(beacon.t_ttfb);
             });
         });
       });

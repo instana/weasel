@@ -1,19 +1,25 @@
 /* eslint-disable */
 
 (function() {
-  var script = '/target/eum.min.js';
-
-  if (window.location.href.indexOf('debug=true') !== -1) {
-    script = '/target/eum.debug.js';
-  }
-
   window.config = getGlobalConfigObject();
 
-  (function(c,e,f,k,g,h,b,a,d){c[g]||(c[g]=h,b=c[h]=function(){
-  b.q.push(arguments)},b.q=[],b.l=1*new Date,a=e.createElement(f),a.async=1,
-  a.src=k,a.setAttribute("crossorigin", "anonymous"),d=e.getElementsByTagName(f)[0],
-  d.parentNode.insertBefore(a,d))})(window,document,"script",
-  script,"EumObject","eum");
+  (function(
+    win,
+    longGlobalName,
+    shortGlobalName,
+    globalApi
+  ) {
+    if (win[longGlobalName]) {
+      return;
+    }
+
+    win[longGlobalName] = shortGlobalName;
+    globalApi = win[shortGlobalName] = function() {
+      globalApi['q'].push(arguments);
+    };
+    globalApi['q'] = [];
+    globalApi['l'] = 1 * new Date();
+  })(window, 'EumObject', 'eum');
 
   eum('reportingUrl', '/beacon');
   eum('ignoreUrls', [/.*pleaseIgnoreThis.*/]);
@@ -22,6 +28,7 @@
   // Set a rather low batching / waiting times as the tests will otherwise take ages.
   eum('beaconBatchingTime', 100);
   eum('maxWaitForResourceTimingsMillis', 1000);
+  eum('maxMaitForPageLoadMetricsMillis', 100);
 
   if (window.onEumLoad) {
     window.onEumLoad(eum);

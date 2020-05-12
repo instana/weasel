@@ -19,15 +19,6 @@ describe('pageLoad', () => {
       browser.get(getE2ETestBaseUrl('00_pageLoad/pageLoad'));
     });
 
-    it('must send pageLoad beacon', () => {
-      return util.retry(() => {
-        return getBeacons()
-          .then(beacons => {
-            cexpect(beacons).to.have.lengthOf(1);
-          });
-      });
-    });
-
     it('must include basic page load information', async () => {
       const capabilities = await getCapabilities();
       return util.retry(async () => {

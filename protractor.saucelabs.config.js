@@ -6,7 +6,6 @@ exports.config = {
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceBuild: process.env.TRAVIS_JOB_NUMBER,
   multiCapabilities: [
-    newSaucelabsCapability('internet explorer', '9.0', 'Windows 7'),
     newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
     newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10'),
     newSaucelabsCapability('safari', '9.0', 'OS X 10.11'),

@@ -10,21 +10,9 @@
 
   <div id="result"></div>
 
-  <script>
-    // Ensuring that the EUM script is not loaded asynchronously to make
-    // tests much more reliable.
-    (function(i, s, o, g, r, a, m) {
-      i['EumObject'] = r;
-      i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-    })(window, document, 'script', null, 'eum');
-
-    eum('reportingUrl', '/beacon');
-    // Set a rather low batching time as the tests will otherwise take ages.
-    eum('beaconBatchingTime', 100);
-  </script>
-  <script src="/target/eum.min.js"></script>
+  <script src="/e2e/initializer.js"></script>
+  <!-- Ensure synchronous load for more reliable tests -->
+  <script crossorigin="anonymous" src="/target/eum.min.js"></script>
   <script>
     if (self.fetch) {
       fetch('/ajax' + '?cacheBust=' + (new Date()).getTime())

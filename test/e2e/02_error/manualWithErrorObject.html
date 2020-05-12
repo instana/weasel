@@ -5,6 +5,7 @@
   <title>error test</title>
 
   <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
   <script>
     eum('reportError', new Error('Testing 123'), {
       componentStack: 'a component stack',

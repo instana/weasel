@@ -10,6 +10,7 @@ describe('transmission/batched', () => {
   let terminateSession;
 
   beforeEach(() => {
+    self.DEBUG = false;
     utilMock = require('../../lib/util');
     utilMock.reset();
     browserMock = require('../../lib/browser');

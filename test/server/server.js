@@ -5,6 +5,7 @@ const uuidV4 = require('uuid/v4');
 const path = require('path');
 
 const {decode} = require('./lineEncodingParser');
+const graphql = require('./graphql');
 
 const app = express();
 
@@ -101,6 +102,8 @@ app.all('/ajax', (req, res) => {
 app.get('/ajaxRequests', (req, res) => {
   res.json(ajaxRequests);
 });
+
+graphql.applyMiddleware({app});
 
 process.env.BEACON_SERVER_PORTS.split(',')
   .map(v => parseInt(v, 10))

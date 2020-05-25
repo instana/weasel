@@ -35,6 +35,7 @@ describe('pageLoad', () => {
         cexpect(beacon.p).to.equal(undefined);
         cexpect(beacon.u).to.equal(getE2ETestBaseUrl('00_pageLoad/pageLoad'));
         cexpect(beacon.ph).to.equal('pl');
+        cexpect(beacon.sv).to.equal('2');
 
         // IE 8 doesn't support innerWidth and innerHeight
         if (capabilities.browserName !== 'internet explorer') {

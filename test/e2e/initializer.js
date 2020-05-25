@@ -19,6 +19,7 @@
     };
     globalApi['q'] = [];
     globalApi['l'] = 1 * new Date();
+    globalApi['v'] = 2;
   })(window, 'EumObject', 'eum');
 
   eum('reportingUrl', '/beacon');

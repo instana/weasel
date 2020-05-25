@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>GraphQL Apollo Test</title>
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" src="/target/eum.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+  <script src="/e2e/05_fetch/graphql_apollo/dist/main.js"></script>
+</head>
+<body>
+  <div id="result"></div>
+
+  <script>
+    Promise.all([
+      window.getBook(),
+      window.getBooks(),
+      window.getBooksWithoutOperationname(),
+      window.borrowBook(),
+      window.borrowBookWithoutOperationName()
+    ]).then(() => document.getElementById('result').textContent = 'Done!');
+  </script>
+</body>
+</html>

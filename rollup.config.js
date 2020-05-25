@@ -14,7 +14,7 @@ export default {
     file: `target/${process.env.FILENAME}.js`,
     format: 'iife'
   },
-  plugins:[
+  plugins: [
     babel({
       babelrc: false,
       exclude: 'node_modules/**',

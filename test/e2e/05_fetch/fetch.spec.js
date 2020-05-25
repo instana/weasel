@@ -405,6 +405,53 @@ describe('05_fetch', () => {
     });
   });
 
+  describe('05_graphql_apollo', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/graphql_apollo'));
+    });
+
+    it('must instrument Apollo GraphQL HTTP calls', () => {
+      return whenFetchIsSupported(() =>
+        retry(async () => {
+          const result = await getResultElementContent();
+          cexpect(result).to.equal('Done!');
+
+          const beacons = await getBeacons();
+          cexpect(beacons).to.have.lengthOf(6);
+
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('xhr');
+            cexpect(beacon.gon).to.equal('Book');
+            cexpect(beacon.got).to.equal('query');
+          });
+
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('xhr');
+            cexpect(beacon.gon).to.equal('Books');
+            cexpect(beacon.got).to.equal('query');
+          });
+
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('xhr');
+            cexpect(beacon.gon).to.equal(undefined);
+            cexpect(beacon.got).to.equal('query');
+          });
+
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('xhr');
+            cexpect(beacon.gon).to.equal('Borrow');
+            cexpect(beacon.got).to.equal('mutation');
+          });
+
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('xhr');
+            cexpect(beacon.gon).to.equal(undefined);
+            cexpect(beacon.got).to.equal('mutation');
+          });
+        })
+      );
+    });
+  });
 
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(

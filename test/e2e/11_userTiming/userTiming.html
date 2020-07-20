@@ -25,6 +25,9 @@
       performance.mark('Zone');
       performance.mark('Zone:toString');
       performance.mark('Zone:ZoneAwarePromise');
+      // simulate start/end calls
+      performance.mark('start xyz');
+      performance.mark('End xyz');
       setTimeout(function() {
         performance.mark('endWork');
         performance.measure('work', 'startWork', 'endWork');

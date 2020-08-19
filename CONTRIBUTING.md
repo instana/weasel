@@ -6,7 +6,8 @@
 git clone https://github.com/instana/weasel.git
 cd weasel
 yarn
-yarn run webdriver:start
+yarn webdriver:start
+yarn build
 yarn test
 ```
 

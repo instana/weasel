@@ -8,6 +8,7 @@ describe('ignoreRules', () => {
     vars.ignoreUrls = [];
     vars.ignorePings = true;
     vars.ignoreErrorMessages = [];
+    vars.reportingUrl = 'https://ingress.example.com';
   });
 
   describe('isUrlIgnored', () => {
@@ -46,6 +47,12 @@ describe('ignoreRules', () => {
 
     it('must ignore data URLs by default', () => {
       expect(isUrlIgnored('data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E')).to.equal(true);
+    });
+
+    it('must ignore data transmission requests', () => {
+      expect(isUrlIgnored(vars.reportingUrl)).to.equal(true);
+      expect(isUrlIgnored(vars.reportingUrl + '/')).to.equal(true);
+      expect(isUrlIgnored(vars.reportingUrl + '/eum.min.js')).to.equal(false);
     });
   });
 

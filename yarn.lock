@@ -5747,10 +5747,10 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-web-vitals@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-0.2.3.tgz#950adea6da9e3cfd3ee2ffe868c7126a6d87b2d1"
-  integrity sha512-6idlbUoL38El+QS320Qz6h4QSZLaWw3CHiJWBtQDmFGs72ro+fnukfavTxTdQSlsaoaBuNL/0bqlIhfdtlrx4A==
+web-vitals@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-1.1.1.tgz#2df535e3355fb7fbe34787b44b736e270e539377"
+  integrity sha512-jYOaqu01Ny1NvMwJ3dBJDUOJ2PGWknZWH4AUnvFOscvbdHMERIKT2TlgiAey5rVyfOePG7so2JcXXZdSnBvioQ==
 
 webdriver-js-extender@2.1.0:
   version "2.1.0"

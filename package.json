@@ -63,6 +63,6 @@
     "webdriver-manager": "^10.2.8"
   },
   "dependencies": {
-    "web-vitals": "^0.2.3"
+    "web-vitals": "1.1.1"
   }
 }

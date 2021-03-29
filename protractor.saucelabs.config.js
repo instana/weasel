@@ -5,6 +5,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceBuild: process.env.TRAVIS_JOB_NUMBER,
+  // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
     newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
     newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10'),
@@ -12,7 +13,7 @@ exports.config = {
     newSaucelabsCapability('safari', '10.1', 'macOS 10.12'),
     newSaucelabsCapability('safari', '11.0', 'macOS 10.12'),
     newSaucelabsCapability('safari', '11.1', 'macOS 10.13'),
-    newSaucelabsCapability('firefox', '48.0', 'Windows 7'),
+    newSaucelabsCapability('firefox', '78.0', 'Windows 7'),
     newSaucelabsCapability('firefox', '59.0', 'Windows 10'),
     newSaucelabsCapability('chrome', '48.0', 'Windows 10'),
     newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),

@@ -6,6 +6,8 @@ const babel = require('rollup-plugin-babel');
 const path = require('path');
 const fs = require('fs');
 
+const secureWebVitalsLoader = require('./secureWebVitalsLoader');
+
 const isDebugBuild = process.env.NODE_ENV !== 'production';
 
 export default {
@@ -20,6 +22,7 @@ export default {
       exclude: 'node_modules/**',
       plugins: getPlugins()
     }),
+    secureWebVitalsLoader(),
     replace({
       DEBUG: JSON.stringify(isDebugBuild)
     }),

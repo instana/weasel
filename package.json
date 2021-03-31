@@ -49,7 +49,7 @@
     "jest": "^26.6.3",
     "prettier": "^1.18.2",
     "pretty-bytes-cli": "^2.0.0",
-    "protractor": "^5.4.4",
+    "protractor": "^7.0.0",
     "proxyquire": "^1.7.11",
     "qs": "^6.5.2",
     "request": "^2.79.0",

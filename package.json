@@ -19,7 +19,7 @@
     "test:e2e:local": "export IS_TEST=true && protractor protractor.local.config.js",
     "test:e2e:saucelabs": "export IS_TEST=true && protractor protractor.saucelabs.config.js",
     "test:lint": "eslint lib/**/*.js test/**/*.js",
-    "test:flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "test:flow": "flow; FLOW_RESULT=$?; flow stop; test $FLOW_RESULT -eq 0 -o $? -eq 2",
     "webdriver:start": "webdriver-manager update && webdriver-manager start",
     "devServer": "BEACON_SERVER_PORTS='3009,3010,3011' node test/server/server",
     "fileStats": "echo \"\nFile Stats:\" && ls target/*.js | xargs -I '%' bash -c 'echo \"%: $(./node_modules/.bin/gzip-size % | ./node_modules/.bin/pretty-bytes) (gzip)\"'"

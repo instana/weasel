@@ -60,7 +60,7 @@
     "serve-index": "^1.9.1",
     "sinon": "^7.0.0",
     "uuid": "^3.0.1",
-    "webdriver-manager": "^10.2.8"
+    "webdriver-manager": "^12.1.8"
   },
   "dependencies": {
     "web-vitals": "1.1.1"

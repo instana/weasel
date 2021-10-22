@@ -4,7 +4,7 @@ exports.config = {
   specs: ['test/e2e/**/*.spec.js'],
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
-  sauceBuild: process.env.TRAVIS_JOB_NUMBER,
+  sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
     newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
@@ -33,7 +33,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     version,
     platform,
     name: 'weasel e2e',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    build: process.env.TRAVIS_JOB_NUMBER
+    'tunnel-identifier': 'github-action-tunnel',
+    build: process.env.GITHUB_RUN_NUMBER
   };
 }

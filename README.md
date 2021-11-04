@@ -1,4 +1,4 @@
-# Weasel &nbsp; [![Build Status](https://travis-ci.org/instana/weasel.svg?branch=master)](https://travis-ci.org/instana/weasel)
+# Weasel &nbsp;
 
 Gather end-user browser performance data.
 
@@ -24,10 +24,6 @@ Features are categorized into beacon types that weasel is able to emit. Currentl
  - **XHR beacon:** Transmitted for occurring `XMLHttpRequest`s and `fetch`s
  - **Error beacon:** Transmitted when unhandled errors occur
  - **SPA beacon:** Transmitted when navigating within single-page applications (SPAs).
-
-## Weasel's approach to tracing
-Weasel is designed from the ground up to support tracing. Every beacon is assigned a random ID that can easily be used to stitch on load and SPA beacons, as well as backend traces together. The ID concept is aligned to Zipkin's ID generation strategy, i.e. each ID is 64 lower-hex encoded bits (`/^[0-9a-f]{1,16}$/i`).
-
 
 ## Usage
 Usage of Weasel is different than that of many other libraries. Technically, this is because of its lack of a plugin system and compilation modes. This was done with a drastic **users first** design in mind (this means **developers later**). Weasel is shipped to a huge number of users on a variety of websites. As a result, its size and impact on the monitored websites must be minimal. To achieve this, Weasel does not include a plugin system or any optional code paths. Weasel is compiled using Rollup enabled tree shaking followed by Google Closure Compiler advanced mode compilation.

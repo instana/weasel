@@ -2,10 +2,12 @@
 
 ## Local development environment
 
-```
+```sh
 git clone https://github.com/instana/weasel.git
 cd weasel
 yarn
+# Does this fail for you?
+yarn webdriver-manager update
 yarn webdriver:start
 yarn build
 yarn test

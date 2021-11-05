@@ -124,4 +124,22 @@ describe('02_error', () => {
       });
     });
   });
+
+  describe('manual reporting with page change', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('02_error/manualWithPageChange'));
+    });
+
+    fit('must support manual error reporting with page changes', () => {
+      return retry(() => {
+        return getBeacons().then(beacons => {
+          expectOneMatching(beacons, beacon => {
+            cexpect(beacon.ty).to.equal('err');
+            cexpect(beacon.e).to.equal('This should have occurred on page 1');
+            cexpect(beacon.p).to.equal('page1');
+          });
+        });
+      });
+    });
+  });
 });

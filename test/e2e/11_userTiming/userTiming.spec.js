@@ -38,8 +38,7 @@ describe('11_userTiming', () => {
         const startWorkBeacon = expectOneMatching(beacons, beacon => {
           cexpect(beacon.ty).to.equal('cus');
           cexpect(beacon.n).to.equal('startWork');
-          cexpect(Number(beacon.ts)).to.be.at.least(Number(pageLoadBeacon.r));
-          cexpect(beacon.d).to.equal(undefined);
+          cexpect(beacon.d).not.to.equal('0');
           cexpect(beacon.m_userTimingType).to.equal('mark');
         });
 
@@ -47,14 +46,14 @@ describe('11_userTiming', () => {
           cexpect(beacon.ty).to.equal('cus');
           cexpect(beacon.n).to.equal('endWork');
           cexpect(Number(beacon.ts)).to.be.at.least(Number(startWorkBeacon.ts));
-          cexpect(beacon.d).to.equal(undefined);
+          cexpect(beacon.d).not.to.equal('0');
           cexpect(beacon.m_userTimingType).to.equal('mark');
         });
 
         expectOneMatching(beacons, beacon => {
           cexpect(beacon.ty).to.equal('cus');
           cexpect(beacon.n).to.equal('work');
-          cexpect(beacon.ts).to.equal(startWorkBeacon.ts);
+          cexpect(Number(beacon.ts)).to.equal(Number(startWorkBeacon.ts) + Number(startWorkBeacon.d));
           cexpect(beacon.d).not.to.equal('0');
           cexpect(beacon.m_userTimingType).to.equal('measure');
         });

@@ -130,7 +130,7 @@ describe('02_error', () => {
       browser.get(getE2ETestBaseUrl('02_error/manualWithPageChange'));
     });
 
-    fit('must support manual error reporting with page changes', () => {
+    it('must support manual error reporting with page changes', () => {
       return retry(() => {
         return getBeacons().then(beacons => {
           expectOneMatching(beacons, beacon => {

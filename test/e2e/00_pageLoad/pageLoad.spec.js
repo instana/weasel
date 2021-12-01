@@ -313,6 +313,22 @@ describe('pageLoad', () => {
       });
     });
   });
+
+  describe('stripSecrets', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/pageLoadStripSecrets') + '&account=myaccount&appsecret=password&phoneno=119');
+    });
+
+    it('must strip secret from url', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['u']).to.equal(getE2ETestBaseUrl('00_pageLoad/pageLoadStripSecrets') + '&account=<redacted>&appsecret=<redacted>&phoneno=119');
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+  });
 });
 
 function stripTimingValues(node) {

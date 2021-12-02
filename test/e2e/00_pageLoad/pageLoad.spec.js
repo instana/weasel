@@ -345,21 +345,7 @@ describe('pageLoad', () => {
           return getBeacons().then(([beacon]) => {
             const timings = typeof beacon.res === 'string' ? JSON.parse(beacon.res) : beacon.res;
             stripTimingValues(timings);
-            cexpect(timings).to.deep.equal(
-              {
-                http: {
-                  's://fonts.g': {
-                    'oogleapis.com/css?family=<redacted>': [true],
-                    'static.com/s/tangerine/v12/IurY6Y5j_oScZZow4VOxCZZM.woff2': [true]
-                  },
-                  '://127.0.0.1:8000/': {
-                    'e2e/initializer.js': [true],
-                    'target/eum.min.js': [true]
-                  }
-                }
-              },
-              `Got the following timing: ${JSON.stringify(timings, 0, 2)}.`
-            );
+            cexpect(timings.http).to.have.property( 's://fonts.googleapis.com/css?family=<redacted>' );
           });
         });
       });

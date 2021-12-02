@@ -347,12 +347,15 @@ describe('pageLoad', () => {
             stripTimingValues(timings);
             cexpect(timings).to.deep.equal(
               {
-                'http://127.0.0.1:8000/': {
-                  'e2e/': {
-                    '00_pageLoad/img/LOGO.png?account=<redacted>&appsecret=<redacted>&phoneno=119': [true],
-                    'initializer.js': [true]
+                http: {
+                  's://fonts.g': {
+                    'oogleapis.com/css?family=<redacted>': [true],
+                    'static.com/s/tangerine/v12/IurY6Y5j_oScZZow4VOxCZZM.woff2': [true]
                   },
-                  'target/eum.min.js': [true]
+                  '://127.0.0.1:8000/': {
+                    'e2e/initializer.js': [true],
+                    'target/eum.min.js': [true]
+                  }
                 }
               },
               `Got the following timing: ${JSON.stringify(timings, 0, 2)}.`

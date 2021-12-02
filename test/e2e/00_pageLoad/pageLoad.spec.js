@@ -329,6 +329,40 @@ describe('pageLoad', () => {
       });
     });
   });
+
+  describe('resourceStripSecrets', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/resourceStripSecrets'));
+    });
+
+    it('must send resource timing data with secrets striped', () => {
+      return getCapabilities().then(capabilities => {
+        if (!hasResourceTimingSupport(capabilities)) {
+          return true;
+        }
+
+        return util.retry(() => {
+          return getBeacons().then(([beacon]) => {
+            const timings = typeof beacon.res === 'string' ? JSON.parse(beacon.res) : beacon.res;
+            stripTimingValues(timings);
+            cexpect(timings).to.deep.equal(
+              {
+                'http://127.0.0.1:8000/': {
+                  'e2e/': {
+                    '00_pageLoad/img/LOGO.png?account=<redacted>&appsecret=<redacted>&phoneno=119': [true],
+                    'initializer.js': [true]
+                  },
+                  'target/eum.min.js': [true]
+                }
+              },
+              `Got the following timing: ${JSON.stringify(timings, 0, 2)}.`
+            );
+          });
+        });
+      });
+    });
+  });
+
 });
 
 function stripTimingValues(node) {

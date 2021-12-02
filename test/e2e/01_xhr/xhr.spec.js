@@ -281,8 +281,8 @@ describe('xhr', () => {
               cexpect(beacons).to.have.lengthOf(2);
 
               expectOneMatching(beacons, beacon => {
-                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?mysecret=<redacted>&myaccountno=<redacted>&phone=999$/);
                 cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?mysecret=<redacted>&myaccountno=<redacted>&phone=999$/);
               });
 
             });

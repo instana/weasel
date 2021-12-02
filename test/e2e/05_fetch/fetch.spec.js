@@ -453,6 +453,29 @@ describe('05_fetch', () => {
     });
   });
 
+  describe('05_fetchStripScerets', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/fetchStripSecrets'));
+    });
+
+    it('must strip secrets from url in send beacons', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons()]).then(([beacons]) => {
+            cexpect(beacons).to.have.lengthOf(2);
+
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('xhr');
+              cexpect(beacon.u).to.match(
+                /^http:\/\/127\.0\.0\.1:8000\/ajax\?mysecret=<redacted>&myaccountno=<redacted>&phone=999$/
+              );
+            });
+          });
+        })
+      );
+    });
+  });
+
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(
       config => {

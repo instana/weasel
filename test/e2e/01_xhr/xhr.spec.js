@@ -268,6 +268,28 @@ describe('xhr', () => {
     });
   });
 
+  describe('xhrStripSecrets', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('01_xhr/xhrStripSecrets'));
+    });
+
+    it('must strip secrets from url in send beacons', () => {
+      return whenXhrInstrumentationIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons()])
+            .then(([beacons]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon.ty).to.equal('xhr');
+                cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?mysecret=<redacted>&myaccountno=<redacted>&phone=999$/);
+              });
+
+            });
+        })
+      );
+    });
+  });
 
   function whenXhrInstrumentationIsSupported(fn) {
     return whenConfigMatches(

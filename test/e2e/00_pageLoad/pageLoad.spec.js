@@ -313,6 +313,45 @@ describe('pageLoad', () => {
       });
     });
   });
+
+  describe('stripSecrets', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/pageLoadStripSecrets') + '&account=myaccount&appsecret=password&phoneno=119');
+    });
+
+    it('must strip secret from url', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['u']).to.equal(getE2ETestBaseUrl('00_pageLoad/pageLoadStripSecrets') + '&account=<redacted>&appsecret=<redacted>&phoneno=119');
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+  });
+
+  describe('resourceStripSecrets', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/resourceStripSecrets'));
+    });
+
+    it('must send resource timing data with secrets striped', () => {
+      return getCapabilities().then(capabilities => {
+        if (!hasResourceTimingSupport(capabilities)) {
+          return true;
+        }
+
+        return util.retry(() => {
+          return getBeacons().then(([beacon]) => {
+            const timings = typeof beacon.res === 'string' ? JSON.parse(beacon.res) : beacon.res;
+            stripTimingValues(timings);
+            cexpect(timings.http).to.have.property( 's://fonts.googleapis.com/css?family=<redacted>' );
+          });
+        });
+      });
+    });
+  });
+
 });
 
 function stripTimingValues(node) {

@@ -284,7 +284,40 @@ describe('xhr', () => {
                 cexpect(beacon.ty).to.equal('xhr');
                 cexpect(beacon.u).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?mysecret=<redacted>&myaccountno=<redacted>&phone=999$/);
               });
+            });
+        })
+      );
+    });
+  });
 
+  describe('xhrCaptureHeaders', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('01_xhr/xhrCaptureHeaders'));
+    });
+
+    it('must capture the http headers configured by user in xhr request', () => {
+      return whenXhrInstrumentationIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
+            .then(([beacons, ajaxRequests, result]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('01_xhr/xhrCaptureHeaders'));
+                cexpect(beacon['ty']).to.equal('xhr');
+                cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+
+                cexpect(beacon['h_provider']).to.equal('instana');
+                cexpect(beacon['h_content-type']).to.equal('text/html; charset=utf-8');
+                //cexpect(beacon['h_host']).to.equal('127.0.0.1');
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.headers['host']).to.equal('127.0.0.1:8000');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
             });
         })
       );

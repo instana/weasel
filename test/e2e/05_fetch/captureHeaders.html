@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Caputure header test</title>
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  Caputure HTTP headers in fetch request.
+
+  <div id="result"></div>
+
+  <script>
+    eum('captureHeaders', [/from/i, /content-type/i, /host/i]);
+    $(window).on('load', function() {
+      setTimeout(function() {
+        if (self.fetch) {
+          fetch('/ajax' + '?cacheBust=' + (new Date()).getTime(), {
+            headers: {
+              'From': 'stan@instana.com'
+            }
+          })
+          .then(function(response) {
+            return response.text();
+          })
+          .then(function(responseBody) {
+            $('#result').text(responseBody);
+          })
+          .catch(function(e) {
+            $('#result').text('error: ' + JSON.stringify(e));
+          });
+        } else {
+            $('#result').text('The Fetch API is not supported by this browser.');
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>

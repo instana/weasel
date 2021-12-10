@@ -310,7 +310,6 @@ describe('xhr', () => {
 
                 cexpect(beacon['h_provider']).to.equal('instana');
                 cexpect(beacon['h_content-type']).to.equal('text/html; charset=utf-8');
-                //cexpect(beacon['h_host']).to.equal('127.0.0.1');
               });
 
               const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {

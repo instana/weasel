@@ -495,7 +495,6 @@ describe('05_fetch', () => {
                 cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
                 cexpect(beacon['h_content-type']).to.equal('text/html; charset=utf-8');
                 cexpect(beacon['h_from']).to.equal('stan@instana.com');
-                //cexpect(beacon['h_host']).to.equal('127.0.0.1:8000');
 
                 if (hasPerformanceObserverSupport(capabilities)) {
                   cexpect(beacon.t_req).to.be.a('string');

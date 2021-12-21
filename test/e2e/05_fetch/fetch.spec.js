@@ -476,6 +476,44 @@ describe('05_fetch', () => {
     });
   });
 
+  describe('05_fetchCaptureHeaders', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/captureHeaders'));
+    });
+
+    it('must capture headers in fetch requests', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
+            .then(([beacons, ajaxRequests, result, capabilities]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('05_fetch/captureHeaders'));
+                cexpect(beacon['ty']).to.equal('xhr');
+                cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax\?cacheBust=\d+$/);
+                cexpect(beacon['h_content-type']).to.equal('text/html; charset=utf-8');
+                cexpect(beacon['h_from']).to.equal('stan@instana.com');
+
+                if (hasPerformanceObserverSupport(capabilities)) {
+                  cexpect(beacon.t_req).to.be.a('string');
+                }
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.url).to.match(/^\/ajax\?cacheBust=\d+$/);
+                cexpect(ajaxRequest.headers['from']).to.equal('stan@instana.com');
+                cexpect(ajaxRequest.headers['host']).to.equal('127.0.0.1:8000');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+            });
+        })
+      );
+    });
+  });
+
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(
       config => {

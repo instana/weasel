@@ -23,7 +23,7 @@ jobs:
     - uses: saucelabs/sauce-connect-action@v2
       with:
         username: ${{ secrets.SAUCE_USERNAME }}
-        accessKey: ${{ secrets.SAUCE_API_KEY }}
+        accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
         tunnelIdentifier: github-action-tunnel
     - run: npm install -g yarn@1.22.10
     - run: yarn
@@ -32,4 +32,4 @@ jobs:
     - run: yarn run test:e2e:saucelabs
       env:
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_API_KEY }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}

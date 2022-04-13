@@ -20,12 +20,12 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '11'
-    - uses: saucelabs/sauce-connect-action@v2.0.0
+    - uses: saucelabs/sauce-connect-action@v2.1.1
       with:
         username: ${{ secrets.SAUCE_USERNAME }}
         accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
         tunnelIdentifier: github-action-tunnel
-        scVersion: '4.6.4'
+        scVersion: '4.7.1'
     - run: npm install -g yarn@1.22.10
     - run: yarn
     - run: yarn run build

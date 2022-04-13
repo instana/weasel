@@ -32,4 +32,4 @@ jobs:
     - run: yarn run test:e2e:saucelabs
       env:
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_API_KEY }}

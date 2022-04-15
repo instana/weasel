@@ -38,10 +38,8 @@ This being said, how would you go about using Weasel? We recommend the following
 
     ```
     yarn
-    # -or-
-    npm install
 
-    npm run build
+    yarn build
     ```
 
  4. The files within `target/` are the result of the build process. Serve these in whatever way you see fit. You want these to be accessible by (end-) users.

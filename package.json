@@ -1,5 +1,4 @@
 {
-  "name": "",
   "version": "1.0.0",
   "description": "Collect end-user data",
   "main": "lib/index.js",

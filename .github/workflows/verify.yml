@@ -25,7 +25,7 @@ jobs:
         username: ${{ secrets.SAUCE_USERNAME }}
         accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
         tunnelIdentifier: github-action-tunnel
-    - run: npm install -g yarn@1.22.18
+    - run: npm install -g yarn@berry
     - run: yarn
     - run: yarn run build
     - run: yarn run test:quick

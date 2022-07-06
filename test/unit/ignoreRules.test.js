@@ -9,6 +9,7 @@ describe('ignoreRules', () => {
     vars.ignorePings = true;
     vars.ignoreErrorMessages = [];
     vars.reportingUrl = 'https://ingress.example.com';
+    vars.reportingBackends = [{reportingUrl: 'https://ingress.example.com', key: 'key'}];
   });
 
   describe('isUrlIgnored', () => {

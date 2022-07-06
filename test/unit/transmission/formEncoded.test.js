@@ -3,12 +3,16 @@ jest.mock('../../../lib/vars');
 
 describe('transmission/formEncoded', () => {
   let browserMock;
+  let varsMock;
   let sendBeacon;
 
   beforeEach(() => {
     browserMock = require('../../../lib/browser');
     browserMock.reset();
     sendBeacon = require('../../../lib/transmission/formEncoded').sendBeacon;
+    varsMock = require('../../../lib/vars').default;
+    varsMock.reportingUrl = 'http://eum.example.com';
+    varsMock.reportingBackends = [{reportingUrl: 'http://eum.example.com', key: 'key'}];
   });
 
   it('must do nothing when there is nothing to transmit', () => {

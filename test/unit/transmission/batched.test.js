@@ -27,6 +27,8 @@ describe('transmission/batched', () => {
     browserMock = require('../../../lib/browser');
     browserMock.reset();
     varsMock = require('../../../lib/vars').default;
+    varsMock.reportingUrl = 'http://eum.example.com';
+    varsMock.reportingBackends = [{reportingUrl: 'http://eum.example.com', key: 'key'}];
     sendBeacon = require('../../../lib/transmission/batched').sendBeacon;
   });
 
@@ -43,7 +45,8 @@ describe('transmission/batched', () => {
       // simulate availability of the sendBeacon API
       browserMock.nav.sendBeacon = () => {};
       varsMock = require('../../../lib/vars').default;
-
+      varsMock.reportingUrl = 'http://eum.example.com';
+      varsMock.reportingBackends = [{reportingUrl: 'http://eum.example.com', key: 'key'}];
       sendBeacon = require('../../../lib/transmission/batched').sendBeacon;
     });
 

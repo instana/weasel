@@ -8,11 +8,8 @@
   <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
   <script>
     if (window.location.href.indexOf('withMultiBackends=true') !== -1) {
-      let reportingBackends = [{reportingUrl: '/beacon', key: 'key_1'},
-        {reportingUrl: '/beacon_2', key: 'key_2'}];
-
       eum('reportingUrl', '');
-      eum('reportingBackends', reportingBackends);
+      eum('reportingBackends', [{ reportingUrl: '/beacon', key: 'key_1' }, { reportingUrl: '/beacon_2', key: 'key_2' }]);
     }
 
     if (window.location.href.indexOf('withRequestBatching=true') !== -1) {
@@ -20,14 +17,8 @@
     } else {
       eum('beaconBatchingTime', 0);
     }
-  </script>
-</head>
-<body>
-  ajax after page load
 
-  <div id="result"></div>
-  <script>
-      eum('reportEvent', 'firstEvent', {
+    eum('reportEvent', 'firstEvent', {
       duration: 42,
       meta: {
         customEvent: '1'
@@ -41,5 +32,10 @@
       }
     });
   </script>
+</head>
+<body>
+  ajax after page load
+
+  <div id="result"></div>
 </body>
 </html>

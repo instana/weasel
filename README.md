@@ -1,10 +1,10 @@
-# Weasel &nbsp;
+# Weasel &nbsp; [![Build Status](https://app.saucelabs.com/buildstatus/instanaweasel)](https://app.saucelabs.com/u/instanaweasel)
 
 Gather end-user browser performance data.
 
 ---
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/instanaweasel.svg)](https://saucelabs.com/u/instanaweasel)
+[![Sauce Test Status](https://app.saucelabs.com/browser-matrix/instanaweasel.svg)](https://app.saucelabs.com/u/instanaweasel)
 
 Weasel gathers browser performance data, e.g. navigation and resource timings, and sends it via beacons to an API endpoint. Weasel itself is the in-browser part. This means that it runs in the browsers of of websites and web applications users. This is typically called end-user monitoring (EUM).
 

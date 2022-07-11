@@ -73,6 +73,21 @@ app.get('/beacon', (req, res) => {
   res.send('OK');
 });
 
+app.post('/beacon_2', (req, res) => {
+  if (req.is('text/plain')) {
+    const str = req.body.toString('utf8');
+    beaconRequests.push.apply(beaconRequests, decode(str));
+  } else {
+    beaconRequests.push(req.body);
+  }
+  res.send('OK');
+});
+
+app.get('/beacon_2', (req, res) => {
+  beaconRequests.push(req.query);
+  res.send('OK');
+});
+
 app.get('/transmittedBeacons', (req, res) => {
   res.json(beaconRequests);
 });

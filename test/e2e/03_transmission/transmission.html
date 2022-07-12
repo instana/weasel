@@ -9,7 +9,6 @@
   <script>
     eum('apiKey', 'key_0');
     if (window.location.href.indexOf('withMultiBackends=true') !== -1) {
-      eum('reportingUrl', '');
       eum('reportingBackends', [{ reportingUrl: '/beacon', key: 'key_1' }, { reportingUrl: '/beacon_2', key: 'key_2' }]);
     }
 

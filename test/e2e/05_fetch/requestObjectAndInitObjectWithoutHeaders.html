@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>fetch test</title>
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  fetch with request object
+
+  <div id="result"></div>
+
+  <script>
+    $(window).on('load', function() {
+      setTimeout(function() {
+        if (self.fetch && self.Request) {
+          var request = new Request('/ajax' + '?cacheBust=' + (new Date()).getTime());
+
+          fetch(request, {
+            method: 'POST'
+          })
+          .then(function(response) {
+            return response.text();
+          })
+          .then(function(responseBody) {
+            $('#result').text(responseBody);
+          })
+          .catch(function(e) {
+            $('#result').text('error: ' + JSON.stringify(e));
+          });
+        } else {
+            $('#result').text('The Fetch/Request object API is not supported by this browser.');
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>

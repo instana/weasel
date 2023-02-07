@@ -24,7 +24,7 @@ Object {
 exports[`resources/timingSerializer serializeEntry must identify full asset retrieval 1`] = `
 Object {
   "appcache": "",
-  "backendTraceId": "jkdlasj31kjjkl",
+  "backendTraceId": "3748eabc1876cdaa",
   "cachingType": "fullLoad",
   "decodedBodySize": "16786",
   "dns": "",

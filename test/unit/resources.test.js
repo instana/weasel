@@ -86,7 +86,7 @@ describe('resources/timingSerializer', () => {
         serverTiming: [
           {
             name: 'intid',
-            description: 'jkdlasj31kjjkl'
+            description: '3748eabc1876cdaa'
           }
         ]
       };

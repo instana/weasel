@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>error test</title>
+
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+  <script>
+    eum('meta', 'name', 'Tom');
+    eum('meta', 'age', 23);
+    eum('meta', 'kind', 'newbie');
+
+    eum('reportEvent', 'testWithEmptyBackendTraceId', {
+      duration: 42,
+      backendTraceId: '',
+      error: new Error('Testing 123'),
+      componentStack: 'a component stack',
+      meta: {
+        // one-off overwrite
+        kind: 'experienced',
+        state: 'broken'
+      }
+    });
+    eum('reportEvent', 'testWithNoBackendTraceId', {
+      duration: 2,
+      error: new Error('something wrong'),
+      componentStack: 'some stack',
+      meta: {
+        // one-off overwrite
+        kind: 'experienced',
+        state: 'broken'
+      }
+    });
+    eum('reportEvent', 'testWithInvalidBackendTraceId', {
+      duration: 2,
+      backendTraceId: 'aa33',
+      error: new Error('something wrong'),
+      componentStack: 'some stack',
+      meta: {
+        // one-off overwrite
+        kind: 'experienced',
+        state: 'broken'
+      }
+    });
+  </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  simple event reporting
+</body>
+</html>

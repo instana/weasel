@@ -4648,6 +4648,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"http-errors@npm:~1.8.1":
+  version: 1.8.1
+  resolution: "http-errors@npm:1.8.1"
+  dependencies:
+    depd: ~1.1.2
+    inherits: 2.0.4
+    setprototypeof: 1.2.0
+    statuses: ">= 1.5.0 < 2"
+    toidentifier: 1.0.1
+  checksum: d3c7e7e776fd51c0a812baff570bdf06fe49a5dc448b700ab6171b1250e4cf7db8b8f4c0b133e4bfe2451022a5790c1ca6c2cae4094dedd6ac8304a1267f91d2
+  languageName: node
+  linkType: hard
+
 "http-proxy-agent@npm:^5.0.0":
   version: 5.0.0
   resolution: "http-proxy-agent@npm:5.0.0"
@@ -6636,6 +6649,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"multiparty@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "multiparty@npm:4.2.3"
+  dependencies:
+    http-errors: ~1.8.1
+    safe-buffer: 5.2.1
+    uid-safe: 2.1.5
+  checksum: 16be1f14280a78a220864e9209196ce3d9bc5e3342a5e14465e8664c8a3f0e217b370d70f0dfba953ae7f17c720f87573b7b3b01a6e9eb04330c19f547ec157a
+  languageName: node
+  linkType: hard
+
 "mute-stream@npm:0.0.7":
   version: 0.0.7
   resolution: "mute-stream@npm:0.0.7"
@@ -7527,6 +7551,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"random-bytes@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "random-bytes@npm:1.0.0"
+  checksum: 09faa256394aa2ca9754aa57e92a27c452c3e97ffb266e98bebb517332e9df7168fea393159f88d884febce949ba8bec8ddb02f03342da6c6023ecc7b155e0ae
+  languageName: node
+  linkType: hard
+
 "range-parser@npm:~1.2.1":
   version: 1.2.1
   resolution: "range-parser@npm:1.2.1"
@@ -7992,6 +8023,7 @@ __metadata:
     gzip-size-cli: ^5.1.0
     husky: ^0.11.9
     jest: ^26.6.3
+    multiparty: ^4.2.3
     prettier: ^1.18.2
     pretty-bytes-cli: ^3.0.0
     protractor: ^7.0.0
@@ -9246,6 +9278,15 @@ __metadata:
   dependencies:
     is-typedarray: ^1.0.0
   checksum: 99c11aaa8f45189fcfba6b8a4825fd684a321caa9bd7a76a27cf0c7732c174d198b99f449c52c3818107430b5f41c0ccbbfb75cb2ee3ca4a9451710986d61a60
+  languageName: node
+  linkType: hard
+
+"uid-safe@npm:2.1.5":
+  version: 2.1.5
+  resolution: "uid-safe@npm:2.1.5"
+  dependencies:
+    random-bytes: ~1.0.0
+  checksum: 07536043da9a026f4a2bc397543d0ace7587449afa1d9d2c4fd3ce76af8a5263a678788bcc429dff499ef29d45843cd5ee9d05434450fcfc19cc661229f703d1
   languageName: node
   linkType: hard
 

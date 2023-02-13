@@ -562,6 +562,75 @@ describe('05_fetch', () => {
     });
   });
 
+  describe('05_fetchWithFormData', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/fetchWithFormData'));
+    });
+
+    it('must send form data in fetch requests', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
+            .then(([beacons, ajaxRequests, result, capabilities]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('05_fetch/fetchWithFormData'));
+                cexpect(beacon['ty']).to.equal('xhr');
+                cexpect(beacon['m']).to.equal('POST');
+                cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/form+$/);
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.url).to.match(/^\/form+$/);
+                cexpect(ajaxRequest.headers['content-type']).to.contains('multipart/form-data;');
+                cexpect(ajaxRequest.fields['name']).to.contains('somename');
+                cexpect(ajaxRequest.fields['data']).to.contains('somedata');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+
+            });
+        })
+      );
+    });
+  });
+
+  describe('05_fetchWithRequestObjectAndFormData', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/fetchWithRequestObjectAndFormData'));
+    });
+
+    it('must send form data in fetch requests', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
+            .then(([beacons, ajaxRequests, result, capabilities]) => {
+              cexpect(beacons).to.have.lengthOf(2);
+              cexpect(ajaxRequests).to.have.lengthOf(1);
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('05_fetch/fetchWithRequestObjectAndFormData'));
+                cexpect(beacon['ty']).to.equal('xhr');
+                cexpect(beacon['m']).to.equal('POST');
+                cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/form+$/);
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.url).to.match(/^\/form+$/);
+                cexpect(ajaxRequest.headers['content-type']).to.contains('multipart/form-data;');
+                cexpect(ajaxRequest.fields['name']).to.contains('somename');
+                cexpect(ajaxRequest.fields['data']).to.contains('somedata');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+            });
+        })
+      );
+    });
+  });
+
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(
       config => {

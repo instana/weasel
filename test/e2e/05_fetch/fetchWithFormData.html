@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>fetch test</title>
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  Fetch with form data
+  <div id="result"></div>
+  <script>
+    $(window).on('load', function() {
+      setTimeout(function() {
+        if (self.fetch) {
+          var formdata = new FormData();
+          formdata.append("data", "somedata");
+          formdata.append("name", "somename");
+          fetch('/form', {
+            method: 'POST',
+            body: formdata
+          })
+          .then(response => response.text())
+          .then(result => $('#result').text(result))
+          .catch(error => $('#result').text(error));
+
+        } else {
+            $('#result').text('The Fetch API is not supported by this browser.');
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>

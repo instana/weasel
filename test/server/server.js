@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const multiparty = require('multiparty');
 const serveIndex = require('serve-index');
 const express = require('express');
 const uuidV4 = require('uuid/v4');
@@ -106,6 +107,35 @@ app.all('/ajax', (req, res) => {
     params: req.params,
     headers: req.headers,
     response
+  });
+
+  // Delay responses to allow timeout tests.
+  setTimeout(() => {
+    res.send(response);
+  }, 100);
+});
+
+app.post('/form', (req, res) => {
+
+  const form = new multiparty.Form();
+  let response = uuidV4();
+  form.parse(req, function(err, fields) {
+    if (err) {
+      response = 'ERROR';
+    }
+
+    if (!fields) {
+      response = 'ERROR';
+    } else {
+      ajaxRequests.push({
+        method: req.method,
+        url: req.url,
+        params: req.params,
+        headers: req.headers,
+        response,
+        fields
+      });
+    }
   });
 
   // Delay responses to allow timeout tests.

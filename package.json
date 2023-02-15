@@ -46,6 +46,7 @@
     "gzip-size-cli": "^5.1.0",
     "husky": "^0.11.9",
     "jest": "^26.6.3",
+    "multiparty": "^4.2.3",
     "prettier": "^1.18.2",
     "pretty-bytes-cli": "^3.0.0",
     "protractor": "^7.0.0",

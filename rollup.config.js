@@ -5,6 +5,7 @@ const replace = require('rollup-plugin-replace');
 const babel = require('rollup-plugin-babel');
 const path = require('path');
 const fs = require('fs');
+import commonjs from '@rollup/plugin-commonjs';
 
 const secureWebVitalsLoader = require('./secureWebVitalsLoader');
 
@@ -22,6 +23,7 @@ export default {
       exclude: 'node_modules/**',
       plugins: getPlugins()
     }),
+    commonjs(),
     secureWebVitalsLoader(),
     replace({
       DEBUG: JSON.stringify(isDebugBuild)

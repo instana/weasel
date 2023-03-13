@@ -631,6 +631,38 @@ describe('05_fetch', () => {
     });
   });
 
+  describe('05_fetchWithCsrfToken', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('05_fetch/fetchWithCsrfToken'));
+    });
+
+    it('must send csrf token in fetch requests', () => {
+      return whenFetchIsSupported(() =>
+        retry(() => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
+            .then(([beacons, ajaxRequests, result, capabilities]) => {
+              cexpect(beacons).to.have.lengthOf(3);
+              cexpect(ajaxRequests).to.have.lengthOf(2);
+
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('05_fetch/fetchWithCsrfToken'));
+                cexpect(beacon['ty']).to.equal('xhr');
+                cexpect(beacon['m']).to.equal('GET');
+                cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax+$/);
+              });
+
+              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.url).to.match(/^\/ajax+$/);
+                cexpect(ajaxRequest.headers['x-csrf-token']).to.equal('this-is-a-csrf-token');
+              });
+
+              cexpect(result).to.equal(ajaxRequest.response);
+            });
+        })
+      );
+    });
+  });
+
   function whenFetchIsSupported(fn) {
     return whenConfigMatches(
       config => {

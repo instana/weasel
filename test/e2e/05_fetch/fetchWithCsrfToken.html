@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>fetch test</title>
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+
+  <div id="result"></div>
+
+
+  <script>
+    eum('captureHeaders', [/test-header/i, /x-instana-l/i]);
+    const fetchOptions1 = {
+      credentials: 'same-origin',
+      headers: {
+        'test-header': 'a'
+      }
+    }
+
+    const fetchOptions2 = {
+      credentials: 'same-origin',
+      headers: [["test-header", "b"]]
+    }
+
+    let headerObject = new Headers();
+    headerObject.append("test-header", "c");
+    const fetchOptions3 = {
+      credentials: 'same-origin',
+      headers: headerObject
+    }
+
+    $(window).on('load', function() {
+      setTimeout(function() {
+        if (self.fetch) {
+          fetch('/ajax', fetchOptions1)
+          .then(function() {
+            fetchOptions1.headers['X-CSRF-Token'] = 'this-is-a-csrf-token';
+            fetchOptions1.body = new FormData();
+            fetchOptions1.method = 'POST';
+            return fetch('/ajax', fetchOptions1)
+          })
+          .then(response => response.text())
+          .then(result => $('#result').text(result))
+          .catch(error => $('#result').text(error));
+
+          fetch('/ajax', fetchOptions2)
+          .then(function() {
+            fetchOptions2.headers.push(["X-CSRF-Token", "this-is-a-csrf-token"]);
+            fetchOptions2.body = new FormData();
+            fetchOptions2.method = 'POST';
+            return fetch('/ajax', fetchOptions2)
+          })
+          .then(response => response.text())
+          .then(result => $('#result').text(result))
+          .catch(error => $('#result').text(error));
+
+          fetch('/ajax', fetchOptions3)
+          .then(function() {
+            fetchOptions3.headers.append("X-CSRF-Token", "this-is-a-csrf-token");
+            fetchOptions3.body = new FormData();
+            fetchOptions3.method = 'POST';
+            return fetch('/ajax', fetchOptions3)
+          })
+          .then(response => response.text())
+          .then(result => $('#result').text(result))
+          .catch(error => $('#result').text(error));
+
+        } else {
+            $('#result').text('The Fetch API is not supported by this browser.');
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>

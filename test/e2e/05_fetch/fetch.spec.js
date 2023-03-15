@@ -641,22 +641,86 @@ describe('05_fetch', () => {
         retry(() => {
           return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
             .then(([beacons, ajaxRequests, result, capabilities]) => {
-              cexpect(beacons).to.have.lengthOf(3);
-              cexpect(ajaxRequests).to.have.lengthOf(2);
+              cexpect(beacons).to.have.lengthOf(7);
+              cexpect(ajaxRequests).to.have.lengthOf(6);
 
-              expectOneMatching(beacons, beacon => {
+              const ajaxGetBeacon = expectOneMatching(beacons, beacon => {
                 cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('05_fetch/fetchWithCsrfToken'));
                 cexpect(beacon['ty']).to.equal('xhr');
                 cexpect(beacon['m']).to.equal('GET');
                 cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax+$/);
+                cexpect(beacon['h_test-header']).to.equal('a');
               });
 
-              const ajaxRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+              const ajaxGetRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
                 cexpect(ajaxRequest.url).to.match(/^\/ajax+$/);
-                cexpect(ajaxRequest.headers['x-csrf-token']).to.equal('this-is-a-csrf-token');
+                cexpect(ajaxRequest.method).to.equal('GET');
+                //original header is passed through
+                cexpect(ajaxRequest.headers['test-header']).to.equal('a');
               });
 
-              cexpect(result).to.equal(ajaxRequest.response);
+              const ajaxPostRequest = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.url).to.match(/^\/ajax+$/);
+                cexpect(ajaxRequest.method).to.equal('POST');
+                cexpect(ajaxRequest.headers['x-csrf-token']).to.equal('this-is-a-csrf-token');
+                //original header is untouched.
+                cexpect(ajaxRequest.headers['test-header']).to.equal('a');
+              });
+
+              cexpect(ajaxGetRequest.headers['x-instana-t']).to.equal(ajaxGetBeacon.t);
+              //instana correltion header is not attached to original headers.
+              cexpect(ajaxPostRequest.headers['x-instana-t']).to.not.contains(ajaxGetBeacon.t);
+
+              const ajaxGetBeacon2 = expectOneMatching(beacons, beacon => {
+                cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('05_fetch/fetchWithCsrfToken'));
+                cexpect(beacon['ty']).to.equal('xhr');
+                cexpect(beacon['m']).to.equal('GET');
+                cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax+$/);
+                cexpect(beacon['h_test-header']).to.equal('b');
+              });
+
+              const ajaxGetRequest2 = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('GET');
+                //original header is passed through
+                cexpect(ajaxRequest.headers['test-header']).to.equal('b');
+              });
+
+              const ajaxPostRequest2 = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('POST');
+                cexpect(ajaxRequest.headers['x-csrf-token']).to.equal('this-is-a-csrf-token');
+                //original header is untouched.
+                cexpect(ajaxRequest.headers['test-header']).to.equal('b');
+              });
+
+              cexpect(ajaxGetRequest2.headers['x-instana-t']).to.equal(ajaxGetBeacon2.t);
+              //instana correltion header is not attached to original headers.
+              cexpect(ajaxPostRequest2.headers['x-instana-t']).to.not.contains(ajaxGetBeacon2.t);
+
+              const ajaxGetBeacon3 = expectOneMatching(beacons, beacon => {
+                cexpect(beacon['l']).to.equal(getE2ETestBaseUrl('05_fetch/fetchWithCsrfToken'));
+                cexpect(beacon['ty']).to.equal('xhr');
+                cexpect(beacon['m']).to.equal('GET');
+                cexpect(beacon['u']).to.match(/^http:\/\/127\.0\.0\.1:8000\/ajax+$/);
+                cexpect(beacon['h_test-header']).to.equal('c');
+              });
+
+              const ajaxGetRequest3 = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('GET');
+                //original header is passed through
+                cexpect(ajaxRequest.headers['test-header']).to.equal('c');
+              });
+
+              const ajaxPostRequest3 = expectOneMatching(ajaxRequests, ajaxRequest => {
+                cexpect(ajaxRequest.method).to.equal('POST');
+                cexpect(ajaxRequest.headers['x-csrf-token']).to.equal('this-is-a-csrf-token');
+                //original header is untouched.
+                cexpect(ajaxRequest.headers['test-header']).to.equal('c');
+              });
+
+              cexpect(ajaxGetRequest3.headers['x-instana-t']).to.equal(ajaxGetBeacon3.t);
+              //instana correltion header is not attached to original headers.
+              cexpect(ajaxPostRequest3.headers['x-instana-t']).to.not.contains(ajaxGetBeacon3.t);
+
             });
         })
       );

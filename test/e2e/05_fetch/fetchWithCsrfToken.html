@@ -8,43 +8,67 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
-  <input id="btn1" type="button" value="complex fetch with csrf" onclick=complexFetch />
 
   <div id="result"></div>
 
 
   <script>
-    const fetchOptions = {
+    eum('captureHeaders', [/test-header/i, /x-instana-l/i]);
+    const fetchOptions1 = {
       credentials: 'same-origin',
       headers: {
-        'Buddy': 'hello world',
-        'X-Requested-With': 'SuperMan'
+        'test-header': 'a'
       }
     }
 
-    // async function complexFetch() {
-    //   const result = await fetch('/ajax', defaultFetchOptions);
+    const fetchOptions2 = {
+      credentials: 'same-origin',
+      headers: [["test-header", "b"]]
+    }
 
-    //   const finalFetchOptions = {...defaultFetchOptions}
-    //   finalFetchOptions.headers['X-CSRF-Token'] = 'this-is-a-csrf-token';
-    //   const response = await fetch('/ajax', {body:'{"k":"v"}', method:'POST', ...finalFetchOptions})
-    //   $('#result').text(await response.text());
-    // }
-    // document.getElementById("btn1").addEventListener('click', complexFetch);
+    const headerObject = new Headers();
+    headerObject.append("test-header", "c");
+    const fetchOptions3 = {
+      credentials: 'same-origin',
+      headers: headerObject
+    }
 
     $(window).on('load', function() {
       setTimeout(function() {
         if (self.fetch) {
-          fetch('/ajax', fetchOptions)
+          fetch('/ajax', fetchOptions1)
           .then(function() {
-            fetchOptions.headers['X-CSRF-Token'] = 'this-is-a-csrf-token';
-            fetchOptions.body = new FormData();
-            fetchOptions.method = 'POST';
-            return fetch('/ajax', fetchOptions)
+            fetchOptions1.headers['X-CSRF-Token'] = 'this-is-a-csrf-token';
+            fetchOptions1.body = new FormData();
+            fetchOptions1.method = 'POST';
+            return fetch('/ajax', fetchOptions1)
           })
           .then(response => response.text())
           .then(result => $('#result').text(result))
           .catch(error => $('#result').text(error));
+
+          fetch('/ajax', fetchOptions2)
+          .then(function() {
+            fetchOptions2.headers.push(["X-CSRF-Token", "this-is-a-csrf-token"]);
+            fetchOptions2.body = new FormData();
+            fetchOptions2.method = 'POST';
+            return fetch('/ajax', fetchOptions2)
+          })
+          .then(response => response.text())
+          .then(result => $('#result').text(result))
+          .catch(error => $('#result').text(error));
+
+          fetch('/ajax', fetchOptions3)
+          .then(function() {
+            fetchOptions3.headers.append("X-CSRF-Token", "this-is-a-csrf-token");
+            fetchOptions3.body = new FormData();
+            fetchOptions3.method = 'POST';
+            return fetch('/ajax', fetchOptions3)
+          })
+          .then(response => response.text())
+          .then(result => $('#result').text(result))
+          .catch(error => $('#result').text(error));
+
         } else {
             $('#result').text('The Fetch API is not supported by this browser.');
         }

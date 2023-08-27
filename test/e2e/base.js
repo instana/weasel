@@ -1,10 +1,21 @@
+const setupBrowser = () => {
+  // we are not using Angular.js
+  browser.waitForAngularEnabled(false);
+};
+
+exports.restartBrowser = () => {
+  browser.restartSync();
+  setupBrowser();
+};
+
 exports.registerBaseHooks = () => {
   beforeEach(() => {
-    // we are not using Angular.js
-    browser.ignoreSynchronization = true;
+    setupBrowser();
   });
 
   afterEach(async () => {
+    setupBrowser();
+
     // Wait until the page is disposed to ensure that we don't have any
     // more beacons that are in flight before the next test starts.
     await browser.get('about:blank');
@@ -18,20 +29,21 @@ exports.exportCapabilities = exporter => {
 };
 
 exports.whenConfigMatches = (predicate, fn) => {
-  return browser.getProcessedConfig()
-    .then(config => {
-      if (predicate(config)) {
-        return fn(config);
-      }
+  return browser.getProcessedConfig().then(config => {
+    if (predicate(config)) {
+      return fn(config);
+    }
 
-      return true;
-    });
+    return true;
+  });
 };
 
-exports.hasResourceTimingSupport = (capabilities) => {
+exports.hasResourceTimingSupport = capabilities => {
   const version = Number(capabilities.version);
-  return (capabilities.browserName !== 'internet explorer' && capabilities.browserName !== 'safari') ||
-    (capabilities.browserName === 'internet explorer' && version >= 10);
+  return (
+    (capabilities.browserName !== 'internet explorer' && capabilities.browserName !== 'safari') ||
+    (capabilities.browserName === 'internet explorer' && version >= 10)
+  );
 };
 
 exports.hasPerformanceObserverSupport = capabilities => {

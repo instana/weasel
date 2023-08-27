@@ -8115,7 +8115,7 @@ __metadata:
     serve-index: ^1.9.1
     sinon: ^7.0.0
     uuid: ^3.0.1
-    web-vitals: 1.1.1
+    web-vitals: 1.1.2
     webdriver-manager: ^12.1.8
   languageName: unknown
   linkType: soft
@@ -9598,10 +9598,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:1.1.1":
-  version: 1.1.1
-  resolution: "web-vitals@npm:1.1.1"
-  checksum: d3caabe88577796795bfad3c24c4afe0e0b8a4fc44edd746f211cadd12b068a5cb060713f197785de454b072a29558d945de12272c90111a03f89a1c98553e89
+"web-vitals@npm:1.1.2":
+  version: 1.1.2
+  resolution: "web-vitals@npm:1.1.2"
+  checksum: 92071029089277166e11141b735831d9011e85737d32c1360034676db898ab0ca95f19041ee01904f2189ad6e711b9da6b17567e4831290a429a586c98bc573f
   languageName: node
   linkType: hard
 

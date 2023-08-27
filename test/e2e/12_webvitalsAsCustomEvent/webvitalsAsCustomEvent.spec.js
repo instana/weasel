@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../../server/controls');
-const {registerBaseHooks} = require('../base');
+const {registerBaseHooks, restartBrowser} = require('../base');
 const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
@@ -10,6 +10,9 @@ describe('12_webvitalsAsCustomEvent', () => {
 
   describe('webvitalsAsCustomEvent', () => {
     beforeEach(() => {
+      // webvital CLS does not work if following another test, so restart browser to cleanup all context
+      restartBrowser();
+
       browser.get(getE2ETestBaseUrl('12_webvitalsAsCustomEvent/webvitalsAsCustomEvent'));
       // wait for webvital metrics
       browser.sleep(5000);
@@ -19,9 +22,10 @@ describe('12_webvitalsAsCustomEvent', () => {
       element(by.id('button3')).click();
       browser.sleep(1000);
       element(by.id('button2')).click();
+      browser.sleep(1000);
     });
 
-    fit('must report web-vitals as custom events', () => {
+    it('must report web-vitals as custom events', () => {
       return retry(() => {
         return getBeacons().then(beacons => {
           const pageLoadBeacon = expectOneMatching(beacons, beacon => {

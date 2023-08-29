@@ -3,12 +3,7 @@
 (function() {
   window.config = getGlobalConfigObject();
 
-  (function(
-    win,
-    longGlobalName,
-    shortGlobalName,
-    globalApi
-  ) {
+  (function(win, longGlobalName, shortGlobalName, globalApi) {
     if (win[longGlobalName]) {
       return;
     }
@@ -30,6 +25,9 @@
   eum('beaconBatchingTime', 100);
   eum('maxWaitForResourceTimingsMillis', 1000);
   eum('maxMaitForPageLoadMetricsMillis', 100);
+
+  // most existing tests does not expect extra custom events
+  eum('webvitalsInCustomEvent', false);
 
   if (window.onEumLoad) {
     window.onEumLoad(eum);
@@ -61,5 +59,5 @@
     var script = document.createElement('script');
     script.src = window.config.crossOrigin + absolutePath;
     document.body.appendChild(script);
-  }
+  };
 })();

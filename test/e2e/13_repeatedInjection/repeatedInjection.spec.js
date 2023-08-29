@@ -13,7 +13,7 @@ describe('13_repeatedInjection', () => {
       browser.get(getE2ETestBaseUrl('13_repeatedInjection/repeatedInjection'));
     });
 
-    fit('must report beacons with different key', () => {
+    it('must report beacons with different key', () => {
       return retry(() => {
         return getBeacons().then(beacons => {
           const pageLoadBeacon = expectOneMatching(beacons, beacon => {

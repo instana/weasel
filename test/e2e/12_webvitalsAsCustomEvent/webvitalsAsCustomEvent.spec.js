@@ -9,6 +9,7 @@ describe('12_webvitalsAsCustomEvent', () => {
   registerBaseHooks();
 
   describe('webvitalsAsCustomEvent', () => {
+    console.log('TEST PR');
     beforeEach(() => {
       // webvital CLS does not work if following another test, so restart browser to cleanup all context
       restartBrowser();

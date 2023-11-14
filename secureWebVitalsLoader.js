@@ -6,7 +6,6 @@ module.exports = () => ({
   name: 'secureWebVitalsLoader',
   load(id) {
     if (id.endsWith('web-vitals/dist/web-vitals.js')) {
-      console.log('Adding try/catch to the web-vitals module');
       const content = fs.readFileSync(id, {encoding: 'utf8'});
       const parts = content.split('export{');
       if (parts.length !== 2) {

@@ -570,8 +570,8 @@ describe('05_fetch', () => {
     it('must send form data in fetch requests', () => {
       return whenFetchIsSupported(() =>
         retry(() => {
-          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
-            .then(([beacons, ajaxRequests, result, capabilities]) => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
               cexpect(beacons).to.have.lengthOf(2);
               cexpect(ajaxRequests).to.have.lengthOf(1);
 
@@ -605,8 +605,8 @@ describe('05_fetch', () => {
     it('must send form data in fetch requests', () => {
       return whenFetchIsSupported(() =>
         retry(() => {
-          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
-            .then(([beacons, ajaxRequests, result, capabilities]) => {
+          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent()])
+            .then(([beacons, ajaxRequests, result]) => {
               cexpect(beacons).to.have.lengthOf(2);
               cexpect(ajaxRequests).to.have.lengthOf(1);
 
@@ -639,8 +639,8 @@ describe('05_fetch', () => {
     it('must send csrf token in fetch requests', () => {
       return whenFetchIsSupported(() =>
         retry(() => {
-          return Promise.all([getBeacons(), getAjaxRequests(), getResultElementContent(), getCapabilities()])
-            .then(([beacons, ajaxRequests, result, capabilities]) => {
+          return Promise.all([getBeacons(), getAjaxRequests()])
+            .then(([beacons, ajaxRequests]) => {
               cexpect(beacons).to.have.lengthOf(7);
               cexpect(ajaxRequests).to.have.lengthOf(6);
 

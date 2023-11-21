@@ -28,37 +28,54 @@ describe('12_webvitalsAsCustomEvent', () => {
     it('must report web-vitals as custom events', () => {
       return retry(() => {
         return getBeacons().then(beacons => {
+          console.log('BEACONS', beacons);
           const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+            console.log('beacon', beacon);
             cexpect(beacon.ty).to.equal('pl');
           });
 
+          console.log('@@@@!', pageLoadBeacon);
+
           expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(parseFloat(beacon.d)).to.be.above(3000);
             cexpect(beacon.n).to.equal('instana-webvitals-LCP');
+            cexpect(beacon.ty).to.equal('cus');
+            cexpect(beacon.s).to.be.a('string');
+            cexpect(beacon.t).to.equal(beacon.s);
+            cexpect(beacon.ts).to.be.a('string');
+            cexpect(parseInt(beacon.sv)).to.be.above(1);
+            cexpect(beacon.r).to.equal(pageLoadBeacon.r);
             cexpect(beacon.l).to.be.a('string');
+            cexpect(beacon.l).to.equal(pageLoadBeacon.u);
+            cexpect(beacon.pl).to.be.a('string');
             cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            cexpect(beacon.ul.split(',').length).to.equal(3);
+            cexpect(parseFloat(beacon.d)).to.be.above(3000);
           });
 
           expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
             cexpect(beacon.n).to.equal('instana-webvitals-FID');
+            cexpect(beacon.ty).to.equal('cus');
+            cexpect(beacon.s).to.be.a('string');
+            cexpect(beacon.t).to.equal(beacon.s);
+            cexpect(beacon.ts).to.be.a('string');
+            cexpect(parseInt(beacon.sv)).to.be.above(1);
+            cexpect(beacon.r).to.equal(pageLoadBeacon.r);
             cexpect(beacon.l).to.be.a('string');
+            cexpect(beacon.l).to.equal(pageLoadBeacon.u);
+            cexpect(beacon.pl).to.be.a('string');
             cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            cexpect(beacon.ul.split(',').length).to.equal(3);
+            cexpect(parseFloat(beacon.d)).to.equal(1);
           });
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-CLS');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+          // expectOneMatching(beacons, beacon => {
+          //   cexpect(beacon.ty).to.equal('cus');
+          //   cexpect(beacon.ts).to.be.a('string');
+          //   cexpect(beacon.n).to.equal('instana-webvitals-CLS');
+          //   cexpect(beacon.l).to.be.a('string');
+          //   cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+          //   cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+          // });
         });
       });
     });

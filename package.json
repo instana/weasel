@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "object-assign": "^4.1.1",
-    "web-vitals": "1.1.2"
+    "web-vitals": "3.5.0"
   },
   "packageManager": "yarn@3.6.3"
 }

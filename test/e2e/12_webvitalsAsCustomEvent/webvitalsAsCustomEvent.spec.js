@@ -22,7 +22,9 @@ describe('12_webvitalsAsCustomEvent', () => {
       element(by.id('button3')).click();
       browser.sleep(1000);
       element(by.id('button2')).click();
-      browser.sleep(1000);
+      browser.sleep(2000);
+      element(by.id('button4')).click();
+      browser.sleep(2000);
     });
 
     it('must report web-vitals as custom events', () => {
@@ -34,7 +36,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             cexpect(beacon.ty).to.equal('pl');
           });
 
-          console.log('@@@@!', pageLoadBeacon);
+          console.log('))))))pageLoadBeacon', pageLoadBeacon);
 
           expectOneMatching(beacons, beacon => {
             cexpect(beacon.n).to.equal('instana-webvitals-LCP');
@@ -69,12 +71,19 @@ describe('12_webvitalsAsCustomEvent', () => {
           });
 
           // expectOneMatching(beacons, beacon => {
-          //   cexpect(beacon.ty).to.equal('cus');
-          //   cexpect(beacon.ts).to.be.a('string');
           //   cexpect(beacon.n).to.equal('instana-webvitals-CLS');
+          //   cexpect(beacon.ty).to.equal('cus');
+          //   cexpect(beacon.s).to.be.a('string');
+          //   cexpect(beacon.t).to.equal(beacon.s);
+          //   cexpect(beacon.ts).to.be.a('string');
+          //   cexpect(parseInt(beacon.sv)).to.be.above(1);
+          //   cexpect(beacon.r).to.equal(pageLoadBeacon.r);
           //   cexpect(beacon.l).to.be.a('string');
+          //   cexpect(beacon.l).to.equal(pageLoadBeacon.u);
+          //   cexpect(beacon.pl).to.be.a('string');
           //   cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-          //   cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+          //   cexpect(beacon.ul.split(',').length).to.equal(3);
+          //   cexpect(parseFloat(beacon.d)).to.be.above(3000);
           // });
         });
       });

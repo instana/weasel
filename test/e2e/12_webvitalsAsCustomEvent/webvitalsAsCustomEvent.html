@@ -10,6 +10,24 @@
     eum('webvitalsInCustomEvent', true);
   </script>
   <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+
+  <!-- <script>
+    (function () {
+      var script = document.createElement('script');
+      // script.src = 'https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js';
+      script.src = 'https://unpkg.com/web-vitals@3.5.0/dist/web-vitals.iife.js';
+      script.onload = function () {
+        // When loading `web-vitals` using a classic script, all the public
+        // methods can be found on the `webVitals` global namespace.
+        console.log('##########')
+        webVitals.onCLS(console.log);
+        webVitals.onFID(console.log);
+        webVitals.onLCP(console.log);
+      };
+      document.head.appendChild(script);
+    })();
+  </script> -->
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
@@ -78,6 +96,7 @@
   <button type="button" class="btn btn-default" id="button1">button1</button>
   <button type="button" class="btn btn-default" id="button2">button2</button>
   <button type="button" class="btn btn-default" id="button3">button3</button>
+  <button type="button" class="btn btn-default" id="button4">Click here</button>
 
   <div class="jumbotron" id="resultwrap" style="display: none">
     <div class="media">
@@ -94,6 +113,11 @@
     $('#button2').on('click', function () {
       $('#button1').hide();
     });
+
+    $('#button4').on('click',function () {
+      window.open('https://www.example.com', '_blank');
+    });
+
 
     $(window).on("load", function () {
       console.log("window loaded");
@@ -125,6 +149,7 @@ Consulted perpetual of pronounce me delivered. Too months nay end change relied 
         $('#resultwrap').show();
       }, 3000);
     });
+
   </script>
 </body>
 

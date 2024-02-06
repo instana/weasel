@@ -8,6 +8,8 @@ const fs = require('fs');
 
 import commonjs from '@rollup/plugin-commonjs';
 
+const extensions = ['.js', '.ts'];
+
 const secureWebVitalsLoader = require('./secureWebVitalsLoader');
 
 const isDebugBuild = process.env.NODE_ENV !== 'production';
@@ -19,28 +21,30 @@ export default {
     format: 'iife'
   },
   plugins: [
-    babel({
+    babel(Object.assign(getBabelrc(), {
       babelrc: false,
       exclude: 'node_modules/**',
-      plugins: getPlugins()
-    }),
+      extensions
+    })),
     commonjs(),
     secureWebVitalsLoader(),
     replace({
       DEBUG: JSON.stringify(isDebugBuild)
     }),
     resolve({
-      browser: true
+      browser: true,
+      extensions
     })
   ]
 };
 
 
-function getPlugins() {
+function getBabelrc() {
   const content = fs.readFileSync(path.join(__dirname, '.babelrc'), {encoding: 'utf8'});
   const config = JSON.parse(content);
-  return config.plugins
+  config.plugins = config.plugins
     // Rollup works with commonjs module. If we would transpile them, then rollup
     // could not do its job.
     .filter(plugin => plugin !== '@babel/plugin-transform-modules-commonjs');
+  return config;
 }

@@ -2,7 +2,7 @@
   "version": "1.6.6",
   "name": "@instana/weasel",
   "description": "Collect end-user data",
-  "main": "lib/index.js",
+  "main": "lib/index.ts",
   "scripts": {
     "build": "yarn run build:clean && yarn run build:production && yarn run build:debug && yarn run fileStats",
     "build:clean": "rm -rf target",

@@ -5,6 +5,7 @@ const replace = require('rollup-plugin-replace');
 const babel = require('rollup-plugin-babel');
 const path = require('path');
 const fs = require('fs');
+
 import commonjs from '@rollup/plugin-commonjs';
 
 const secureWebVitalsLoader = require('./secureWebVitalsLoader');
@@ -12,7 +13,7 @@ const secureWebVitalsLoader = require('./secureWebVitalsLoader');
 const isDebugBuild = process.env.NODE_ENV !== 'production';
 
 export default {
-  input: 'lib/index.js',
+  input: 'lib/index.ts',
   output: {
     file: `target/${process.env.FILENAME}.js`,
     format: 'iife'

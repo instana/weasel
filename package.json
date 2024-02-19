@@ -1,5 +1,6 @@
 {
-  "version": "1.0.0",
+  "version": "1.6.0",
+  "name": "@instana/weasel",
   "description": "Collect end-user data",
   "main": "lib/index.js",
   "scripts": {
@@ -68,5 +69,11 @@
     "object-assign": "^4.1.1",
     "web-vitals": "3.5.2"
   },
+  "publishConfig": {
+    "registry": "https://delivery.instana.io/artifactory/api/npm/int-npm-local/"
+  },
+  "files": [
+    "target/*"
+  ],
   "packageManager": "yarn@3.6.3"
 }

@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 if (true) {
-  while true) {
+  while (true) {
     console.log('Info!');
   }
 }

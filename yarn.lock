@@ -8074,9 +8074,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"root-workspace-0b6124@workspace:.":
+"@instana/weasel@workspace:.":
   version: 0.0.0-use.local
-  resolution: "root-workspace-0b6124@workspace:."
+  resolution: "@instana/weasel@workspace:."
   dependencies:
     "@babel/core": ^7.0.0
     "@babel/plugin-transform-block-scoping": ^7.0.0

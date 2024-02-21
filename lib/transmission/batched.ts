@@ -12,7 +12,7 @@ import vars from '../vars';
 const maxBatchedBeacons = 15;
 
 const pendingBeacons: Array<Beacon> = [];
-let pendingBeaconTransmittingTimeout;
+let pendingBeaconTransmittingTimeout: any;
 
 const isVisibilityApiSupported = typeof doc.visibilityState === 'string';
 const isSupported = !!XMLHttpRequest && isVisibilityApiSupported && isSendBeaconApiSupported();

@@ -4,7 +4,7 @@ import type {State} from './types';
 import {info} from './debug';
 
 const states: {[name: string]: State} = {};
-let currentStateName;
+let currentStateName: string | null;
 
 export function registerState(name: string, impl: State) {
   states[name] = impl;
@@ -19,10 +19,10 @@ export function transitionTo(nextStateName: string) {
   states[nextStateName].onEnter();
 }
 
-export function getActiveTraceId(): ?string {
-  return states[currentStateName].getActiveTraceId();
+export function getActiveTraceId(): string | null | undefined {
+  return currentStateName ? states[currentStateName].getActiveTraceId() : null;
 }
 
-export function getActivePhase(): ?string {
-  return states[currentStateName].getActivePhase();
+export function getActivePhase(): string | null | undefined {
+  return currentStateName ? states[currentStateName].getActivePhase() : null;
 }

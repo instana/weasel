@@ -11,7 +11,7 @@
     eum('meta', 'age', 23);
     eum('meta', 'kind', 'newbie');
 
-    eum('reportEvent', 'myTestEvent', {
+    eum('reportEvent', 'testWithEmptyCustomMetric', {
       duration: 42,
       backendTraceId: 'ab87128a1ff99345',
       error: new Error('Testing 123'),
@@ -21,7 +21,42 @@
         kind: 'experienced',
         state: 'broken'
       },
-      customMetric: 123.2342
+      customMetric: null
+    });
+    eum('reportEvent', 'testWithNoCustomMetric', {
+      duration: 2,
+      backendTraceId: 'ab87128a1ff99345',
+      error: new Error('something wrong'),
+      componentStack: 'some stack',
+      meta: {
+        // one-off overwrite
+        kind: 'experienced',
+        state: 'broken'
+      }
+    });
+    eum('reportEvent', 'testWithIncorrectCustomMetric', {
+      duration: 2,
+      backendTraceId: 'ab87128a1ff99345',
+      error: new Error('something wrong'),
+      componentStack: 'some stack',
+      meta: {
+        // one-off overwrite
+        kind: 'experienced',
+        state: 'broken'
+      },
+      customMetric: 'some string'
+    });
+    eum('reportEvent', 'testWithExponentialCustomMetric(1e5)', {
+      duration: 2,
+      backendTraceId: 'ab87128a1ff99345',
+      error: new Error('something wrong'),
+      componentStack: 'some stack',
+      meta: {
+        // one-off overwrite
+        kind: 'experienced',
+        state: 'broken'
+      },
+      customMetric: 1e5
     });
   </script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -29,6 +64,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 <body>
-  simple event reporting
+  simple event reporting without proper CustomMetric
 </body>
 </html>

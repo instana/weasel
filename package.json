@@ -1,5 +1,5 @@
 {
-  "version": "1.6.2",
+  "version": "1.6.3",
   "name": "@instana/weasel",
   "description": "Collect end-user data",
   "main": "lib/index.js",

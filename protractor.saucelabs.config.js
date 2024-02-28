@@ -17,7 +17,7 @@ exports.config = {
     newSaucelabsCapability('safari', '11.1', 'macOS 10.13'),
     newSaucelabsCapability('firefox', '78.0', 'Windows 7'),
     newSaucelabsCapability('firefox', '58.0', 'Windows 11'),
-    newSaucelabsCapability('chrome', '49.0', 'Windows 10'),
+    newSaucelabsCapability('chrome', '50.0', 'Windows 10'),
     newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
     newSaucelabsCapability('chrome', '65.0', 'OS X 10.11')
   ],

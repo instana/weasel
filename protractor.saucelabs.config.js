@@ -9,7 +9,7 @@ exports.config = {
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
-    newSaucelabsCapability('chrome', '61.0', 'Windows 10'),
+    newSaucelabsCapability('chrome', '62.0', 'Windows 10'),
     newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
     newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10'),
     newSaucelabsCapability('safari', '9.0', 'OS X 10.11'),

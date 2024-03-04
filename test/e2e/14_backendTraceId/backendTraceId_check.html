@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>xhr test</title>
+
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+</head>
+<body>
+  generating ajax requests after page load
+
+  <div id="result"></div>
+
+  <script>
+    $(window).on('load', function() {
+        var totalIterations = 4;
+        var beaconsPerIteration = 8;
+        var intervalBetweenIterations = 1000; // 1 second between iterations
+        var iteration = 0;
+
+        function sendBeacons(iteration) {     // sending beaconsPerIteration in 1 intervalBetweenIterations
+            for (var i = 0; i < beaconsPerIteration; i++) {
+                $.ajax({
+                    url: '/ajax' + '?cacheBust=' + (new Date()).getTime(),
+                    success: function(result) {
+                        $('#result').append(result + '<br>'); 
+                    }
+                });
+            }    
+        }
+        myInterval = setInterval(function() { 
+          iteration=iteration+1;
+
+          if(iteration > totalIterations - 1){
+          clearInterval(myInterval);
+          }
+
+          sendBeacons(iteration); // Send beacons for the next iteration after 1 second
+        }, intervalBetweenIterations);
+
+          
+        //sendBeacons(0);
+        
+    });
+  </script>
+</body>
+</html>

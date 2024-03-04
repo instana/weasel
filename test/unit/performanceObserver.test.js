@@ -120,6 +120,7 @@ describe('performanceObserver', () => {
       entryTypes: ['resource'],
       resourceMatcher,
       maxWaitForResourceMillis: 1000,
+      maxToleranceForResourceTimingsMillis: 3000,
       onEnd
     });
     expectPendingTimers(0);

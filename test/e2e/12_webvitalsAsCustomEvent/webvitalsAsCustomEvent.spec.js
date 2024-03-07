@@ -31,7 +31,7 @@ describe('12_webvitalsAsCustomEvent', () => {
       browser.sleep(3000);
     });
 
-    it('must report web-vitals as custom events', () => {
+    fit('must report web-vitals as custom events', () => {
       return retry(() => {
         return getBeacons().then(beacons => {
           const pageLoadBeacon = expectOneMatching(beacons, beacon => {

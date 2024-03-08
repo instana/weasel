@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.6.5
+- Added fragment as user configurable. Support for case when user wants to redact sensitive information in url fragment.
+
 # 1.6.4
 - Added maxToleranceForResourceTimingsMillis(default 3000ms) as user configurable. Support for case where Backend Trace Id is not available in xhr beacons.
 

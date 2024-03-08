@@ -330,6 +330,54 @@ describe('pageLoad', () => {
     });
   });
 
+  describe('stripSecretlastQueryParam', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/pageLoadStripSecrets') + '&phoneno=119&account=myaccount#fragmentinfo');
+    });
+
+    it('must strip secret from url when it is last query parameter', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['u']).to.equal(getE2ETestBaseUrl('00_pageLoad/pageLoadStripSecrets') + '&phoneno=119&account=<redacted>#fragmentinfo');
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+  });
+
+  describe('redactFragment', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/pageLoadRedactFragment') + '&account=myaccount&appsecret=password&phoneno=119#fragmentstring');
+    });
+
+    it('must redact fragment from url', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['u']).to.equal(getE2ETestBaseUrl('00_pageLoad/pageLoadRedactFragment') + '&account=myaccount&appsecret=<redacted>&phoneno=119#<redacted>');
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+  });
+
+  describe('redactFragmentLastQp', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/pageLoadRedactFragment') + '&account=myaccount&appsecret=password#fragmentstring');
+    });
+
+    it('must strip secret from url for last query parameter and redact fragment', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['u']).to.equal(getE2ETestBaseUrl('00_pageLoad/pageLoadRedactFragment') + '&account=myaccount&appsecret=<redacted>#<redacted>');
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+  });
+
   describe('resourceStripSecrets', () => {
     beforeEach(() => {
       browser.get(getE2ETestBaseUrl('00_pageLoad/resourceStripSecrets'));

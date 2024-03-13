@@ -13,6 +13,7 @@ export function sendBeacon(data: Beacon) {
     for (let i = 0, len = vars.reportingBackends.length; i < len; i++) {
       let reportingBackend: ReportingBackend = vars.reportingBackends[i];
       if (i > 0) {
+        // @ts-ignore TODO - remove this ignore once k or key type become equal.
         data['k'] = reportingBackend['key'];
       }
       const str = stringify(data);
@@ -50,7 +51,7 @@ function transmit(str: string, reportingUrl: string) {
 function stringify(data: Beacon) {
   let str = '';
 
-  for (let key in data) {
+  for (const key in data) {
     if (hasOwnProperty(data, key)) {
       const value = data[key];
       if (value != null) {

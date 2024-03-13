@@ -18,7 +18,7 @@ function getPageLoadStartTimestamp() {
   return performance.timing.navigationStart;
 }
 
-export function addTimingToPageLoadBeacon(beacon: PageLoadBeacon) {
+export function addTimingToPageLoadBeacon(beacon: Partial<PageLoadBeacon>) {
   if (!isTimingAvailable) {
     // This is our absolute fallback mode where we only have
     // approximations for speed information.
@@ -94,7 +94,7 @@ export function addTimingToPageLoadBeacon(beacon: PageLoadBeacon) {
   addFirstPaintTimings(beacon, start);
 }
 
-function addFirstPaintTimings(beacon: PageLoadBeacon, start: number) {
+function addFirstPaintTimings(beacon: Partial<PageLoadBeacon>, start: number) {
   if (!isResourceTimingAvailable) {
     addFirstPaintFallbacks(beacon, start);
     return;
@@ -121,7 +121,7 @@ function addFirstPaintTimings(beacon: PageLoadBeacon, start: number) {
   }
 }
 
-function addFirstPaintFallbacks(beacon: PageLoadBeacon, start: number) {
+function addFirstPaintFallbacks(beacon: Partial<PageLoadBeacon>, start: number) {
   let firstPaint = null;
 
   // Chrome

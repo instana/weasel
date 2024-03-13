@@ -13,7 +13,7 @@ const isExcessiveUsage = createExcessiveUsageIdentifier({
   maxCallsPerTenSeconds: 128
 });
 
-export function sendBeacon(data: Beacon) {
+export function sendBeacon(data: Partial<Beacon>) {
   if (isUrlIgnored(data['l'])) {
     // data['l'] is a standardized property across all beacons to ensure that we do not accidentally transmit data
     // about a page such as this.

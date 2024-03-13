@@ -1,6 +1,6 @@
 // @flow
 
-import { Beacon } from '../types';
+import type { Beacon } from '../types';
 import {hasOwnProperty} from '../util';
 
 // We know that must values are plain key/value pairs. We therefore choose a format that is

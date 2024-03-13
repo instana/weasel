@@ -8,7 +8,7 @@ import {hasOwnProperty} from '../util';
 // line-based encoding of key/value pairs. Each line contains a key/value pair.
 //
 // In contrast to form encoding, this encoding handles JSON much better.
-export function encode(beacons: Array<Beacon>): string {
+export function encode(beacons: Array<Partial<Beacon>>): string {
   let str = '';
 
   for (let i = 0; i < beacons.length; i++) {

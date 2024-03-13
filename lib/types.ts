@@ -20,7 +20,7 @@ export type State = {
 
 export type ReportingBackend = {
   reportingUrl: string;
-  key: string | null | undefined;
+  key: string;
 };
 
 export interface Beacon {

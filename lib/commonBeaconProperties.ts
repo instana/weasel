@@ -11,7 +11,7 @@ const maximumLengthPerMetaDataField = 1024;
 
 const languages = determineLanguages();
 
-export function addCommonBeaconProperties(beacon: Beacon) {
+export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
   if (vars.reportingBackends && vars.reportingBackends.length > 0) {
     let reportingBackend: ReportingBackend = vars.reportingBackends[0];
     beacon['k'] = reportingBackend['key'];
@@ -57,10 +57,10 @@ function determineLanguages() {
   return undefined;
 }
 
-export function addMetaDataToBeacon(beacon: Beacon, meta: Meta) {
+export function addMetaDataToBeacon(beacon: Partial<Beacon>, meta: Meta) {
   let i = 0;
 
-  for (let key in meta) {
+  for (const key in meta) {
     if (hasOwnProperty(meta, key)) {
       i++;
       if (i > maximumNumberOfMetaDataFields) {

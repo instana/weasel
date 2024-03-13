@@ -15,8 +15,8 @@ import vars from '../vars';
 // See https://w3c.github.io/resource-timing/
 // See https://www.w3.org/TR/hr-time/
 
-export function addResourceTimings(beacon: BeaconWithResourceTiming, minStartTime: ?number) {
-  if (isResourceTimingAvailable && win.JSON) {
+export function addResourceTimings(beacon: Partial<BeaconWithResourceTiming>, minStartTime?: number) {
+  if (!!isResourceTimingAvailable && win.JSON) {
     const entries = getEntriesTransferFormat(performance.getEntriesByType('resource'), minStartTime);
     beacon['res'] = win.JSON.stringify(entries);
   } else if (DEBUG) {
@@ -25,7 +25,7 @@ export function addResourceTimings(beacon: BeaconWithResourceTiming, minStartTim
 }
 
 
-function getEntriesTransferFormat(performanceEntries: Array<Object>, minStartTime: ?number) {
+function getEntriesTransferFormat(performanceEntries: PerformanceEntryList, minStartTime?: number) {
   const trie = createTrie();
 
   for (let i = 0, len = performanceEntries.length; i < len; i++) {

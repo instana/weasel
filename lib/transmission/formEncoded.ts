@@ -8,7 +8,7 @@ import vars from '../vars';
 
 const maxLengthForImgRequest = 2000;
 
-export function sendBeacon(data: Beacon) {
+export function sendBeacon(data: Partial<Beacon>) {
   if (vars.reportingBackends && vars.reportingBackends.length > 0) {
     for (let i = 0, len = vars.reportingBackends.length; i < len; i++) {
       let reportingBackend: ReportingBackend = vars.reportingBackends[i];
@@ -48,7 +48,7 @@ function transmit(str: string, reportingUrl: string) {
   }
 }
 
-function stringify(data: Beacon) {
+function stringify(data: Partial<Beacon>) {
   let str = '';
 
   for (const key in data) {

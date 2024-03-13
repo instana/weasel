@@ -1,6 +1,7 @@
 module.exports = {
-  parser: 'babel-eslint',
-  extends: 'eslint:recommended',
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   env: {
     browser: true
   },
@@ -14,9 +15,19 @@ module.exports = {
     ErrorLike: false
   },
   rules: {
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
     indent: ['error', 2, {SwitchCase: 1}],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always']
-  }
+  },
+  overrides: [
+    {
+      files: ['**/*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    }
+  ]
 };

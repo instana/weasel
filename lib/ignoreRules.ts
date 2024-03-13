@@ -7,7 +7,7 @@ import vars from './vars';
 const dataUrlPrefix = 'data:';
 const ignorePingsRegex = /.*\/ping(\/?$|\?.*)/i;
 
-export function isUrlIgnored(url: ?string|?number): boolean {
+export function isUrlIgnored(url?: string | number): boolean {
   if (!url) {
     return true;
   }
@@ -41,6 +41,6 @@ export function isUrlIgnored(url: ?string|?number): boolean {
   return matchesAny(vars.ignoreUrls, url);
 }
 
-export function isErrorMessageIgnored(message: ?string) {
+export function isErrorMessageIgnored(message?: string) {
   return !message || matchesAny(vars.ignoreErrorMessages, message);
 }

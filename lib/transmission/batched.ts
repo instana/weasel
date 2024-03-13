@@ -11,8 +11,8 @@ import vars from '../vars';
 
 const maxBatchedBeacons = 15;
 
-const pendingBeacons: Array<Beacon> = [];
-let pendingBeaconTransmittingTimeout: any;
+const pendingBeacons: Array<Partial<Beacon>> = [];
+let pendingBeaconTransmittingTimeout: ReturnType<typeof setTimeout> | null;
 
 const isVisibilityApiSupported = typeof doc.visibilityState === 'string';
 const isSupported = !!XMLHttpRequest && isVisibilityApiSupported && isSendBeaconApiSupported();
@@ -32,7 +32,7 @@ if (isSupported) {
   onLastChance(transmit);
 }
 
-export function sendBeacon(beacon: Beacon) {
+export function sendBeacon(beacon: Partial<Beacon>) {
   pendingBeacons.push(beacon);
 
   if (pendingBeacons.length >= maxBatchedBeacons) {
@@ -64,7 +64,7 @@ function transmit() {
       let reportingBackend: ReportingBackend = vars.reportingBackends[i];
       if (i > 0) {
         for (let j = 0, length = pendingBeacons.length; j < length; j++) {
-          let beacon: Beacon = pendingBeacons[j];
+          let beacon: Partial<Beacon> = pendingBeacons[j];
           beacon['k'] = reportingBackend['key'];
         }
       }

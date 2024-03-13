@@ -1,5 +1,6 @@
 // @flow
 
+import { Beacon } from '../types';
 import {hasOwnProperty} from '../util';
 
 // We know that must values are plain key/value pairs. We therefore choose a format that is
@@ -7,7 +8,7 @@ import {hasOwnProperty} from '../util';
 // line-based encoding of key/value pairs. Each line contains a key/value pair.
 //
 // In contrast to form encoding, this encoding handles JSON much better.
-export function encode(beacons: Array<Object>): string {
+export function encode(beacons: Array<Beacon>): string {
   let str = '';
 
   for (let i = 0; i < beacons.length; i++) {
@@ -16,7 +17,7 @@ export function encode(beacons: Array<Object>): string {
     // Multiple beacons are separated by an empty line
     str += '\n';
 
-    for (let key in beacon) {
+    for (const key in beacon) {
       if (hasOwnProperty(beacon, key)) {
         const value = beacon[key];
         if (value != null) {

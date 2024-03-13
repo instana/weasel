@@ -9,54 +9,54 @@ const defaultVars: {
   // product has no influence over. This should be chosen
   // wisely such that conflicts with other tools are highly
   // unlikely.
-  nameOfLongGlobal: string,
+  nameOfLongGlobal: string;
 
   // The version of the snippet loading/initializing Weasel.
   // This value is automatically retrieved from the global
   // object's `v` field.
-  trackingSnippetVersion: ?string,
+  trackingSnippetVersion: string | null | undefined;
 
   // The trace id of the page load. You should never need to
   // change this.
-  pageLoadTraceId: string,
+  pageLoadTraceId: string;
 
   // An optional trace ID to correlate the page load trace
   // to a backend trace.
   // Set via:
   // eum('traceId', '123');
-  pageLoadBackendTraceId: ?string,
+  pageLoadBackendTraceId: string | null | undefined;
 
   // Name of the server timing entry under which the backend trace
   // ID can be found. Expects a server timing entry in the following
   // format.
   // PerformanceServerTiming {name: "intid", duration: 0, description: "1f27caa3493aeb"}
-  serverTimingBackendTraceIdEntryName: string,
+  serverTimingBackendTraceIdEntryName: string;
 
   // All timestamps which are part of beacons will be adjusted
   // using this timestamp before transmission to save some bytes.
   // So what we are doing is:
   // timestampToTransmit = actualTimestamp - referenceTimestamp
-  referenceTimestamp: number,
+  referenceTimestamp: number;
 
   // High resolution reference point. Will be used to relate
   // high res timestamps to a value that client and server
   // understands.
-  highResTimestampReference: number,
+  highResTimestampReference: number;
 
   // The time at which the EUM initializer was executed. Useful
   // to get a load time indicator for older devices.
-  initializerExecutionTimestamp: number,
+  initializerExecutionTimestamp: number;
 
   // Changes the URL to which beacons will be send.
   // Change via
   // eum('reportingUrl', '//eum.example.com');
-  reportingUrl: ?string,
+  reportingUrl: string | null | undefined;
 
   // The number of milliseconds to potentially wait to batch beacons
   // into a single request.
   // Change via
   // eum('beaconBatchingTime', 1000);
-  beaconBatchingTime: number,
+  beaconBatchingTime: number;
 
   // How long to wait after an XMLHttpRequest or fetch request has finished
   // for the retrieval of resource timing data. Performance timeline events
@@ -65,7 +65,7 @@ const defaultVars: {
   //
   // Change via:
   // eum('maxWaitForResourceTimingsMillis', 5000);
-  maxWaitForResourceTimingsMillis: number,
+  maxWaitForResourceTimingsMillis: number;
 
   // The number of milliseconds added to endTime so that performanceEntry is
   // available before endTime and backendTraceId does not become undefined for 
@@ -84,27 +84,27 @@ const defaultVars: {
   //
   // Change via:
   // eum('maxMaitForPageLoadMetricsMillis', 2000);
-  maxMaitForPageLoadMetricsMillis: number,
+  maxMaitForPageLoadMetricsMillis: number;
 
   // Defines an application identification mechanism. This value
   // will always be transfered with every beacon to associate
   // requests with a monitored system.
   // Change via:
   // eum('apiKey', 'myKey');
-  apiKey: ?string,
+  apiKey: string | null | undefined;
 
   // Defines user-configurable application payloads. These payloads
   // will be transfered with the page load beacon and should be a
   // Set meta data via:
   // eum('meta', 'key', 'value');
-  meta: Meta,
+  meta: Meta;
 
   // An array of URL regular expression for which no data should be
   // collected. These regular expressions are evaluated against
   // the document, XMLHttpRequest, fetch and resource URLs.
   // Set via:
   // eum('ignoreUrls', [/example.com/]);
-  ignoreUrls: RegExp[],
+  ignoreUrls: RegExp[];
 
   // Whether or not ping like requests should be ignored from AJAX
   // collection. This is separate from ignoreUrls to handle cases
@@ -119,19 +119,19 @@ const defaultVars: {
   //
   // Set via:
   // eum('ignorePings', false);
-  ignorePings: boolean,
+  ignorePings: boolean;
 
   // An array of error message regular expressions for which no data
   // should be collected.
   // Set via:
   // eum('ignoreErrorMessages', [/script error/i]);
-  ignoreErrorMessages: RegExp[],
+  ignoreErrorMessages: RegExp[];
 
   // Timeout for the transmission of XHR beacons.
   //
   // Set via:
   // eum('xhrTransmissionTimeout', 60000);
-  xhrTransmissionTimeout: number,
+  xhrTransmissionTimeout: number;
 
   // Correlation headers can by default only be transmitted to the
   // origin of the document. This is the case because the same-origin
@@ -155,7 +155,7 @@ const defaultVars: {
   // eum('allowedOrigins', [/.*shop.example.com/i]);
   //
   // The regular expressions will be matched against URLs.
-  allowedOrigins: RegExp[],
+  allowedOrigins: RegExp[];
 
   // Name of the page which the user is currently viewing. May be set as
   // part of the page load or later for SPA, XHR and error beacons.
@@ -164,7 +164,7 @@ const defaultVars: {
   //
   // Set via:
   // eum('page', 'myPageName');
-  page: ?string,
+  page: string | null | undefined;
 
   // Whether or not weasel should automatically wrap DOM event handlers
   // added via addEventlistener for improved uncaught error tracking.
@@ -174,7 +174,7 @@ const defaultVars: {
   //
   // Set via:
   // eum('wrapEventHandlers', true)
-  wrapEventHandlers: boolean,
+  wrapEventHandlers: boolean;
 
   // When wrapping event handlers (enabled only when wrapEventHandlers=true),
   // we will have to wrap user provided callbacks in addEventListener. This
@@ -184,7 +184,7 @@ const defaultVars: {
   // break the applications.
   //
   // Not configurable externally. Overwrite by forking.
-  wrappedEventHandlersOriginalFunctionStorageKey: string,
+  wrappedEventHandlersOriginalFunctionStorageKey: string;
 
   // Whether or not weasel should automatically wrap timers
   // added via setTimeout / setInterval for improved uncaught error tracking.
@@ -194,7 +194,7 @@ const defaultVars: {
   //
   // Set via:
   // eum('wrapTimers', true)
-  wrapTimers: boolean,
+  wrapTimers: boolean;
 
   // This key will be used by Weasel to privately store data on objects.
   // Make sure to change this key when deploying Weasel in production.
@@ -208,9 +208,9 @@ const defaultVars: {
   //
   // Set via:
   // eum('user', 'userId', 'user name', 'email')
-  userId: ?string,
-  userName: ?string,
-  userEmail: ?string,
+  userId: string | null | undefined;
+  userName: string | null | undefined;
+  userEmail: string | null | undefined;
 
   // Weasel by default does not collect session information as this
   // has privacy policy implications. The session ID is a random
@@ -222,48 +222,48 @@ const defaultVars: {
   //   sessionInactivityTimeoutMillis: ?number = 21600000,  // six hours
   //   sessionTerminationTimeoutMillis: ?number = 21600000  // six hours
   // )
-  sessionId: ?string,
+  sessionId: string | null | undefined;
 
   // Information about sessions will be stored under this name in
   // localStorage or cookies whenever allowed by calling trackSessions.
   //
   // This value cannot be changed at runtime.
-  sessionStorageKey: string,
+  sessionStorageKey: string;
 
   // The default session inactivity timeout. Session inactivity is the maximum
   // allowed time to pass between two page loads before the session is considered
   // to be expired. Also think of cache time-to-idle configuration options.
   //
   // This value cannot be changed at runtime.
-  defaultSessionInactivityTimeoutMillis: number,
+  defaultSessionInactivityTimeoutMillis: number;
 
   // The default session termination timeout. Session termination is the maximum
   // allowed time to pass since session start before the session is considered
   // to be expired. Also think of cache time-to-live configuration options.
   //
   // This value cannot be changed at runtime.
-  defaultSessionTerminationTimeoutMillis: number,
+  defaultSessionTerminationTimeoutMillis: number;
 
   // The maximum allowed value for either all session timeouts. Users can overwrite
   // the defaults on a per page-load basis. We want to avoid abuse by protecting
   // end-user from (near-) infinite timeouts.
   //
   // This value cannot be changed at runtime.
-  maxAllowedSessionTimeoutMillis: number,
+  maxAllowedSessionTimeoutMillis: number;
 
   // A set of regular expressions that will be matched against user timing
   // mark and measure names. When any of the regular expressions match, then
   // the user timing value will not be collected.
   //
   // eum('ignoreUserTimings', [/^\u269B/, /^\u26D4/]);
-  ignoreUserTimings: RegExp[],
+  ignoreUserTimings: RegExp[];
 
   // A set of regular expressions that will be matched against the first parameter
   // of the `fetch` API, i.e. the relative or absolute request URL. By configuring
   // this, you can decide which URLs Weasel we analyze for GraphQL specifics.
   //
   // eum('urlsToCheckForGraphQlInsights', [/\/graphql/i]);
-  urlsToCheckForGraphQlInsights: RegExp[],
+  urlsToCheckForGraphQlInsights: RegExp[];
 
   // A set of regular expression that will be matched against query parameters
   // in any URL that collected. When matched, value of the query parameter will be
@@ -273,7 +273,7 @@ const defaultVars: {
   // parameters are treated as secret data.
   //
   // eum('secrets',  [/mysecret/i]);
-  secrets: RegExp[],
+  secrets: RegExp[];
 
   // A set of regular expressions that will be matched against fragment in URL
   //When matched, the fragment containing secrets will be set to <redacted> and
@@ -287,12 +287,12 @@ const defaultVars: {
   // within the http request beacon.
   // Set the config via:
   // eum('captureHeaders', [/content-type/i]);
-  headersToCapture: RegExp[],
+  headersToCapture: RegExp[];
 
   // Changes backends which beacons will be send.
   // Change via
   // eum('reportingBackends', [{reportingUrl: '//eum.example.com', key: 'key'}]);
-  reportingBackends: ReportingBackend[],
+  reportingBackends: ReportingBackend[];
 
   //The version of Weasel agent.
   agentVersion: ?string,

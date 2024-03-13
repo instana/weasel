@@ -5,7 +5,7 @@ import {debug} from '../debug';
 const maximumHttpRequestUrlLength = 4096;
 
 // Asynchronously created a tag.
-let urlAnalysisElement = null;
+let urlAnalysisElement: HTMLAnchorElement | null = null;
 
 try {
   urlAnalysisElement = document.createElement('a');

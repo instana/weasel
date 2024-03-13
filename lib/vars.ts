@@ -91,7 +91,7 @@ const defaultVars: {
   // requests with a monitored system.
   // Change via:
   // eum('apiKey', 'myKey');
-  apiKey: string | null | undefined;
+  apiKey: string;
 
   // Defines user-configurable application payloads. These payloads
   // will be transfered with the page load beacon and should be a

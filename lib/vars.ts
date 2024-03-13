@@ -24,7 +24,7 @@ const defaultVars: {
   // to a backend trace.
   // Set via:
   // eum('traceId', '123');
-  pageLoadBackendTraceId: string | null | undefined;
+  pageLoadBackendTraceId: string;
 
   // Name of the server timing entry under which the backend trace
   // ID can be found. Expects a server timing entry in the following

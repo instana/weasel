@@ -25,7 +25,7 @@ export type ReportingBackend = {
 
 export interface Beacon {
   // The API key.
-  k: string;
+  k: string | null;
 
   // The version of the tracking snippet
   sv: string | null | undefined;
@@ -98,7 +98,7 @@ export interface PageLoadBeacon extends Beacon, BeaconWithResourceTiming {
   d: number;
 
   // A backend trace ID when available
-  bt: string;
+  bt: string | null;
 
   // timing data available?
   tim: ShortBoolean;

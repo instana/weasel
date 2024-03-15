@@ -24,7 +24,7 @@ const defaultVars: {
   // to a backend trace.
   // Set via:
   // eum('traceId', '123');
-  pageLoadBackendTraceId: string;
+  pageLoadBackendTraceId: null;
 
   // Name of the server timing entry under which the backend trace
   // ID can be found. Expects a server timing entry in the following
@@ -91,7 +91,7 @@ const defaultVars: {
   // requests with a monitored system.
   // Change via:
   // eum('apiKey', 'myKey');
-  apiKey: string;
+  apiKey: null;
 
   // Defines user-configurable application payloads. These payloads
   // will be transfered with the page load beacon and should be a

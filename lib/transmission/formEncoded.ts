@@ -13,7 +13,6 @@ export function sendBeacon(data: Partial<Beacon>) {
     for (let i = 0, len = vars.reportingBackends.length; i < len; i++) {
       let reportingBackend: ReportingBackend = vars.reportingBackends[i];
       if (i > 0) {
-        // @ts-ignore TODO - remove this ignore once k or key type become equal.
         data['k'] = reportingBackend['key'];
       }
       const str = stringify(data);

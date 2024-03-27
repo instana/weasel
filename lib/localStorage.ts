@@ -11,6 +11,7 @@ export function getItem(k: string): string | null | undefined {
   if (isSupported && localStorage) {
     return localStorage.getItem(k);
   }
+  return null;
 }
 
 export function setItem(k: string, v: string): void {

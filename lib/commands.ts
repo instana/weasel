@@ -148,7 +148,7 @@ export function processCommand(command: any[]): any {
   }
 }
 
-function validateRegExpArray(name, arr) {
+function validateRegExpArray(name: string, arr: any) {
   if (!(arr instanceof Array)) {
     return warn(name + ' is not an array. This will result in errors.');
   }
@@ -160,7 +160,7 @@ function validateRegExpArray(name, arr) {
   }
 }
 
-function processReportingBackends(arr) {
+function processReportingBackends(arr: any) {
   vars.reportingBackends.length = 0;
   if (!(arr instanceof Array)) {
     if (DEBUG) {

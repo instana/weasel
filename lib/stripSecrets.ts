@@ -4,7 +4,7 @@ import { debug } from './debug';
 import { matchesAny } from './util';
 import vars from './vars';
 
-let urlAnalysisElement = null;
+let urlAnalysisElement: HTMLAnchorElement | null = null;
 
 try {
   urlAnalysisElement = document.createElement('a');

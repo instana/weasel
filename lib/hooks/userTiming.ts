@@ -74,6 +74,6 @@ function observeNewUserTimings() {
   }
 }
 
-function onObservedPerformanceEntries(list) {
+function onObservedPerformanceEntries(list: PerformanceObserverEntryList) {
   onUserTimings(list.getEntries());
 }

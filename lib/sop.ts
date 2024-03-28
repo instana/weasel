@@ -5,8 +5,8 @@ import { win } from './browser';
 
 // Asynchronously created a tag.
 // document.createElement('a')
-let urlAnalysisElement = null;
-let documentOriginAnalysisElement = null;
+let urlAnalysisElement: HTMLAnchorElement | null = null;
+let documentOriginAnalysisElement: HTMLAnchorElement | null = null;
 try {
   urlAnalysisElement = document.createElement('a');
   documentOriginAnalysisElement = document.createElement('a');

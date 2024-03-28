@@ -13,8 +13,8 @@ interface Session {
 
 const storageSeparatorKey = '#';
 
-export function trackSessions(sessionInactivityTimeoutMillis: ?number,
-  sessionTerminationTimeoutMillis: ?number): void {
+export function trackSessions(sessionInactivityTimeoutMillis?: number,
+  sessionTerminationTimeoutMillis?: number): void {
 
   if (!isSupported) {
     if (DEBUG) {
@@ -33,9 +33,9 @@ export function trackSessions(sessionInactivityTimeoutMillis: ?number,
   sessionTerminationTimeoutMillis = Math.min(sessionTerminationTimeoutMillis, vars.maxAllowedSessionTimeoutMillis);
 
   try {
-    let storedValue: ?string = getItem(vars.sessionStorageKey);
+    const storedValue = getItem(vars.sessionStorageKey);
 
-    let session: ?Session = parseSession(storedValue);
+    let session = parseSession(storedValue);
     if (session && !isSessionValid(session, sessionInactivityTimeoutMillis, sessionTerminationTimeoutMillis)) {
       session = null;
     }
@@ -74,8 +74,7 @@ export function terminateSession() {
     }
   }
 }
-
-function parseSession(storedValue: ?string): ?Session {
+function parseSession(storedValue?: string | null): Session | null {
   if (!storedValue) {
     return null;
   }

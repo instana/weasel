@@ -15,7 +15,7 @@ const isExcessiveUsage = createExcessiveUsageIdentifier({
   maxCallsPerTenSeconds: 32
 });
 
-export function setPage(page: ?string): void {
+export function setPage(page?: string): void {
   const previousPage = vars.page;
   vars.page = page;
 
@@ -33,7 +33,7 @@ export function setPage(page: ?string): void {
 
 function reportPageChange(): void {
   // $FlowFixMe: Some properties deliberately left our for js file size reasons.
-  const beacon: PageChangeBeacon = {
+  const beacon: Partial<PageChangeBeacon> = {
     'ty': 'pc',
     'ts': now()
   };

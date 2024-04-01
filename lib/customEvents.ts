@@ -14,7 +14,7 @@ const isExcessiveUsage = createExcessiveUsageIdentifier({
   maxCallsPerTenSeconds: 32
 });
 
-export function reportCustomEvent(eventName: string, opts?: CustomEventOptions): void {
+export function reportCustomEvent(eventName: string, opts?: Partial<CustomEventOptions>): void {
   if (isExcessiveUsage()) {
     if (DEBUG) {
       info('Reached the maximum number of custom events to monitor');

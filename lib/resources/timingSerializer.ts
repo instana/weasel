@@ -3,11 +3,11 @@
 import { cachingTypes, initiatorTypes } from './consts';
 import vars from '../vars';
 
-export function serializeEntryToArray(entry: Object) {
+export function serializeEntryToArray(entry: PerformanceResourceTiming) {
   const result = [
     Math.round(entry['startTime'] - vars.highResTimestampReference),
     Math.round(entry['duration']),
-    initiatorTypes[entry['initiatorType']] || initiatorTypes['other']
+    (initiatorTypes as any)[entry['initiatorType']] || initiatorTypes['other']
   ];
 
   // When timing data is available, we can provide additional information about
@@ -80,7 +80,7 @@ export function serializeEntryToArray(entry: Object) {
         }
       }
     }
-  } catch (e) {
+  } catch (e: any) {
     // Some browsers may not grant access to the field when the Timing-Allow-Origin
     // check fails. Better be safe than sorry here.
   }
@@ -95,13 +95,13 @@ export function serializeEntryToArray(entry: Object) {
   return result;
 }
 
-export function serializeEntry(entry: PerformanceEntry) {
+export function serializeEntry(entry: PerformanceResourceTiming) {
   return serializeEntryToArray(entry).join(',')
     // remove empty trailing timings
     .replace(/,+$/, '');
 }
 
-function calculateTiming(a: ?number, b: ?number) {
+function calculateTiming(a?: number, b?: number) {
   if (a == null || b == null ||
       // the values being equal indicates for example that a network connection didn't need
       // to be established. Do not report a timing of '0' as this will skew the statistics.

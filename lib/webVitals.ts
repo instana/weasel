@@ -8,7 +8,7 @@ import {reportCustomEvent} from './customEvents';
 import vars from './vars';
 
 interface Metric {
-  name: 'CLS' | 'FID' | 'LCP';
+  name: 'CLS' | 'FID' | 'LCP' | 'INP';
 
   value: number;
   id?: string;
@@ -30,18 +30,18 @@ function reportExtraMetrics(metric: Metric) {
   });
 }
 
-export function addWebVitals(beacon: PageLoadBeacon) {
+export function addWebVitals(beacon: Partial<PageLoadBeacon>) {
   if (onLCP) {
-    onLCP(onMetric, true);
+    onLCP(onMetric, { reportAllChanges: true });
   }
   if (onFID) {
-    onFID(onMetric, true);
+    onFID(onMetric, { reportAllChanges: true });
   }
   if (onINP) {
-    onINP(onMetric, true);
+    onINP(onMetric, { reportAllChanges: true });
   }
   if (onCLS) {
-    onCLS(onMetricWithoutRounding, true);
+    onCLS(onMetricWithoutRounding, { reportAllChanges: true });
   }
 
   function onMetric(metric: Metric) {

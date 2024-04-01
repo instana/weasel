@@ -12,7 +12,7 @@ export function wrapEventHandlers() {
   }
 }
 
-function wrapEventTarget(EventTarget) {
+function wrapEventTarget(EventTarget: typeof win.EventTarget) {
   if (
     !EventTarget ||
     typeof EventTarget.prototype.addEventListener !== 'function' ||
@@ -26,11 +26,11 @@ function wrapEventTarget(EventTarget) {
 
   EventTarget.prototype.addEventListener = function wrappedAddEventListener(
     eventName: string,
-    fn: Function,
+    fn: EventListenerOrEventListenerObject | null,
     optionsOrCapture?: EventListenerOptionsOrUseCapture
   ) {
     if (typeof fn !== 'function') {
-      return originalAddEventListener.apply(this, arguments);
+      return originalAddEventListener.apply(this, arguments as any);
     }
 
     // non-deopt arguments copy
@@ -41,8 +41,8 @@ function wrapEventTarget(EventTarget) {
 
     args[1] = function wrappedEventListener() {
       try {
-        return fn.apply(this, arguments);
-      } catch (e) {
+        return fn.apply(this, arguments as any);
+      } catch (e: any) {
         reportError(e);
         ignoreNextOnErrorEvent();
         throw e;
@@ -51,16 +51,16 @@ function wrapEventTarget(EventTarget) {
 
     args[1] = addWrappedDomEventListener(this, args[1], eventName, fn, optionsOrCapture);
 
-    return originalAddEventListener.apply(this, args);
+    return originalAddEventListener.apply(this, args as any);
   };
 
   EventTarget.prototype.removeEventListener = function wrappedRemoveEventListener(
     eventName: string,
-    fn: Function,
+    fn: EventListenerOrEventListenerObject | null,
     optionsOrCapture?: EventListenerOptionsOrUseCapture
   ) {
     if (typeof fn !== 'function') {
-      return originalRemoveEventListener.apply(this, arguments);
+      return originalRemoveEventListener.apply(this, arguments as any);
     }
 
     // non-deopt arguments copy
@@ -71,6 +71,6 @@ function wrapEventTarget(EventTarget) {
 
     args[1] = popWrappedDomEventListener(this, eventName, fn, optionsOrCapture, fn);
 
-    return originalRemoveEventListener.apply(this, args);
+    return originalRemoveEventListener.apply(this, args as any);
   };
 }

@@ -100,7 +100,7 @@ const state: State = {
 export default state;
 
 
-function processCommands(commands) {
+function processCommands(commands: Array<any>) {
   for (let i = 0, len = commands.length; i < len; i++) {
     processCommand(commands[i]);
   }
@@ -110,7 +110,7 @@ function processCommands(commands) {
 function addCommandAfterInitializationSupport() {
   const globalObjectName = win[vars.nameOfLongGlobal];
   win[globalObjectName] = function() {
-    return processCommand(arguments);
+    return processCommand(arguments as any);
   };
 }
 

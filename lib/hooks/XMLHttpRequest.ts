@@ -67,8 +67,7 @@ export function instrumentXMLHttpRequest() {
     }
     return;
   }
-
-  XMLHttpRequest.prototype.open = function open(method, url, async) {
+  XMLHttpRequest.prototype.open = function open(method: any, url: string, async?: boolean) {
     const xhr = this;
 
     if (isExcessiveUsage()) {
@@ -76,13 +75,13 @@ export function instrumentXMLHttpRequest() {
         info('Reached the maximum number of XMLHttpRequests to monitor.');
       }
 
-      return originalOpen.apply(xhr, arguments);
+      return originalOpen.apply(xhr, arguments as any);
     }
 
-    const state = xhr[vars.secretPropertyKey] = xhr[vars.secretPropertyKey] || {};
+    const state = (xhr as any)[vars.secretPropertyKey] = (xhr as any)[vars.secretPropertyKey] || {};
     // probably ignored due to disableMonitoringForXMLHttpRequest calls
     if (state.ignored) {
-      return originalOpen.apply(xhr, arguments);
+      return originalOpen.apply(xhr, arguments as any);
     }
 
     state.ignored = isUrlIgnored(url);
@@ -92,14 +91,14 @@ export function instrumentXMLHttpRequest() {
           'Not generating XHR beacon because it should be ignored according to user configuration. URL: ' + url
         );
       }
-      return originalOpen.apply(xhr, arguments);
+      return originalOpen.apply(xhr, arguments as any);
     }
 
     state.spanAndTraceId = generateUniqueId();
     state.setBackendCorrelationHeaders = isSameOrigin(url) || isAllowedOrigin(url);
 
     // $FlowFixMe: Some properties deliberately left our for js file size reasons.
-    const beacon: XhrBeacon = {
+    const beacon: Partial<XhrBeacon> = {
       'ty': 'xhr',
 
       // general beacon data
@@ -124,7 +123,7 @@ export function instrumentXMLHttpRequest() {
       resourceMatcher: function resourceMatcher(resource:  PerformanceResourceTiming): boolean {
         return (resource.initiatorType === 'fetch' || resource.initiatorType === 'xmlhttprequest') &&
           // $FlowFixMe We know that beacon['u'] is now set
-          !!resource.name && resource.name.indexOf(beacon['u']) === 0;
+          !!resource.name && resource.name.indexOf(beacon['u'] as string) === 0;
       },
       maxWaitForResourceMillis: vars.maxWaitForResourceTimingsMillis,
       maxToleranceForResourceTimingsMillis: vars.maxToleranceForResourceTimingsMillis,
@@ -133,29 +132,29 @@ export function instrumentXMLHttpRequest() {
         if (args.resource) {
           addResourceTiming(beacon, args.resource);
         }
-        sendBeacon(beacon);
+        sendBeacon(beacon as XhrBeacon);
       }
     });
 
     try {
-      const result = originalOpen.apply(xhr, arguments);
+      const result = originalOpen.apply(xhr, arguments as any);
       xhr.addEventListener('timeout', onTimeout);
       xhr.addEventListener('error', onError);
       xhr.addEventListener('abort', onAbort);
       xhr.addEventListener('readystatechange', onReadystatechange);
       return result;
-    } catch (e) {
+    } catch (e: any) {
       state.performanceObserver.cancel();
       beacon['ts'] = now() - vars.referenceTimestamp;
       beacon['st'] = additionalStatuses.openError;
       beacon['e'] = e.message;
       addCommonBeaconProperties(beacon);
-      sendBeacon(beacon);
-      xhr[vars.secretPropertyKey] = null;
+      sendBeacon(beacon as XhrBeacon);
+      (xhr as any)[vars.secretPropertyKey] = null;
       throw e;
     }
 
-    function onFinish(status) {
+    function onFinish(status: number) {
       if (state.ignored) {
         return;
       }
@@ -175,12 +174,12 @@ export function instrumentXMLHttpRequest() {
       // step will rename the properties which results in JSON payloads with
       // wrong property keys.
       // $FlowFixMe: see above
-      beacon['d'] = Math.max(0, now() - (beacon['ts'] + vars.referenceTimestamp));
+      beacon['d'] = Math.max(0, now() - (beacon['ts'] as number + vars.referenceTimestamp));
 
       if (vars.headersToCapture.length > 0) {
         try{
           captureHttpHeaders(beacon, xhr.getAllResponseHeaders());
-        } catch (e) {
+        } catch (e: any) {
           if (DEBUG) {
             //it is possible without CORS, the getAllResponseHeaders()
             //could throw errors with some browsers.
@@ -195,7 +194,7 @@ export function instrumentXMLHttpRequest() {
         if (state.performanceObserver) {
           state.performanceObserver.cancel();
         }
-        sendBeacon(beacon);
+        sendBeacon(beacon as XhrBeacon);
       }
     }
 
@@ -203,12 +202,13 @@ export function instrumentXMLHttpRequest() {
       onFinish(additionalStatuses.timeout);
     }
 
-    function onError(e) {
-      if (state.ignored) {
+    function onError(e: ProgressEvent<XMLHttpRequestEventTarget>) {
+      if (state?.ignored) {
         return;
       }
 
-      let message = e && ((e.error && e.error.message) || e.message);
+      const anye = e as any;
+      const message = e && ((anye.error && anye.error.message) || anye.message);
       if (typeof message === 'string') {
         beacon['e'] = message.substring(0, 300);
       }
@@ -225,7 +225,7 @@ export function instrumentXMLHttpRequest() {
 
         try {
           status = xhr.status;
-        } catch (e) {
+        } catch (e: any) {
           // IE 9 will throw errors when trying to access the status property
           // on aborted requests and timeouts. We can swallow the error
           // since we have separate event listeners for these types of
@@ -241,8 +241,8 @@ export function instrumentXMLHttpRequest() {
     }
   };
 
-  XMLHttpRequest.prototype.setRequestHeader = function setRequestHeader(header, value) {
-    const state = this[vars.secretPropertyKey];
+  XMLHttpRequest.prototype.setRequestHeader = function setRequestHeader(header: string, value: any) {
+    const state = (this as any)[vars.secretPropertyKey];
 
     // If this request was initiated by a fetch polyfill, the Instana headers
     // will be set before xhr.send is called (by the fetch polyfill,
@@ -265,13 +265,13 @@ export function instrumentXMLHttpRequest() {
         state.beacon['h_'+header.toLowerCase()] = value;
       }
     }
-    return originalSetRequestHeader.apply(this, arguments);
+    return originalSetRequestHeader.apply(this, arguments as any);
   };
 
   XMLHttpRequest.prototype.send = function send() {
-    const state = this[vars.secretPropertyKey];
+    const state = (this as any)[vars.secretPropertyKey];
     if (!state || state.ignored) {
-      return originalSend.apply(this, arguments);
+      return originalSend.apply(this, arguments as any);
     }
 
     if (state.setBackendCorrelationHeaders) {
@@ -281,11 +281,11 @@ export function instrumentXMLHttpRequest() {
     state.beacon['ts'] = now() - vars.referenceTimestamp;
     addCommonBeaconProperties(state.beacon);
     state.performanceObserver.onBeforeResourceRetrieval();
-    return originalSend.apply(this, arguments);
+    return originalSend.apply(this, arguments as any);
   };
 }
 
-export function captureHttpHeaders(beacon: XhrBeacon, headerString: string) {
+export function captureHttpHeaders(beacon: Partial<XhrBeacon>, headerString: string) {
   const lines = headerString.trim().split(/[\r\n]+/);
   for (let i=0; i<lines.length; i++) {
     const items = lines[i].split(': ', 2);

@@ -8,11 +8,11 @@ import vars from '../vars';
  */
 
 export function disableMonitoringForXMLHttpRequest(xhr: XMLHttpRequest): void {
-  const state = xhr[vars.secretPropertyKey] = xhr[vars.secretPropertyKey] || {};
+  const state = (xhr as any)[vars.secretPropertyKey] = (xhr as any)[vars.secretPropertyKey] || {};
   state.ignored = true;
 }
 
-export function addResourceTiming(beacon: XhrBeacon, resource: PerformanceEntry) {
+export function addResourceTiming(beacon: Partial<XhrBeacon>, resource: PerformanceResourceTiming) {
   const timings = serializeEntryToArray(resource);
 
   beacon['s_ty'] = getTimingValue(timings[3]);
@@ -40,7 +40,7 @@ function getTimingValue(timing: any) {
   return undefined;
 }
 
-export function addCorrelationHttpHeaders(fn, ctx, traceId) {
+export function addCorrelationHttpHeaders(fn: (name: string, value: string) => void, ctx: any, traceId: string) {
   fn.call(ctx, 'X-INSTANA-T', traceId);
   fn.call(ctx, 'X-INSTANA-S', traceId);
   fn.call(ctx, 'X-INSTANA-L', '1,correlationType=web;correlationId=' + traceId);

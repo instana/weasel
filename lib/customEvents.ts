@@ -14,7 +14,7 @@ const isExcessiveUsage = createExcessiveUsageIdentifier({
   maxCallsPerTenSeconds: 32
 });
 
-export function reportCustomEvent(eventName: string, opts: ?CustomEventOptions): void {
+export function reportCustomEvent(eventName: string, opts?: CustomEventOptions): void {
   if (isExcessiveUsage()) {
     if (DEBUG) {
       info('Reached the maximum number of custom events to monitor');
@@ -29,7 +29,7 @@ export function reportCustomEvent(eventName: string, opts: ?CustomEventOptions):
   }
 
   // $FlowFixMe: Some properties deliberately left our for js file size reasons.
-  const beacon: CustomEventBeacon = {
+  const beacon: Partial<CustomEventBeacon> = {
     'ty': 'cus',
     's': spanId,
     't': traceId,
@@ -40,10 +40,10 @@ export function reportCustomEvent(eventName: string, opts: ?CustomEventOptions):
   addCommonBeaconProperties(beacon);
 
   if (opts) {
-    enrich(beacon, opts);
+    enrich(beacon as CustomEventBeacon, opts);
   }
 
-  sendBeacon(beacon);
+  sendBeacon(beacon as CustomEventBeacon);
 }
 
 function enrich(beacon: CustomEventBeacon, opts: CustomEventOptions) {
@@ -81,4 +81,4 @@ function enrich(beacon: CustomEventBeacon, opts: CustomEventOptions) {
   if (typeof opts['customMetric'] === 'number') {
     beacon['cm'] = opts['customMetric'];
   }
-} 
+}

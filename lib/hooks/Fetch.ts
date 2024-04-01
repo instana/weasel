@@ -32,7 +32,7 @@ export function instrumentFetch() {
     return;
   }
 
-  win.fetch = function(input, init) {
+  win.fetch = function (input: RequestInfo, init: RequestInit) {
     if (isExcessiveUsage()) {
       if (DEBUG) {
         info('Reached the maximum number of fetch calls to monitor.');
@@ -67,7 +67,7 @@ export function instrumentFetch() {
     }
 
     // $FlowFixMe: Some properties deliberately left our for js file size reasons.
-    const beacon: XhrBeacon = {
+    const beacon: Partial<XhrBeacon> = {
       'ty': 'xhr',
 
       // 't': '',
@@ -113,7 +113,7 @@ export function instrumentFetch() {
 
     try{
       captureHttpHeaders(request.headers, beacon);
-    } catch(e) {
+    } catch (e: any) {
       if (DEBUG) {
         //it is possible without CORS, the Headers.forEach()
         //could throw errors with some browsers.
@@ -131,11 +131,11 @@ export function instrumentFetch() {
     performanceObserver.onBeforeResourceRetrieval();
 
     return originalFetch(input instanceof Request ? request : input, copyInit)
-      .then(function(response) {
-        beacon['st'] = response.status;
+      .then(function (response: any) {
+        beacon['st'] = response?.status;
         try {
-          captureHttpHeaders(response.headers, beacon);
-        } catch(e) {
+          captureHttpHeaders(response?.headers, beacon);
+        } catch (e: any) {
           if (DEBUG) {
             //it is possible without CORS, the Headers.forEach()
             //could throw errors with some browsers.
@@ -151,20 +151,20 @@ export function instrumentFetch() {
         // $FlowFixMe: see above
         performanceObserver.onAfterResourceRetrieved();
         return response;
-      }, function(e) {
+      }, function (e: any) {
         performanceObserver.cancel();
         // $FlowFixMe: see above
-        beacon['d'] = now() - (beacon['ts'] + vars.referenceTimestamp);
+        beacon['d'] = now() - (beacon['ts'] as number + vars.referenceTimestamp);
         beacon['e'] = e.message;
         beacon['st'] = -103;
-        sendBeacon(beacon);
+        sendBeacon(beacon as XhrBeacon);
         throw e;
       });
 
     function resourceMatcher(resource:  PerformanceResourceTiming): boolean {
       return (resource.initiatorType === 'fetch' || resource.initiatorType === 'xmlhttprequest') &&
         // $FlowFixMe We know that beacon['u'] is now set
-        Boolean(resource.name) && resource.name.indexOf(beacon['u']) === 0;
+        Boolean(resource.name) && resource.name.indexOf(beacon['u'] as string) === 0;
     }
 
     function onEnd(args: ObserveResourcePerformanceResult) {
@@ -172,7 +172,7 @@ export function instrumentFetch() {
       if (args.resource) {
         addResourceTiming(beacon, args.resource);
       }
-      sendBeacon(beacon);
+      sendBeacon(beacon as XhrBeacon);
     }
   };
 }
@@ -180,7 +180,7 @@ export function instrumentFetch() {
 const queryIdentification = /^\s*query(\s|\{)/i;
 const mutationIdentification = /^\s*mutation(\s|\{)/i;
 
-function addGraphQlProperties(beacon: XhrBeacon, input, init) {
+function addGraphQlProperties(beacon: Partial<XhrBeacon>, input: RequestInfo, init?: RequestInit) {
   try {
     if (typeof input !== 'string' ||
         !init ||
@@ -205,7 +205,7 @@ function addGraphQlProperties(beacon: XhrBeacon, input, init) {
         beacon['got'] = 'query';
       }
     }
-  } catch (e) {
+  } catch (e: any) {
     if (DEBUG) {
       debug('Failed to analyze request for GraphQL insights.', input, init);
     }
@@ -213,7 +213,7 @@ function addGraphQlProperties(beacon: XhrBeacon, input, init) {
 
 }
 
-function captureHttpHeaders(headers, beacon) {
+function captureHttpHeaders(headers: Headers, beacon: Partial<XhrBeacon>) {
   if (vars.headersToCapture.length === 0) {
     return;
   }

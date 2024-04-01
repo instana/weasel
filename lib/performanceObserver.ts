@@ -9,14 +9,14 @@ const ONE_DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
 
 export type ObserveResourcePerformanceResult = {
   duration: number,
-  resource: ?PerformanceResourceTiming
+  resource?: PerformanceResourceTiming | null;
 };
 
-type ObserveResourcePerformanceResultCallback = ObserveResourcePerformanceResult => any;
+type ObserveResourcePerformanceResultCallback = (arg: ObserveResourcePerformanceResult) => any;
 
 type ObserveResourcePerformanceOptions = {
   entryTypes: string[],
-  resourceMatcher:  PerformanceResourceTiming => boolean,
+  resourceMatcher: (arg: PerformanceResourceTiming) => boolean,
   maxWaitForResourceMillis: number,
   maxToleranceForResourceTimingsMillis: number,
   onEnd: ObserveResourcePerformanceResultCallback
@@ -31,16 +31,16 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
   }
 
   // Used to calculate the duration when no resource was found.
-  let startTime;
-  let endTime;
+  let startTime: number;
+  let endTime: number;
 
   // The identified resource. To be used when calling opts.onEnd
-  let resource;
+  let resource: PerformanceResourceTiming | null;
 
   // global resources that will need to be disposed
-  let observer;
-  let fallbackNoResourceFoundTimerHandle;
-  let fallbackEndNeverCalledTimerHandle;
+  let observer: PerformanceObserver | null;
+  let fallbackNoResourceFoundTimerHandle: ReturnType<typeof setTimeout> | null;
+  let fallbackEndNeverCalledTimerHandle: ReturnType<typeof setTimeout> | null;
 
   return {
     onBeforeResourceRetrieval,
@@ -52,7 +52,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     startTime = performance.now();
     try {
       observer = new win['PerformanceObserver'](onResource);
-      observer['observe']({'entryTypes': opts.entryTypes});
+      observer!.observe({'entryTypes': opts.entryTypes});
     } catch (e) {
       // Some browsers may not support the passed entryTypes and decide to throw an error.
       // This would then result in an error with a message like:
@@ -93,10 +93,10 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     opts.onEnd({resource, duration});
   }
 
-  function onResource(list) {
+  function onResource(list: PerformanceObserverEntryList) {
     const entries = list.getEntries();
     for (let i = 0; i < entries.length; i++) {
-      const entry = entries[i];
+      const entry = entries[i] as PerformanceResourceTiming;
       if (entry.startTime >= startTime
           && (!endTime || endTime + opts.maxToleranceForResourceTimingsMillis >= entry.responseEnd)
           && opts.resourceMatcher(entry)) {
@@ -159,7 +159,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
 // This variant of the performance observer is only used when the performance-timeline features
 // are not supported. See isPerformanceObserverAvailable
 function observeWithoutPerformanceObserverSupport(onEnd: ObserveResourcePerformanceResultCallback) {
-  let start;
+  let start: number;
 
   return {
     onBeforeResourceRetrieval,
@@ -172,8 +172,8 @@ function observeWithoutPerformanceObserverSupport(onEnd: ObserveResourcePerforma
   }
 
   function onAfterResourceRetrieved() {
-    let end = now();
-    onEnd({duration: end - start});
+    const end = now();
+    onEnd({ duration: end - start });
   }
 }
 

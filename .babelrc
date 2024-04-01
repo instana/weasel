@@ -1,5 +1,11 @@
 {
+  "presets": [
+    "@babel/env",
+    "@babel/preset-typescript"
+  ],
   "plugins": [
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread",
     "@babel/plugin-transform-modules-commonjs",
     "@babel/plugin-transform-flow-strip-types",
     "@babel/plugin-transform-shorthand-properties",

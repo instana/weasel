@@ -53,7 +53,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     try {
       observer = new win['PerformanceObserver'](onResource);
       observer!.observe({'entryTypes': opts.entryTypes});
-    } catch (e) {
+    } catch (e: any) {
       // Some browsers may not support the passed entryTypes and decide to throw an error.
       // This would then result in an error with a message like:
       //
@@ -130,7 +130,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     if (observer) {
       try {
         observer['disconnect']();
-      } catch (e) {
+      } catch (e: any) {
         // Observer disconnect may throw when connect attempt wasn't successful. Ignore this.
       }
       observer = null;

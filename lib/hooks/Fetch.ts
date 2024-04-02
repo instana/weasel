@@ -131,7 +131,7 @@ export function instrumentFetch() {
     performanceObserver.onBeforeResourceRetrieval();
 
     return originalFetch(input instanceof Request ? request : input, copyInit)
-      .then(function (response: any) {
+      .then(function (response: Response) {
         beacon['st'] = response?.status;
         try {
           captureHttpHeaders(response?.headers, beacon);

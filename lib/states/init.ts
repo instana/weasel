@@ -59,7 +59,7 @@ const state: State = {
     // Start observing web vitals as early as possible as it registers performance observers.
     try {
       addWebVitals(pageLoadBeacon);
-    } catch (e: any) {
+    } catch (e) {
       if (DEBUG) {
         warn('Failed to capture web vitals. Will continue without web vitals', e);
       }

@@ -143,11 +143,11 @@ export function instrumentXMLHttpRequest() {
       xhr.addEventListener('abort', onAbort);
       xhr.addEventListener('readystatechange', onReadystatechange);
       return result;
-    } catch (e: any) {
+    } catch (e) {
       state.performanceObserver.cancel();
       beacon['ts'] = now() - vars.referenceTimestamp;
       beacon['st'] = additionalStatuses.openError;
-      beacon['e'] = e.message;
+      beacon['e'] = (e as any).message;
       addCommonBeaconProperties(beacon);
       sendBeacon(beacon as XhrBeacon);
       (xhr as any)[vars.secretPropertyKey] = null;
@@ -179,7 +179,7 @@ export function instrumentXMLHttpRequest() {
       if (vars.headersToCapture.length > 0) {
         try{
           captureHttpHeaders(beacon, xhr.getAllResponseHeaders());
-        } catch (e: any) {
+        } catch (e) {
           if (DEBUG) {
             //it is possible without CORS, the getAllResponseHeaders()
             //could throw errors with some browsers.
@@ -225,7 +225,7 @@ export function instrumentXMLHttpRequest() {
 
         try {
           status = xhr.status;
-        } catch (e: any) {
+        } catch (e) {
           // IE 9 will throw errors when trying to access the status property
           // on aborted requests and timeouts. We can swallow the error
           // since we have separate event listeners for these types of

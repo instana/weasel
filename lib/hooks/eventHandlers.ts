@@ -42,8 +42,8 @@ function wrapEventTarget(EventTarget: typeof win.EventTarget) {
     args[1] = function wrappedEventListener() {
       try {
         return fn.apply(this, arguments as any);
-      } catch (e: any) {
-        reportError(e);
+      } catch (e) {
+        reportError(e as any);
         ignoreNextOnErrorEvent();
         throw e;
       }

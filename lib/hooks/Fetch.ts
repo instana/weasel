@@ -113,7 +113,7 @@ export function instrumentFetch() {
 
     try{
       captureHttpHeaders(request.headers, beacon);
-    } catch (e: any) {
+    } catch (e) {
       if (DEBUG) {
         //it is possible without CORS, the Headers.forEach()
         //could throw errors with some browsers.
@@ -135,7 +135,7 @@ export function instrumentFetch() {
         beacon['st'] = response?.status;
         try {
           captureHttpHeaders(response?.headers, beacon);
-        } catch (e: any) {
+        } catch (e) {
           if (DEBUG) {
             //it is possible without CORS, the Headers.forEach()
             //could throw errors with some browsers.
@@ -205,7 +205,7 @@ function addGraphQlProperties(beacon: Partial<XhrBeacon>, input: RequestInfo, in
         beacon['got'] = 'query';
       }
     }
-  } catch (e: any) {
+  } catch (e) {
     if (DEBUG) {
       debug('Failed to analyze request for GraphQL insights.', input, init);
     }

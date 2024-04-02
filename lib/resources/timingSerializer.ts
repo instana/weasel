@@ -80,7 +80,7 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
         }
       }
     }
-  } catch (e: any) {
+  } catch (e) {
     // Some browsers may not grant access to the field when the Timing-Allow-Origin
     // check fails. Better be safe than sorry here.
   }

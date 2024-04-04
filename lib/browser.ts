@@ -2,14 +2,13 @@
 
 // aliasing globals for improved minifications
 
-
-export const win: any = window;
+export const win: typeof window = window;
 export const doc: any = win.document;
 export const nav: any = navigator;
-export const encodeURIComponent: string => string = win.encodeURIComponent;
+export const encodeURIComponent: (arg: string) => string = win.encodeURIComponent;
 export const XMLHttpRequest = win.XMLHttpRequest;
 export const originalFetch = win.fetch;
-export const localStorage: ?Storage = (function() {
+export const localStorage: Storage | null = (function () {
   try {
     return win.localStorage;
   } catch (e) {

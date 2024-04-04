@@ -22,46 +22,46 @@ let reportedErrors = 0;
 const maxSeenErrorsTracked = 20;
 let numberOfDifferentErrorsSeen = 0;
 let seenErrors: {[key: string]: TrackedError} = {};
-let scheduledTransmissionTimeoutHandle;
+let scheduledTransmissionTimeoutHandle : ReturnType<typeof setTimeout> | null;
 
 // We are wrapping global listeners. In these, we are catching and rethrowing errors.
 // In older browsers, rethrowing errors actually manipulates the error objects. As a
 // result, it is not possible to just mark an error as reported. The simplest way to
 // avoid double reporting is to temporarily disable the global onError handler…
-let ignoreNextOnError = false;
+let ignoreNextOnError: boolean = false;
 
 export function ignoreNextOnErrorEvent() {
   ignoreNextOnError = true;
 }
 
 export function hookIntoGlobalErrorEvent() {
-  let globalOnError = win.onerror;
+  const globalOnError = win.onerror;
 
-  win.onerror = function(message, fileName, lineNumber, columnNumber, error) {
-    if (ignoreNextOnError) {
+  win.onerror = function(message: string | Event, fileName?: string, lineNumber?: number, columnNumber?: number, error?: any) {
+    if (ignoreNextOnError as boolean) {
       ignoreNextOnError = false;
       if (typeof globalOnError === 'function') {
-        return globalOnError.apply(this, arguments);
+        return globalOnError.apply(this, arguments as any);
       }
       return;
     }
 
-    let stack = error && error.stack;
+    let stack = error && error?.stack;
     if (!stack) {
       stack = 'at ' + fileName + ' ' + lineNumber;
       if (columnNumber != null) {
         stack += ':' + columnNumber;
       }
     }
-    onUnhandledError(message, stack);
+    onUnhandledError(String(message), stack);
 
     if (typeof globalOnError === 'function') {
-      return globalOnError.apply(this, arguments);
+      return globalOnError.apply(this, arguments as any);
     }
   };
 }
 
-export function reportError(error: string | ErrorLike, opts: ?ReportErrorOpts) {
+export function reportError(error: string | ErrorLike, opts?: ReportErrorOpts) {
   if (!error) {
     return;
   }
@@ -73,7 +73,7 @@ export function reportError(error: string | ErrorLike, opts: ?ReportErrorOpts) {
   }
 }
 
-function onUnhandledError(message, stack, opts: ?ReportErrorOpts) {
+function onUnhandledError(message: string, stack?: string, opts?: ReportErrorOpts) {
   if (!message || reportedErrors > maxErrorsToReport) {
     return;
   }
@@ -89,11 +89,11 @@ function onUnhandledError(message, stack, opts: ?ReportErrorOpts) {
 
   message = String(message).substring(0, 300);
   stack = shortenStackTrace(stack);
-  const location = win.location.href;
-  const parentId: ?string = getActiveTraceId();
+  const location = win?.location?.href;
+  const parentId = getActiveTraceId();
   const key = message + stack + location + (parentId || '');
 
-  let trackedError = seenErrors[key];
+  let trackedError = seenErrors[key as string];
   if (trackedError) {
     trackedError.seenCount++;
     trackedError.beacon['c'] = trackedError.seenCount - trackedError.transmittedCount;
@@ -105,24 +105,25 @@ function onUnhandledError(message, stack, opts: ?ReportErrorOpts) {
 
     const spanId = generateUniqueId();
     const traceId = parentId || spanId;
-    trackedError = seenErrors[key] = {
+    const partialBeacon: Partial<UnhandledErrorBeacon> = {
+      'ty': 'err',
+
+      's': spanId,
+      't': traceId,
+      'ts': now(),
+
+      // error beacon specific data
+      'l': location,
+      'e': message,
+      'st': stack,
+      'cs': componentStack,
+      'c': 1
+    };
+
+    trackedError = seenErrors[key as string] = {
       seenCount: 1,
       transmittedCount: 0,
-      // $FlowFixMe
-      beacon: {
-        'ty': 'err',
-
-        's': spanId,
-        't': traceId,
-        'ts': now(),
-
-        // error beacon specific data
-        'l': location,
-        'e': message,
-        'st': stack,
-        'cs': componentStack,
-        'c': 1
-      }
+      beacon: partialBeacon as UnhandledErrorBeacon
     };
 
     // we cannot delay the creation of error beacon as common properties might be changed
@@ -137,7 +138,7 @@ function onUnhandledError(message, stack, opts: ?ReportErrorOpts) {
   scheduleTransmission();
 }
 
-export function shortenStackTrace(stack: ?string): string {
+export function shortenStackTrace(stack?: string): string {
   return String(stack || '').split('\n').slice(0, maxStackSize).join('\n');
 }
 
@@ -150,13 +151,15 @@ function scheduleTransmission() {
 
 
 function send() {
-  clearTimeout(scheduledTransmissionTimeoutHandle);
-  scheduledTransmissionTimeoutHandle = null;
+  if (scheduledTransmissionTimeoutHandle) {
+    clearTimeout(scheduledTransmissionTimeoutHandle);
+    scheduledTransmissionTimeoutHandle = null;
+  }
 
-  for (let key in seenErrors) {
-    if (seenErrors.hasOwnProperty(key)) {
+  for (const key in seenErrors) {
+    if (seenErrors?.hasOwnProperty(key)) {
       const seenError = seenErrors[key];
-      if (seenError.seenCount > seenError.transmittedCount) {
+      if (seenError?.seenCount > seenError?.transmittedCount) {
         sendBeaconForError(seenError);
         reportedErrors++;
       }
@@ -169,5 +172,5 @@ function send() {
 
 
 function sendBeaconForError(error: TrackedError) {
-  sendBeacon(error.beacon);
+  sendBeacon(error?.beacon);
 }

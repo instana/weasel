@@ -5,7 +5,7 @@ import {win} from './browser';
 // aliasing the global function for improved minification and
 // protection against hasOwnProperty overrides.
 const globalHasOwnProperty = Object.prototype.hasOwnProperty;
-export function hasOwnProperty(obj: Object, key: string) {
+export function hasOwnProperty(obj: Record<string, unknown>, key: string) {
   return globalHasOwnProperty.call(obj, key);
 }
 
@@ -17,7 +17,7 @@ export function noop() {}
 
 // We are trying to stay close to common tracing architectures and use
 // a hex encoded 64 bit random ID.
-var validIdCharacters = '0123456789abcdef'.split('');
+const validIdCharacters: string[] = '0123456789abcdef'.split('');
 let generateUniqueIdImpl: () => string = function generateUniqueIdViaRandom(): string {
   let result = '';
   for (let i = 0; i < 16; i++) {
@@ -26,7 +26,7 @@ let generateUniqueIdImpl: () => string = function generateUniqueIdViaRandom(): s
   return result;
 };
 
-if (win.crypto && win.crypto.getRandomValues && win.Uint32Array) {
+if (win?.crypto?.getRandomValues && win?.Uint32Array) {
   generateUniqueIdImpl = function generateUniqueIdViaCrypto(): string {
     const array = new win.Uint32Array(2);
     win.crypto.getRandomValues(array);
@@ -36,20 +36,20 @@ if (win.crypto && win.crypto.getRandomValues && win.Uint32Array) {
 
 export const generateUniqueId = generateUniqueIdImpl;
 
-export function addEventListener(target: EventTarget, eventType: string, callback: Event => mixed) {
+export function addEventListener(target: EventTarget, eventType: string, callback: (arg: Event) => unknown) {
   if (target.addEventListener) {
     target.addEventListener(eventType, callback, false);
-  } else if (target.attachEvent) {
-    target.attachEvent('on' + eventType, callback);
+  } else if ((target as any).attachEvent) {
+    (target as any).attachEvent('on' + eventType, callback);
   }
 }
 
 
-export function removeEventListener(target: EventTarget, eventType: string, callback: () => mixed) {
+export function removeEventListener(target: EventTarget, eventType: string, callback: () => unknown) {
   if (target.removeEventListener) {
     target.removeEventListener(eventType, callback, false);
-  } else if (target.detachEvent) {
-    target.detachEvent('on' + eventType, callback);
+  } else if ((target as any).detachEvent) {
+    (target as any).detachEvent('on' + eventType, callback);
   }
 }
 

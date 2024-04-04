@@ -70,10 +70,10 @@ export function addMetaDataToBeacon(beacon: Partial<Beacon>, meta: Meta) {
         return;
       }
 
-      let serializedValue = null;
+      let serializedValue: string | null = null;
 
       if (typeof meta[key] === 'string') {
-        serializedValue = meta[key];
+        serializedValue = meta[key] as string;
       } else if (meta[key] === undefined) {
         serializedValue = 'undefined';
       } else if (meta[key] === null) {

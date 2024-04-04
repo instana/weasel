@@ -5,7 +5,7 @@ export function generateUniqueId() {
 }
 
 let currentNow = 100;
-export function setNow(time) {
+export function setNow(time: number) {
   currentNow = time;
 }
 

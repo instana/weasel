@@ -7,7 +7,7 @@ import {warn} from '../debug';
 import vars from '../vars';
 
 export function wrapTimers() {
-  if (vars.wrapTimers) {
+  if (vars?.wrapTimers) {
     if (isRunningZoneJs) {
       if (DEBUG) {
         warn('We discovered a usage of Zone.js. In order to avoid any incompatibility issues timer wrapping is not going to be enabled.');
@@ -19,35 +19,35 @@ export function wrapTimers() {
   }
 }
 
-function wrapTimer(name) {
+function wrapTimer(name: 'setTimeout' | 'setInterval') {
   const original = win[name];
   if (typeof original !== 'function') {
     // cannot wrap because fn is not a function – should actually never happen
     return;
   }
 
-  win[name] = function wrappedTimerSetter(fn) {
+  (win as any)[name] = function wrappedTimerSetter(fn: TimerHandler): ReturnType<(typeof win)[typeof name]> {
     // non-deopt arguments copy
     const args = new Array(arguments.length);
     for (let i = 0; i < arguments.length; i++) {
       args[i] = arguments[i];
     }
     args[0] = wrap(fn);
-    return original.apply(this, args);
+    return original.apply(this, args as any);
   };
 }
 
-function wrap(fn) {
+function wrap(fn: TimerHandler) {
   if (typeof fn !== 'function') {
     // cannot wrap because fn is not a function
     return fn;
   }
 
-  return function wrappedTimerHandler() {
+  return function wrappedTimerHandler(this: any) {
     try {
       return fn.apply(this, arguments);
     } catch (e) {
-      reportError(e);
+      reportError(e as any);
       ignoreNextOnErrorEvent();
       throw e;
     }

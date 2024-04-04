@@ -1,2 +1,3 @@
 test/e2e/05_fetch/graphql_apollo/**/*.js
 test/experiments/errors/**/*.js
+test/experiments/errors/errorTypes/parsingError.js

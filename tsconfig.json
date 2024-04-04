@@ -109,5 +109,5 @@
     "lib", "lib/*.ts", "lib/*.tsx", "lib/**/*.ts", "lib/**/*.tsx",
     "test"
   ],
-  "exclude": ["node_modules", "node_modules/**/*"]
+  "exclude": ["node_modules", "node_modules/**/*", "test/experiments/errors/errorTypes"]
 }

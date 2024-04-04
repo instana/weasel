@@ -32,12 +32,12 @@ export type EventListenerOptionsOrUseCapture =
 // http://dom.spec.whatwg.org
 
 export function addWrappedFunction(
-  storageTarget: Object,
-  wrappedFunction: Function,
+  storageTarget: EventTarget,
+  wrappedFunction: EventListenerOrEventListenerObject,
   valuesForEqualityCheck: any[]
-): Function {
-  const storage = (storageTarget[vars.wrappedEventHandlersOriginalFunctionStorageKey] =
-    storageTarget[vars.wrappedEventHandlersOriginalFunctionStorageKey] || []);
+): EventListenerOrEventListenerObject {
+  const storage = ((storageTarget as any)[vars.wrappedEventHandlersOriginalFunctionStorageKey] =
+    (storageTarget as any)[vars.wrappedEventHandlersOriginalFunctionStorageKey] || []);
   const index = findInStorage(storageTarget, valuesForEqualityCheck);
   if (index !== -1) {
     // already registered. Do not allow re-registration
@@ -51,20 +51,20 @@ export function addWrappedFunction(
   return wrappedFunction;
 }
 
-function findInStorage(storageTarget: Object, valuesForEqualityCheck: any[]): number {
-  const storage = storageTarget[vars.wrappedEventHandlersOriginalFunctionStorageKey];
+function findInStorage(storageTarget: EventTarget, valuesForEqualityCheck: any[]): number {
+  const storage = (storageTarget as any)[vars.wrappedEventHandlersOriginalFunctionStorageKey];
   for (let i = 0; i < storage.length; i++) {
     const storageItem = storage[i];
 
-    if (matchesEqualityCheck(storageItem.valuesForEqualityCheck, valuesForEqualityCheck)) {
+    if (matchesEqualityCheck(storageItem?.valuesForEqualityCheck, valuesForEqualityCheck)) {
       return i;
     }
   }
   return -1;
 }
 
-export function popWrappedFunction(storageTarget: Object, valuesForEqualityCheck: any[], fallback: Function): Function {
-  const storage = storageTarget[vars.wrappedEventHandlersOriginalFunctionStorageKey];
+export function popWrappedFunction(storageTarget: EventTarget, valuesForEqualityCheck: any[], fallback?: EventListenerOrEventListenerObject): EventListenerOrEventListenerObject | undefined {
+  const storage = (storageTarget as any)[vars.wrappedEventHandlersOriginalFunctionStorageKey];
   if (storage == null) {
     return fallback;
   }
@@ -79,7 +79,7 @@ export function popWrappedFunction(storageTarget: Object, valuesForEqualityCheck
   return storageItem.wrappedFunction;
 }
 
-function matchesEqualityCheck(valuesForEqualityCheckA, valuesForEqualityCheckB) {
+function matchesEqualityCheck(valuesForEqualityCheckA: any, valuesForEqualityCheckB: any) {
   if (valuesForEqualityCheckA.length !== valuesForEqualityCheckB.length) {
     return false;
   }
@@ -94,12 +94,12 @@ function matchesEqualityCheck(valuesForEqualityCheckA, valuesForEqualityCheckB) 
 }
 
 export function addWrappedDomEventListener(
-  storageTarget: Object,
-  wrappedFunction: Function,
+  storageTarget: EventTarget,
+  wrappedFunction: EventListenerOrEventListenerObject,
   eventName: string,
-  eventListener: Function,
+  eventListener: EventListenerOrEventListenerObject,
   optionsOrCapture?: EventListenerOptionsOrUseCapture
-): Function {
+): EventListenerOrEventListenerObject {
   return addWrappedFunction(
     storageTarget,
     wrappedFunction,
@@ -109,7 +109,7 @@ export function addWrappedDomEventListener(
 
 function getDomEventListenerValuesForEqualityCheck(
   eventName: string,
-  eventListener: Function,
+  eventListener: EventListenerOrEventListenerObject,
   optionsOrCapture?: EventListenerOptionsOrUseCapture
 ): any[] {
   return [eventName, eventListener, getDomEventListenerCaptureValue(optionsOrCapture)];
@@ -141,12 +141,12 @@ export function getDomEventListenerCaptureValue(optionsOrCapture?: EventListener
 }
 
 export function popWrappedDomEventListener(
-  storageTarget: Object,
+  storageTarget: EventTarget,
   eventName: string,
-  eventListener: Function,
+  eventListener: EventListenerOrEventListenerObject,
   optionsOrCapture?: EventListenerOptionsOrUseCapture,
-  fallback: Function
-): Function {
+  fallback?: EventListenerOrEventListenerObject
+): EventListenerOrEventListenerObject | undefined {
   return popWrappedFunction(
     storageTarget,
     getDomEventListenerValuesForEqualityCheck(eventName, eventListener, optionsOrCapture),

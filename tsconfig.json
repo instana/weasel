@@ -107,7 +107,6 @@
   },
   "include": [
     "lib", "lib/*.ts", "lib/*.tsx", "lib/**/*.ts", "lib/**/*.tsx",
-    "test"
   ],
-  "exclude": ["node_modules", "node_modules/**/*", "test/experiments/errors/errorTypes"]
+  "exclude": ["node_modules", "node_modules/**/*", "test", "test/experiments/errors/errorTypes"]
 }

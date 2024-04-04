@@ -32,7 +32,7 @@ export function instrumentFetch() {
     return;
   }
 
-  win.fetch = function (input: RequestInfo, init: RequestInit) {
+  win.fetch = function (input: RequestInfo | URL, init?: RequestInit) {
     if (isExcessiveUsage()) {
       if (DEBUG) {
         info('Reached the maximum number of fetch calls to monitor.');
@@ -49,7 +49,7 @@ export function instrumentFetch() {
     }
 
     const request = new Request(input, copyInit);
-    if (body) {
+    if (body && copyInit) {
       copyInit.body = body;
     }
 
@@ -180,7 +180,7 @@ export function instrumentFetch() {
 const queryIdentification = /^\s*query(\s|\{)/i;
 const mutationIdentification = /^\s*mutation(\s|\{)/i;
 
-function addGraphQlProperties(beacon: Partial<XhrBeacon>, input: RequestInfo, init?: RequestInit) {
+function addGraphQlProperties(beacon: Partial<XhrBeacon>, input: RequestInfo | URL, init?: RequestInit) {
   try {
     if (typeof input !== 'string' ||
         !init ||

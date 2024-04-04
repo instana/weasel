@@ -4,9 +4,9 @@ import {win} from './browser';
 
 // a wrapper around win.performance for cross-browser support
 export const performance = win.performance ||
-  win.webkitPerformance ||
-  win.msPerformance ||
-  win.mozPerformance;
+  (win as any).webkitPerformance ||
+  (win as any).msPerformance ||
+  (win as any).mozPerformance;
 
 export const isTimingAvailable = performance && performance.timing;
 export const isResourceTimingAvailable = performance && performance.getEntriesByType;

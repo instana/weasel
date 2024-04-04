@@ -6,7 +6,7 @@ export let performance = {
 };
 
 export let isPerformanceObserverAvailable = true;
-export function setPerformanceObserverAvailable(available) {
+export function setPerformanceObserverAvailable(available: boolean) {
   isPerformanceObserverAvailable = available;
 }
 

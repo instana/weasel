@@ -46,7 +46,7 @@ export function reportCustomEvent(eventName: string, opts?: Partial<CustomEventO
   sendBeacon(beacon as CustomEventBeacon);
 }
 
-function enrich(beacon: CustomEventBeacon, opts: CustomEventOptions) {
+function enrich(beacon: CustomEventBeacon, opts: Partial<CustomEventOptions>) {
   if (opts['meta']) {
     addMetaDataToBeacon(beacon, opts['meta']);
   }

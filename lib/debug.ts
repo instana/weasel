@@ -18,12 +18,12 @@ function createLogger(method: Extract<keyof Console, 'log' | 'info' | 'warn' | '
   }
 
   if (console[method] && typeof console[method].apply === 'function') {
-    return function() {
-      console[method].apply(console, arguments as any);
+    return function (...args: any[]) {
+      console[method](...args);
     };
   }
 
-  return function() {
-    console.log.apply(console, arguments as any);
+  return function (...args: any[]) {
+    console.log(...args);
   };
 }

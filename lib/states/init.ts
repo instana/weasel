@@ -1,4 +1,4 @@
-// @flow
+/* eslint-disable prefer-rest-params */
 
 import {hookIntoGlobalUnhandledRejectionEvent} from '../hooks/unhandledRejection';
 import {instrumentXMLHttpRequest} from '../hooks/XMLHttpRequest';
@@ -24,8 +24,13 @@ const state: State = {
       warn('Browser does not have all the required features for web monitoring.');
     }
 
-    const globalObjectName = win[vars.nameOfLongGlobal];
-    const globalObject = win[globalObjectName];
+    const globalObjectName = (win as any)[vars.nameOfLongGlobal];
+    const globalObject: {
+      (...args: Array<any>): void;
+      q: Array<any>;
+      v: number;
+      l: number;
+    } = win[globalObjectName] as any;
 
     if (!globalObject) {
       if (DEBUG) {
@@ -108,8 +113,8 @@ function processCommands(commands: Array<any>) {
 
 
 function addCommandAfterInitializationSupport() {
-  const globalObjectName = win[vars.nameOfLongGlobal];
-  win[globalObjectName] = function() {
+  const globalObjectName = (win as any)[vars.nameOfLongGlobal];
+  (win as any)[globalObjectName] = function () {
     return processCommand(arguments as any);
   };
 }

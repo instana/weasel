@@ -13,7 +13,7 @@ const languages = determineLanguages();
 
 export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
   if (vars.reportingBackends && vars.reportingBackends.length > 0) {
-    let reportingBackend: ReportingBackend = vars.reportingBackends[0];
+    const reportingBackend: ReportingBackend = vars.reportingBackends[0];
     beacon['k'] = reportingBackend['key'];
   } else {
     beacon['k'] = vars.apiKey;

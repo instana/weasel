@@ -11,7 +11,7 @@ const maxLengthForImgRequest = 2000;
 export function sendBeacon(data: Partial<Beacon>) {
   if (vars.reportingBackends && vars.reportingBackends.length > 0) {
     for (let i = 0, len = vars.reportingBackends.length; i < len; i++) {
-      let reportingBackend: ReportingBackend = vars.reportingBackends[i];
+      const reportingBackend: ReportingBackend = vars.reportingBackends[i];
       if (i > 0) {
         data['k'] = reportingBackend['key'];
       }

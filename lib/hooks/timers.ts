@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 // @flow
 
 import {reportError, ignoreNextOnErrorEvent} from './unhandledError';

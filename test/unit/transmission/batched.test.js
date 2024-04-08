@@ -43,7 +43,9 @@ describe('transmission/batched', () => {
       browserMock = require('../../../lib/browser');
       browserMock.reset();
       // simulate availability of the sendBeacon API
-      browserMock.nav.sendBeacon = () => {};
+      browserMock.nav.sendBeacon = () => {
+        // This function is intentionally empty to mock the sendBeacon function
+      };
       varsMock = require('../../../lib/vars').default;
       varsMock.reportingUrl = 'http://eum.example.com';
       varsMock.reportingBackends = [{reportingUrl: 'http://eum.example.com', key: 'key'}];

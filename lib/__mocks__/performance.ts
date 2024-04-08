@@ -1,5 +1,5 @@
 // a wrapper around win.performance for cross-browser support
-export let performance = {
+export const performance = {
   now() {
     return Date.now();
   }

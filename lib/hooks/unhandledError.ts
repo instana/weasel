@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 // @flow
 
 import {addCommonBeaconProperties, addMetaDataToBeacon} from '../commonBeaconProperties';
@@ -28,7 +29,7 @@ let scheduledTransmissionTimeoutHandle : ReturnType<typeof setTimeout> | null;
 // In older browsers, rethrowing errors actually manipulates the error objects. As a
 // result, it is not possible to just mark an error as reported. The simplest way to
 // avoid double reporting is to temporarily disable the global onError handler…
-let ignoreNextOnError: boolean = false;
+let ignoreNextOnError: boolean = false as boolean;
 
 export function ignoreNextOnErrorEvent() {
   ignoreNextOnError = true;
@@ -157,7 +158,7 @@ function send() {
   }
 
   for (const key in seenErrors) {
-    if (seenErrors?.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(seenErrors, key)) {
       const seenError = seenErrors[key];
       if (seenError?.seenCount > seenError?.transmittedCount) {
         sendBeaconForError(seenError);

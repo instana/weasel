@@ -52,7 +52,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     startTime = performance.now();
     try {
       observer = new win['PerformanceObserver'](onResource);
-      observer!.observe({'entryTypes': opts.entryTypes});
+      observer['observe']({ 'entryTypes': opts.entryTypes });
     } catch (e) {
       // Some browsers may not support the passed entryTypes and decide to throw an error.
       // This would then result in an error with a message like:

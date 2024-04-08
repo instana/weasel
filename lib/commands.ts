@@ -170,7 +170,7 @@ function processReportingBackends(arr: any) {
   }
 
   for (let i = 0, len = arr.length; i < len; i++) {
-    let item = arr[i];
+    const item = arr[i];
     if (!item || !item['reportingUrl'] || !hasOwnProperty(item, 'key')) {
       if (DEBUG) {
         warn('reportingBackends[' + i + '] is not a ReportingBackend. It will be ignored.');

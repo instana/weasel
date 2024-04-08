@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 import {warn, info} from './debug';
 import {win} from './browser';
 
@@ -29,27 +30,28 @@ if (DEBUG && isRunningZoneJs) {
   info('Discovered Zone.js globals. Will attempt to register all timers inside the root Zone.');
 }
 
-export function setTimeout() {
-  return executeGlobally.apply('setTimeout', arguments);
+export function setTimeout(...args: any) {
+  return executeGlobally.apply('setTimeout', args);
 }
 
-export function clearTimeout() {
-  return executeGlobally.apply('clearTimeout', arguments);
+export function clearTimeout(...args: Parameters<typeof globals.clearTimeout>): ReturnType<typeof globals.clearTimeout> {
+  return executeGlobally.apply('clearTimeout', args as any);
 }
 
-export function setInterval() {
-  return executeGlobally.apply('setInterval', arguments);
+export function setInterval(...args: Parameters<typeof globals.setInterval>): ReturnType<typeof globals.setInterval> {
+  return executeGlobally.apply('setInterval', args as any);
 }
 
-export function clearInterval() {
-  return executeGlobally.apply('clearInterval', arguments);
+export function clearInterval(...args: Parameters<typeof globals.clearInterval>): ReturnType<typeof globals.clearInterval> {
+  return executeGlobally.apply('clearInterval', args as any);
 }
 
-function executeGlobally() {
+function executeGlobally(this: keyof typeof globals) {
   // We don't want to incur a performance penalty for all users just because some
   // users are relying on zone.js. This API looks quite ridiculous, but it
   // allows for concise and efficient code, e.g. arguments does not need to be
   // translated into an array.
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const globalFunctionName = this;
 
   if (isRunningZoneJs) {
@@ -70,6 +72,5 @@ function executeGlobally() {
   }
 
   // Note: Explicitly passing win as 'this' even though we are getting the function from 'globals'
-  return globals[globalFunctionName].apply(win, arguments);
+  return (globals[globalFunctionName] as any).apply(win, arguments);
 }
-

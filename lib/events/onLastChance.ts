@@ -5,7 +5,7 @@ import { doc, win } from '../browser';
 
 let isUnloading = false;
 
-export function onLastChance(fn: Function) {
+export function onLastChance(fn: () => void) {
   if (isUnloading) {
     fn();
   }

@@ -1,5 +1,3 @@
-// @flow
-
 import {addCommonBeaconProperties, addMetaDataToBeacon} from './commonBeaconProperties';
 import {createExcessiveUsageIdentifier} from './excessiveUsageIdentification';
 import type {CustomEventBeacon, CustomEventOptions} from './types';

@@ -1,5 +1,4 @@
 /* eslint-disable prefer-rest-params */
-// @flow
 
 import {createExcessiveUsageIdentifier} from '../excessiveUsageIdentification';
 import type {ObserveResourcePerformanceResult} from '../performanceObserver';

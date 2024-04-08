@@ -1,5 +1,3 @@
-// @flow
-
 // localStorage API re-exposed to allow testing.
 
 import { localStorage } from './browser';

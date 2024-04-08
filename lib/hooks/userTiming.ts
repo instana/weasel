@@ -1,5 +1,3 @@
-// @flow
-
 import {performance, isResourceTimingAvailable, isPerformanceObserverAvailable} from '../performance';
 import {pageLoadStartTimestamp} from '../timings';
 import {reportCustomEvent} from '../customEvents';

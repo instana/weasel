@@ -1,5 +1,3 @@
-// @flow
-
 import { isTransmitionRequest } from './transmission/util';
 import {matchesAny} from './util';
 import vars from './vars';

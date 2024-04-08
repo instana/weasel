@@ -1,5 +1,3 @@
-// @flow
-
 import {isSupported, getItem, setItem, removeItem} from './localStorage';
 import {generateUniqueId, now} from './util';
 import {info, warn} from './debug';

@@ -1,5 +1,3 @@
-// @flow
-
 import {trackSessions, terminateSession} from './session';
 import {reportError} from './hooks/unhandledError';
 import {reportCustomEvent} from './customEvents';

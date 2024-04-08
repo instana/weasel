@@ -1,5 +1,3 @@
-// @flow
-
 let bus: Record<string, Array<Listener>> = {};
 
 type Listener = (arg0: unknown) => unknown;

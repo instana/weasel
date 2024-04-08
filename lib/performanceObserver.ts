@@ -1,5 +1,3 @@
-// @flow
-
 import {performance, isPerformanceObserverAvailable} from './performance';
 import {noop, now, addEventListener, removeEventListener} from './util';
 import {setTimeout, clearTimeout} from './timers';

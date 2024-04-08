@@ -1,5 +1,3 @@
-// @flow
-
 // $FlowFixMe Flow doesn't find the file. Let's ignore this for now.
 import {onCLS, onLCP, onFID, onINP} from 'web-vitals';
 import type {PageLoadBeacon} from './types';

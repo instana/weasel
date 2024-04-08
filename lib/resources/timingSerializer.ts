@@ -1,5 +1,3 @@
-// @flow
-
 import { cachingTypes, initiatorTypes } from './consts';
 import vars from '../vars';
 

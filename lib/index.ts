@@ -1,5 +1,3 @@
-// @flow
-
 import waitForPageLoad from './states/waitForPageLoad';
 import {registerState, transitionTo} from './fsm';
 import pageLoaded from './states/pageLoaded';

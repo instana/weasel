@@ -1,5 +1,3 @@
-// @flow
-
 import { addEventListener } from '../util';
 import { doc, win } from '../browser';
 

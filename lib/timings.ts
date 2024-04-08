@@ -1,5 +1,3 @@
-// @flow
-
 import {performance, isTimingAvailable, isResourceTimingAvailable} from './performance';
 import type {PageLoadBeacon} from './types';
 import onLoadEvent from './events/onLoad';

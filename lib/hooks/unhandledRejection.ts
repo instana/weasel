@@ -1,5 +1,3 @@
-// @flow
-
 import {reportError} from './unhandledError';
 import {win} from '../browser';
 

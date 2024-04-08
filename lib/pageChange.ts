@@ -1,5 +1,3 @@
-// @flow
-
 import {createExcessiveUsageIdentifier} from './excessiveUsageIdentification';
 import {addCommonBeaconProperties} from './commonBeaconProperties';
 import {pageLoad as pageLoadPhase} from './phases';

@@ -1,4 +1,4 @@
-// @flow
+/* eslint-disable prefer-rest-params */
 
 import {addCommonBeaconProperties, addMetaDataToBeacon} from '../commonBeaconProperties';
 import type {UnhandledErrorBeacon, ReportErrorOpts} from '../types';

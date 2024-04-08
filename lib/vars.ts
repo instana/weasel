@@ -1,5 +1,3 @@
-// @flow
-
 import {generateUniqueId, now} from './util';
 import {performance} from './performance';
 import type {Meta, ReportingBackend} from './types';

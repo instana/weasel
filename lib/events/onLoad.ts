@@ -1,5 +1,3 @@
-// @flow
-
 import {addEventListener, now} from '../util';
 import {setTimeout} from '../timers';
 import type {Event} from '../types';

@@ -1,5 +1,3 @@
-// @flow
-
 import { debug } from './debug';
 import { win } from './browser';
 

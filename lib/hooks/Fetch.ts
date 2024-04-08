@@ -1,5 +1,3 @@
-// @flow
-
 import {createExcessiveUsageIdentifier} from '../excessiveUsageIdentification';
 import type {ObserveResourcePerformanceResult} from '../performanceObserver';
 import {addResourceTiming, addCorrelationHttpHeaders} from './xhrHelpers';

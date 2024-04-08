@@ -1,5 +1,3 @@
-// @flow
-
 import {addCommonBeaconProperties} from '../commonBeaconProperties';
 import {addResourceTimings} from '../resources/resources';
 import {addTimingToPageLoadBeacon} from '../timings';

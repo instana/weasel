@@ -2,8 +2,6 @@
 /* eslint-disable prefer-rest-params */
 /* eslint-disable no-console */
 
-// @flow
-
 import {noop} from './util';
 
 type Logger = (...args: any[]) => void;

@@ -1,5 +1,3 @@
-// @flow
-
 import {setInterval} from './timers';
 
 export function createExcessiveUsageIdentifier(opts: {

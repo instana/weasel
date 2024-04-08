@@ -1,5 +1,3 @@
-// @flow
-
 import vars from './vars';
 
 // Copied from flow's DOM type definition at:

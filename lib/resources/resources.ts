@@ -29,7 +29,7 @@ function getEntriesTransferFormat(performanceEntries: PerformanceEntryList, minS
   const trie = createTrie();
 
   for (let i = 0, len = performanceEntries.length; i < len; i++) {
-    const entry = performanceEntries[i];
+    const entry = performanceEntries[i] as PerformanceResourceTiming;
     if (minStartTime != null &&
         (entry['startTime'] - vars.highResTimestampReference + vars.referenceTimestamp) < minStartTime) {
       continue;

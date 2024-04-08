@@ -158,7 +158,8 @@ function send() {
   }
 
   for (const key in seenErrors) {
-    if (Object.prototype.hasOwnProperty.call(seenErrors, key)) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (seenErrors?.hasOwnProperty(key)) {
       const seenError = seenErrors[key];
       if (seenError?.seenCount > seenError?.transmittedCount) {
         sendBeaconForError(seenError);

@@ -61,10 +61,10 @@ function transmit() {
 
   if (vars.reportingBackends && vars.reportingBackends.length > 0) {
     for (let i = 0, len = vars.reportingBackends.length; i < len; i++) {
-      let reportingBackend: ReportingBackend = vars.reportingBackends[i];
+      const reportingBackend: ReportingBackend = vars.reportingBackends[i];
       if (i > 0) {
         for (let j = 0, length = pendingBeacons.length; j < length; j++) {
-          let beacon: Partial<Beacon> = pendingBeacons[j];
+          const beacon: Partial<Beacon> = pendingBeacons[j];
           beacon['k'] = reportingBackend['key'];
         }
       }

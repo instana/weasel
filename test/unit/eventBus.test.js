@@ -28,7 +28,9 @@ describe('eventBus', () => {
   });
 
   it('must not fail when there are no listeners to remove', () => {
-    off('blub', () => {});
+    off('blub', () => {
+      // This function is intentionally empty
+    });
   });
 
   it('must continue to emit to other listeners once one unsubscribes', () => {

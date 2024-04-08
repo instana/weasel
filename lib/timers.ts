@@ -30,20 +30,20 @@ if (DEBUG && isRunningZoneJs) {
   info('Discovered Zone.js globals. Will attempt to register all timers inside the root Zone.');
 }
 
-export function setTimeout(...args: any) {
-  return executeGlobally.apply('setTimeout', args);
+export function setTimeout(..._args: Parameters<typeof win.setTimeout>): ReturnType<typeof win.setTimeout> {
+  return executeGlobally.apply('setTimeout', arguments as any);
 }
 
-export function clearTimeout(...args: Parameters<typeof globals.clearTimeout>): ReturnType<typeof globals.clearTimeout> {
-  return executeGlobally.apply('clearTimeout', args as any);
+export function clearTimeout(..._args: Parameters<typeof win.clearTimeout>): ReturnType<typeof win.clearTimeout> {
+  return executeGlobally.apply('clearTimeout', arguments as any);
 }
 
-export function setInterval(...args: Parameters<typeof globals.setInterval>): ReturnType<typeof globals.setInterval> {
-  return executeGlobally.apply('setInterval', args as any);
+export function setInterval(..._args: Parameters<typeof win.setInterval>): ReturnType<typeof win.setInterval> {
+  return executeGlobally.apply('setInterval', arguments as any);
 }
 
-export function clearInterval(...args: Parameters<typeof globals.clearInterval>): ReturnType<typeof globals.clearInterval> {
-  return executeGlobally.apply('clearInterval', args as any);
+export function clearInterval(..._args: Parameters<typeof win.clearInterval>): ReturnType<typeof win.clearInterval> {
+  return executeGlobally.apply('clearInterval', arguments as any);
 }
 
 function executeGlobally(this: keyof typeof globals) {

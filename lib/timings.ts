@@ -125,17 +125,17 @@ function addFirstPaintFallbacks(beacon: Partial<PageLoadBeacon>, start: number) 
   let firstPaint = null;
 
   // Chrome
-  if (win.chrome && win.chrome.loadTimes) {
+  if ((win as any).chrome && (win as any).chrome.loadTimes) {
     // Convert to ms
-    firstPaint = win.chrome.loadTimes()['firstPaintTime'] * 1000;
+    firstPaint = (win as any).chrome.loadTimes()['firstPaintTime'] * 1000;
   }
   // IE
-  else if (typeof win.performance.timing['msFirstPaint'] === 'number') {
-    firstPaint = win.performance.timing['msFirstPaint'];
+  else if (typeof (win.performance.timing as any)['msFirstPaint'] === 'number') {
+    firstPaint = (win.performance.timing as any)['msFirstPaint'];
   }
   // standard
-  else if (typeof win.performance.timing['firstPaint'] === 'number') {
-    firstPaint = win.performance.timing['firstPaint'];
+  else if (typeof (win.performance.timing as any)['firstPaint'] === 'number') {
+    firstPaint = (win.performance.timing as any)['firstPaint'];
   }
 
   // First paint may not be available -OR- the browser may have never

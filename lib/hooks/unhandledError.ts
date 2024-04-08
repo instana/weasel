@@ -29,7 +29,7 @@ let scheduledTransmissionTimeoutHandle : ReturnType<typeof setTimeout> | null;
 // In older browsers, rethrowing errors actually manipulates the error objects. As a
 // result, it is not possible to just mark an error as reported. The simplest way to
 // avoid double reporting is to temporarily disable the global onError handler…
-let ignoreNextOnError: boolean = false as boolean;
+let ignoreNextOnError = false;
 
 export function ignoreNextOnErrorEvent() {
   ignoreNextOnError = true;

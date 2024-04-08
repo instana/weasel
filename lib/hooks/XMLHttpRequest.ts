@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 // @flow
 
 import {createExcessiveUsageIdentifier} from '../excessiveUsageIdentification';
@@ -68,6 +69,7 @@ export function instrumentXMLHttpRequest() {
     return;
   }
   XMLHttpRequest.prototype.open = function open(method: any, url: string, async?: boolean) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const xhr = this;
 
     if (isExcessiveUsage()) {

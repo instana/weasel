@@ -13,7 +13,9 @@ export function now(): number {
   return new Date().getTime();
 }
 
-export function noop() {}
+export function noop() {
+  // This function is intentionally empty.
+}
 
 // We are trying to stay close to common tracing architectures and use
 // a hex encoded 64 bit random ID.

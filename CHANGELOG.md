@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.6.6
+- Read version from package.json to update agentVersion variable.
+
 # 1.6.5
 - Added fragment as user configurable. Support for case when user wants to redact sensitive information in url fragment.
 

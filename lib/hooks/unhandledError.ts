@@ -1,4 +1,3 @@
-/* eslint-disable prefer-rest-params */
 // @flow
 
 import {addCommonBeaconProperties, addMetaDataToBeacon} from '../commonBeaconProperties';
@@ -42,6 +41,7 @@ export function hookIntoGlobalErrorEvent() {
     if (ignoreNextOnError as boolean) {
       ignoreNextOnError = false;
       if (typeof globalOnError === 'function') {
+        /* eslint-disable prefer-rest-params */
         return globalOnError.apply(this, arguments as any);
       }
       return;

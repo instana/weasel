@@ -33,7 +33,7 @@ This being said, how would you go about using Weasel? We recommend the following
  1. Fork Weasel. Yes, really. The lack of a plugin system and the desire to remove optional code paths means that some things just aren't configurable. But don't worry about pulling improvements from upstream: The kind of changes that you have to make in your fork are pretty small.
  2. Update the following files within your fork as you see fit:
   - The global variables which define such values as the default reporting URL. To be found in [lib/vars.ts](https://github.com/instana/weasel/blob/master/lib/vars.ts).
-  - Remove or adapt backend correlation headers as necessary within the [XMLHttpRequest](https://github.com/instana/weasel/blob/master/lib/hooks/XMLHttpRequest.js#L184-L186) hook.
+  - Remove or adapt backend correlation headers as necessary within the [XMLHttpRequest](https://github.com/instana/weasel/blob/master/lib/hooks/XMLHttpRequest.ts#L185-L187) hook.
  3. Install the necessary dependencies and build weasel:
 
     ```

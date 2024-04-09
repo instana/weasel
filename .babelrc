@@ -4,8 +4,8 @@
     "@babel/preset-typescript"
   ],
   "plugins": [
-    "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread",
+    "@babel/plugin-transform-class-properties",
+    "@babel/plugin-transform-object-rest-spread",
     "@babel/plugin-transform-modules-commonjs",
     "@babel/plugin-transform-shorthand-properties",
     ["@babel/plugin-transform-block-scoping", {"throwIfClosureRequired": true, "tdzEnabled": true}]

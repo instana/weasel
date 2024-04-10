@@ -9,7 +9,7 @@ exports.config = {
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
-    newSaucelabsCapability('chrome', '123', 'Windows 11')
+    newSaucelabsCapability('internet explorer', '11', 'Windows 10'),
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

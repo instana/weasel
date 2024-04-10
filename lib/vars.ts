@@ -68,11 +68,11 @@ const defaultVars: {
   maxWaitForResourceTimingsMillis: number;
 
   // The number of milliseconds added to endTime so that performanceEntry is
-  // available before endTime and backendTraceId does not become undefined for 
+  // available before endTime and backendTraceId does not become undefined for
   // xhr beacons
   // Change via:
   // eum('maxToleranceForResourceTimingsMillis', 3000);
-  maxToleranceForResourceTimingsMillis: number,
+  maxToleranceForResourceTimingsMillis: number;
 
   // Weasel will wait up to this many milliseconds after the onLoad event
   // completes for any additional metrics related to the page load, e.g.
@@ -198,7 +198,7 @@ const defaultVars: {
 
   // This key will be used by Weasel to privately store data on objects.
   // Make sure to change this key when deploying Weasel in production.
-  secretPropertyKey: string,
+  secretPropertyKey: string;
 
   // Weasel will not attempt automatic user tracking via cookies,
   // fingerprinting or any other means. Instead, we give users the
@@ -280,7 +280,7 @@ const defaultVars: {
   //will not reach the backend for processing,thus, will not be available for
   //analysis in the UI or retrieval via API.
   //eum('fragment', [/url-segment/i]);
-  fragment: RegExp[],
+  fragment: RegExp[];
 
   // A set of regular expressions that will be matched against HTTP headers to be
   // captured in `XMLHttpRequest` and `fetch` API. These headers will be transfered
@@ -295,7 +295,7 @@ const defaultVars: {
   reportingBackends: ReportingBackend[];
 
   //The version of Weasel agent.
-  agentVersion: ?string,
+  agentVersion?: string;
 
   // Whether or not weasel should generate dedicated custom events on webvital metrics
   // these custom events is more reliable than webvitals in PageLoad beacon, as we
@@ -304,7 +304,7 @@ const defaultVars: {
   //
   // Set via:
   // eum('webvitalsInCustomEvent', false)
-  webvitalsInCustomEvent: boolean
+  webvitalsInCustomEvent: boolean;
 } = {
   nameOfLongGlobal: 'EumObject',
   trackingSnippetVersion: null,
@@ -357,7 +357,7 @@ const defaultVars: {
   fragment: [],
   headersToCapture: [],
   reportingBackends: [],
-  agentVersion: '0.0.0',  
+  agentVersion: '0.0.0',
   //0.0.0 will be replaced with version from package.json
   webvitalsInCustomEvent: false
 };

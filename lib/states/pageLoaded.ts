@@ -12,7 +12,7 @@ import {info} from '../debug';
 import vars from '../vars';
 
 // Export
-// $FlowFixMe: Find a way to define all properties beforehand so that flow doesn't complain about missing props.
+// Find a way to define all properties beforehand so that flow doesn't complain about missing props.
 export const beacon: Partial<PageLoadBeacon> = {
   'ty': 'pl'
 };

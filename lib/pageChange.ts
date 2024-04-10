@@ -30,7 +30,7 @@ export function setPage(page?: string): void {
 }
 
 function reportPageChange(): void {
-  // $FlowFixMe: Some properties deliberately left our for js file size reasons.
+  // Some properties deliberately left our for js file size reasons.
   const beacon: Partial<PageChangeBeacon> = {
     'ty': 'pc',
     'ts': now()

@@ -1,5 +1,3 @@
-// @flow
-
 import {win} from './browser';
 
 // a wrapper around win.performance for cross-browser support

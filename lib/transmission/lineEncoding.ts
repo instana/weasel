@@ -1,5 +1,3 @@
-// @flow
-
 import type { Beacon } from '../types';
 import {hasOwnProperty} from '../util';
 

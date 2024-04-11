@@ -1,5 +1,3 @@
-// @flow
-
 import {XMLHttpRequest, encodeURIComponent, executeImageRequest} from '../browser';
 import { disableMonitoringForXMLHttpRequest } from '../hooks/xhrHelpers';
 import {hasOwnProperty} from '../util';

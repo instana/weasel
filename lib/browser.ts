@@ -1,5 +1,3 @@
-// @flow
-
 // aliasing globals for improved minifications
 
 export const win: typeof window = window;

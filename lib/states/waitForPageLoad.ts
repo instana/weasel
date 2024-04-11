@@ -1,5 +1,3 @@
-// @flow
-
 import {pageLoad as pageLoadPhase} from '../phases';
 import onLoadEvent from '../events/onLoad';
 import type {State} from '../types';

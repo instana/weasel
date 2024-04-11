@@ -1,5 +1,3 @@
-// @flow
-
 import {performance, isResourceTimingAvailable} from './performance';
 import {info} from './debug';
 import vars from './vars';

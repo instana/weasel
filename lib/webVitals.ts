@@ -1,6 +1,3 @@
-// @flow
-
-// $FlowFixMe Flow doesn't find the file. Let's ignore this for now.
 import {onCLS, onLCP, onFID, onINP} from 'web-vitals';
 import type {PageLoadBeacon} from './types';
 import {pageLoadStartTimestamp} from './timings';
@@ -19,7 +16,7 @@ function reportExtraMetrics(metric: Metric) {
     return;
   }
 
-  // $FlowFixMe: Flow cannot detect that this is a proper usage of the function. We have to write it this way because of the Closure compiler advanced mode.
+  // We have to write it this way because of the Closure compiler advanced mode.
   reportCustomEvent('instana-webvitals-' + metric.name, {
     'timestamp': pageLoadStartTimestamp + Math.round(metric.value),
     'duration': Math.round(metric.value),

@@ -1,5 +1,3 @@
-// @flow
-
 import { sendBeacon as sendBatchedBeacon, isEnabled as isBatchingEnabled } from './batched';
 import {createExcessiveUsageIdentifier} from '../excessiveUsageIdentification';
 import { sendBeacon as sendFormEncodedBeacon } from './formEncoded';

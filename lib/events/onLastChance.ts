@@ -1,5 +1,3 @@
-// @flow
-
 import { addEventListener } from '../util';
 import { doc, win } from '../browser';
 
@@ -16,7 +14,6 @@ export function onLastChance(fn: () => void) {
     }
   });
 
-  // $FlowFixMe The type is correct, but flow doesn't think so. Ignore for now.
   addEventListener(win, 'pagehide', function() {
     isUnloading = true;
     fn();

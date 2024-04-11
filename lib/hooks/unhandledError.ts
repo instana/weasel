@@ -1,5 +1,3 @@
-// @flow
-
 import {addCommonBeaconProperties, addMetaDataToBeacon} from '../commonBeaconProperties';
 import type {UnhandledErrorBeacon, ReportErrorOpts} from '../types';
 import {isErrorMessageIgnored} from '../ignoreRules';
@@ -10,10 +8,10 @@ import {getActiveTraceId} from '../fsm';
 import {win} from '../browser';
 
 type TrackedError = {
-  seenCount: number,
-  transmittedCount: number,
-  beacon: UnhandledErrorBeacon
-}
+  seenCount: number;
+  transmittedCount: number;
+  beacon: UnhandledErrorBeacon;
+};
 
 const maxErrorsToReport = 100;
 const maxStackSize = 30;
@@ -22,7 +20,7 @@ let reportedErrors = 0;
 const maxSeenErrorsTracked = 20;
 let numberOfDifferentErrorsSeen = 0;
 let seenErrors: {[key: string]: TrackedError} = {};
-let scheduledTransmissionTimeoutHandle : ReturnType<typeof setTimeout> | null;
+let scheduledTransmissionTimeoutHandle: ReturnType<typeof setTimeout> | null;
 
 // We are wrapping global listeners. In these, we are catching and rethrowing errors.
 // In older browsers, rethrowing errors actually manipulates the error objects. As a
@@ -37,7 +35,13 @@ export function ignoreNextOnErrorEvent() {
 export function hookIntoGlobalErrorEvent() {
   const globalOnError = win.onerror;
 
-  win.onerror = function(message: string | Event, fileName?: string, lineNumber?: number, columnNumber?: number, error?: any) {
+  win.onerror = function (
+    message: string | Event,
+    fileName?: string,
+    lineNumber?: number,
+    columnNumber?: number,
+    error?: any
+  ) {
     if (ignoreNextOnError as boolean) {
       ignoreNextOnError = false;
       if (typeof globalOnError === 'function') {
@@ -140,7 +144,10 @@ function onUnhandledError(message: string, stack?: string, opts?: ReportErrorOpt
 }
 
 export function shortenStackTrace(stack?: string): string {
-  return String(stack || '').split('\n').slice(0, maxStackSize).join('\n');
+  return String(stack || '')
+    .split('\n')
+    .slice(0, maxStackSize)
+    .join('\n');
 }
 
 function scheduleTransmission() {
@@ -149,7 +156,6 @@ function scheduleTransmission() {
   }
   scheduledTransmissionTimeoutHandle = setTimeout(send, 1000);
 }
-
 
 function send() {
   if (scheduledTransmissionTimeoutHandle) {
@@ -171,7 +177,6 @@ function send() {
   seenErrors = {};
   numberOfDifferentErrorsSeen = 0;
 }
-
 
 function sendBeaconForError(error: TrackedError) {
   sendBeacon(error?.beacon);

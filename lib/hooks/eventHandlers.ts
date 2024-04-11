@@ -1,6 +1,4 @@
 /* eslint-disable prefer-rest-params */
-// @flow
-
 import { addWrappedDomEventListener, popWrappedDomEventListener } from '../asyncFunctionWrapping';
 import type { EventListenerOptionsOrUseCapture } from '../asyncFunctionWrapping';
 import { reportError, ignoreNextOnErrorEvent } from './unhandledError';

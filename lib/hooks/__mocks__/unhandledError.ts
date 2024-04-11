@@ -1,5 +1,3 @@
-// @flow
-
 const reportedErrors: Array<ErrorLike> = [];
 
 export function hookIntoGlobalErrorEvent() {

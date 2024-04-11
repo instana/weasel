@@ -1,5 +1,4 @@
 /* eslint-disable prefer-rest-params */
-// @flow
 
 import {createExcessiveUsageIdentifier} from '../excessiveUsageIdentification';
 import type {ObserveResourcePerformanceResult} from '../performanceObserver';
@@ -99,7 +98,7 @@ export function instrumentXMLHttpRequest() {
     state.spanAndTraceId = generateUniqueId();
     state.setBackendCorrelationHeaders = isSameOrigin(url) || isAllowedOrigin(url);
 
-    // $FlowFixMe: Some properties deliberately left our for js file size reasons.
+    // Some properties deliberately left our for js file size reasons.
     const beacon: Partial<XhrBeacon> = {
       'ty': 'xhr',
 
@@ -124,7 +123,6 @@ export function instrumentXMLHttpRequest() {
       entryTypes: ['resource'],
       resourceMatcher: function resourceMatcher(resource:  PerformanceResourceTiming): boolean {
         return (resource.initiatorType === 'fetch' || resource.initiatorType === 'xmlhttprequest') &&
-          // $FlowFixMe We know that beacon['u'] is now set
           !!resource.name && resource.name.indexOf(beacon['u'] as string) === 0;
       },
       maxWaitForResourceMillis: vars.maxWaitForResourceTimingsMillis,
@@ -175,7 +173,6 @@ export function instrumentXMLHttpRequest() {
       // we can not safely use beacon.property as the compilation/minification
       // step will rename the properties which results in JSON payloads with
       // wrong property keys.
-      // $FlowFixMe: see above
       beacon['d'] = Math.max(0, now() - (beacon['ts'] as number + vars.referenceTimestamp));
 
       if (vars.headersToCapture.length > 0) {

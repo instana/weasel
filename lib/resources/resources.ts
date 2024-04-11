@@ -1,5 +1,3 @@
-// @flow
-
 import {performance, isResourceTimingAvailable} from '../performance';
 import { isTransmitionRequest } from '../transmission/util';
 import type {BeaconWithResourceTiming} from '../types';

@@ -1,5 +1,3 @@
-// @flow
-
 import type { ReportingBackend } from '../types';
 import vars from '../vars';
 

@@ -1,5 +1,3 @@
-// @flow
-
 export type ShortBoolean = 0 | 1 | '0' | '1';
 
 export type Meta = {

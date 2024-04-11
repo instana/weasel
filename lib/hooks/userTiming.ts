@@ -1,5 +1,3 @@
-// @flow
-
 import {performance, isResourceTimingAvailable, isPerformanceObserverAvailable} from '../performance';
 import {pageLoadStartTimestamp} from '../timings';
 import {reportCustomEvent} from '../customEvents';
@@ -44,7 +42,7 @@ function onUserTiming(performanceEntry: PerformanceEntry) {
     timestamp = Math.round(performance['timeOrigin']);
   }
 
-  // $FlowFixMe: Flow cannot detect that this is a proper usage of the function. We have to write it this way because of the Closure compiler advanced mode.
+  // We have to write it this way because of the Closure compiler advanced mode.
   reportCustomEvent(performanceEntry.name, {
     // Do not allow the timestamp to be before our Notion of page load start.
     'timestamp': Math.max(

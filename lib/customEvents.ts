@@ -1,5 +1,3 @@
-// @flow
-
 import {addCommonBeaconProperties, addMetaDataToBeacon} from './commonBeaconProperties';
 import {createExcessiveUsageIdentifier} from './excessiveUsageIdentification';
 import type {CustomEventBeacon, CustomEventOptions} from './types';
@@ -28,7 +26,7 @@ export function reportCustomEvent(eventName: string, opts?: Partial<CustomEventO
     traceId = spanId;
   }
 
-  // $FlowFixMe: Some properties deliberately left our for js file size reasons.
+  // Some properties deliberately left our for js file size reasons.
   const beacon: Partial<CustomEventBeacon> = {
     'ty': 'cus',
     's': spanId,
@@ -54,7 +52,7 @@ function enrich(beacon: CustomEventBeacon, opts: Partial<CustomEventOptions>) {
   if (typeof opts['duration'] === 'number' && !isNaN(opts['duration'])) {
     beacon['d'] = opts['duration'];
     // add Math.round since duration could be a float
-    // $FlowFixMe: We know that both properties are numbers. Flow thinks they are strings because we access them via […].
+    // We know that both properties are numbers. Flow thinks they are strings because we access them via […].
     beacon['ts'] = Math.round(beacon['ts'] - opts['duration']);
   }
 

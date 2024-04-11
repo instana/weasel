@@ -1,5 +1,3 @@
-// @flow
-
 import { doc, nav, XMLHttpRequest, sendBeacon as sendBeaconInternal } from '../browser';
 import { disableMonitoringForXMLHttpRequest } from '../hooks/xhrHelpers';
 import {onLastChance} from '../events/onLastChance';

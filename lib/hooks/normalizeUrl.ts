@@ -1,5 +1,3 @@
-// @flow
-
 import {debug} from '../debug';
 
 const maximumHttpRequestUrlLength = 4096;

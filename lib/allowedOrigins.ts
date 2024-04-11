@@ -1,5 +1,3 @@
-// @flow
-
 import {matchesAny} from './util';
 import vars from './vars';
 

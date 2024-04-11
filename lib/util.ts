@@ -1,5 +1,3 @@
-// @flow
-
 import {win} from './browser';
 
 // aliasing the global function for improved minification and

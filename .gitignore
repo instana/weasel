@@ -1,6 +1,7 @@
 /node_modules
 /target
 /coverage
+/.idea/
 .npm-debug*
 .yarn/*
 !.yarn/patches
@@ -8,3 +9,4 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+/tsconfig.tsbuildinfo

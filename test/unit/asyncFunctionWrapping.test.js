@@ -8,9 +8,15 @@ import {
   popWrappedDomEventListener
 } from '../../lib/asyncFunctionWrapping';
 
-const wrapped = () => {};
-const wrapped2 = () => {};
-const original = () => {};
+const wrapped = () => {
+  // This function is intentionally empty.
+};
+const wrapped2 = () => {
+  // This function is intentionally empty.
+};
+const original = () => {
+  // This function is intentionally empty.
+};
 
 describe('asyncFunctionWrapping', () => {
   let eventTarget;

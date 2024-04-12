@@ -1,7 +1,12 @@
 {
+  "presets": [
+    "@babel/env",
+    "@babel/preset-typescript"
+  ],
   "plugins": [
+    "@babel/plugin-transform-class-properties",
+    "@babel/plugin-transform-object-rest-spread",
     "@babel/plugin-transform-modules-commonjs",
-    "@babel/plugin-transform-flow-strip-types",
     "@babel/plugin-transform-shorthand-properties",
     ["@babel/plugin-transform-block-scoping", {"throwIfClosureRequired": true, "tdzEnabled": true}]
   ]

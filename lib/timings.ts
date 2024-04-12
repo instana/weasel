@@ -1,0 +1,144 @@
+import {performance, isTimingAvailable, isResourceTimingAvailable} from './performance';
+import type {PageLoadBeacon} from './types';
+import onLoadEvent from './events/onLoad';
+import {win} from './browser';
+import vars from './vars';
+
+// See spec:
+// https://www.w3.org/TR/navigation-timing/
+
+export const pageLoadStartTimestamp = getPageLoadStartTimestamp();
+
+function getPageLoadStartTimestamp() {
+  if (!isTimingAvailable) {
+    return vars.initializerExecutionTimestamp;
+  }
+  return performance.timing.navigationStart;
+}
+
+export function addTimingToPageLoadBeacon(beacon: Partial<PageLoadBeacon>) {
+  if (!isTimingAvailable) {
+    // This is our absolute fallback mode where we only have
+    // approximations for speed information.
+    beacon['ts'] = pageLoadStartTimestamp - vars.referenceTimestamp;
+    beacon['d'] = Number(onLoadEvent.time) - vars.initializerExecutionTimestamp;
+
+    // We add this as an extra property to the beacon so that
+    // a backend can decide whether it should include timing
+    // information in aggregated metrics. Since they are only
+    // approximations, this is not always desirable.
+    if (!isTimingAvailable) {
+      beacon['tim'] = '0';
+    }
+
+    return;
+  }
+
+  const timing = performance.timing;
+
+  const redirectTime = timing.redirectEnd - timing.redirectStart;
+  // We don't use navigationStart since that includes unload times for the previous page.
+  const start = pageLoadStartTimestamp;
+  beacon['ts'] = start - vars.referenceTimestamp;
+
+  // This can happen when the user aborts the page load. In this case, the load event
+  // timing information is not available and will have the default value of "0".
+  if (timing.loadEventStart > 0) {
+    beacon['d'] = timing.loadEventStart - (timing.fetchStart || timing.navigationStart);
+  } else {
+    beacon['d'] = Number(onLoadEvent.time) - vars.initializerExecutionTimestamp;
+
+    // We have partial timing information, but since the load was aborted, we will
+    // mark it as missing to indicate that the information should be ignored in
+    // statistics.
+    beacon['tim'] = '0';
+  }
+
+  beacon['t_unl'] = timing.unloadEventEnd - timing.unloadEventStart;
+  beacon['t_red'] = redirectTime;
+  beacon['t_apc'] =
+    timing.domainLookupStart -
+    (timing.fetchStart || timing.redirectEnd || timing.unloadEventEnd || timing.navigationStart);
+  beacon['t_dns'] = timing.domainLookupEnd - timing.domainLookupStart;
+  if (timing.connectStart > 0 && timing.connectEnd > 0) {
+    if (
+      timing.secureConnectionStart != null &&
+      timing.secureConnectionStart > 0 &&
+      // Issue in the navigation timing spec: Secure connection start does not take
+      // connection reuse into consideration. At the time of writing (2020-07-11)
+      // the latest W3C Navigation Timing recommendation still contains this issue.
+      // The latest editor draft has these fixed (by linking to the resource timing
+      // spec instead of duplicating the information).
+      // For now a workaround to avoid these wrong timings seems to be the following.
+      timing.secureConnectionStart >= timing.connectStart
+    ) {
+      beacon['t_tcp'] = timing.secureConnectionStart - timing.connectStart;
+      beacon['t_ssl'] = timing.connectEnd - timing.secureConnectionStart;
+    } else {
+      beacon['t_tcp'] = timing.connectEnd - timing.connectStart;
+      beacon['t_ssl'] = 0;
+    }
+  }
+  beacon['t_req'] = timing.responseStart - timing.requestStart;
+  beacon['t_rsp'] = timing.responseEnd - timing.responseStart;
+  beacon['t_dom'] = timing.domContentLoadedEventStart - timing.domLoading;
+  beacon['t_chi'] = timing.loadEventEnd - timing.domContentLoadedEventStart;
+  beacon['t_bac'] = timing.responseStart - start;
+  beacon['t_fro'] = timing.loadEventEnd - timing.responseStart;
+  beacon['t_pro'] = timing.loadEventStart - timing.domLoading;
+  beacon['t_loa'] = timing.loadEventEnd - timing.loadEventStart;
+  beacon['t_ttfb'] = timing.responseStart - start;
+
+  addFirstPaintTimings(beacon, start);
+}
+
+function addFirstPaintTimings(beacon: Partial<PageLoadBeacon>, start: number) {
+  if (!isResourceTimingAvailable) {
+    addFirstPaintFallbacks(beacon, start);
+    return;
+  }
+
+  const paintTimings = performance.getEntriesByType('paint');
+  let firstPaintFound = false;
+  for (let i = 0; i < paintTimings.length; i++) {
+    const paintTiming = paintTimings[i];
+    switch (paintTiming.name) {
+      case 'first-paint':
+        beacon['t_fp'] = paintTiming.startTime | 0;
+        firstPaintFound = true;
+        break;
+
+      case 'first-contentful-paint':
+        beacon['t_fcp'] = paintTiming.startTime | 0;
+        break;
+    }
+  }
+
+  if (!firstPaintFound) {
+    addFirstPaintFallbacks(beacon, start);
+  }
+}
+
+function addFirstPaintFallbacks(beacon: Partial<PageLoadBeacon>, start: number) {
+  let firstPaint = null;
+
+  // Chrome
+  if ((win as any).chrome && (win as any).chrome.loadTimes) {
+    // Convert to ms
+    firstPaint = (win as any).chrome.loadTimes()['firstPaintTime'] * 1000;
+  }
+  // IE
+  else if (typeof (win.performance.timing as any)['msFirstPaint'] === 'number') {
+    firstPaint = (win.performance.timing as any)['msFirstPaint'];
+  }
+  // standard
+  else if (typeof (win.performance.timing as any)['firstPaint'] === 'number') {
+    firstPaint = (win.performance.timing as any)['firstPaint'];
+  }
+
+  // First paint may not be available -OR- the browser may have never
+  // painted anything and thereby kept this value at 0.
+  if (firstPaint != null && firstPaint !== 0) {
+    beacon['t_fp'] = Math.round(firstPaint - start);
+  }
+}

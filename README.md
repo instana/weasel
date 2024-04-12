@@ -32,8 +32,8 @@ This being said, how would you go about using Weasel? We recommend the following
 
  1. Fork Weasel. Yes, really. The lack of a plugin system and the desire to remove optional code paths means that some things just aren't configurable. But don't worry about pulling improvements from upstream: The kind of changes that you have to make in your fork are pretty small.
  2. Update the following files within your fork as you see fit:
-  - The global variables which define such values as the default reporting URL. To be found in [lib/vars.js](https://github.com/instana/weasel/blob/master/lib/vars.js).
-  - Remove or adapt backend correlation headers as necessary within the [XMLHttpRequest](https://github.com/instana/weasel/blob/master/lib/hooks/XMLHttpRequest.js#L184-L186) hook.
+  - The global variables which define such values as the default reporting URL. To be found in [lib/vars.ts](https://github.com/instana/weasel/blob/master/lib/vars.ts).
+  - Remove or adapt backend correlation headers as necessary within the [XMLHttpRequest](https://github.com/instana/weasel/blob/master/lib/hooks/XMLHttpRequest.ts#L185-L187) hook.
  3. Install the necessary dependencies and build weasel:
 
     ```
@@ -56,7 +56,7 @@ This being said, how would you go about using Weasel? We recommend the following
     </script>
     ```
 
- 6. Accept the data on the server side. Weasel will send data either as HTTP `GET` requests with data being stored in query parameters, or as HTTP `POST` requests with data being available as the request body encoded as `application/x-www-form-urlencoded` (whether `GET` or `POST` is used depends on the amount of data). The data format is described in [lib/types.js](https://github.com/instana/weasel/blob/master/lib/types.js).
+ 6. Accept the data on the server side. Weasel will send data either as HTTP `GET` requests with data being stored in query parameters, or as HTTP `POST` requests with data being available as the request body encoded as `application/x-www-form-urlencoded` (whether `GET` or `POST` is used depends on the amount of data). The data format is described in [lib/types.ts](https://github.com/instana/weasel/blob/master/lib/types.ts).
  7. Let us know about how you are using Weasel! This will help us get a better understanding for the community and the impact that our changes will have.
  8. Keep your fork up-to-date by periodically pulling from upstream.
  9. Have a great day ☀️!

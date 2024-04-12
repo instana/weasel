@@ -54,7 +54,8 @@ export function instrumentFetch() {
     if (isUrlIgnored(url)) {
       if (DEBUG) {
         debug(
-          'Not generating XHR beacon for fetch call because it is to be ignored according to user configuration. URL: ' + url
+          'Not generating XHR beacon for fetch call because it is to be ignored according to user configuration. URL: ' +
+            url
         );
       }
       // could not use the original Request as it would encounter error that
@@ -108,7 +109,7 @@ export function instrumentFetch() {
       }
     }
 
-    try{
+    try {
       captureHttpHeaders(request.headers, beacon);
     } catch (e) {
       if (DEBUG) {
@@ -127,11 +128,11 @@ export function instrumentFetch() {
     });
     performanceObserver.onBeforeResourceRetrieval();
 
-    return originalFetch(input instanceof Request ? request : input, copyInit)
-      .then(function (response: Response) {
-        beacon['st'] = response?.status;
+    return originalFetch(input instanceof Request ? request : input, copyInit).then(
+      function (response: Response) {
+        beacon['st'] = response.status;
         try {
-          captureHttpHeaders(response?.headers, beacon);
+          captureHttpHeaders(response.headers, beacon);
         } catch (e) {
           if (DEBUG) {
             //it is possible without CORS, the Headers.forEach()
@@ -147,18 +148,23 @@ export function instrumentFetch() {
         // wrong property keys.
         performanceObserver.onAfterResourceRetrieved();
         return response;
-      }, function (e: any) {
+      },
+      function (e: any) {
         performanceObserver.cancel();
-        beacon['d'] = now() - (beacon['ts'] as number + vars.referenceTimestamp);
+        beacon['d'] = now() - ((beacon['ts'] as number) + vars.referenceTimestamp);
         beacon['e'] = e.message;
         beacon['st'] = -103;
         sendBeacon(beacon as XhrBeacon);
         throw e;
-      });
+      }
+    );
 
-    function resourceMatcher(resource:  PerformanceResourceTiming): boolean {
-      return (resource.initiatorType === 'fetch' || resource.initiatorType === 'xmlhttprequest') &&
-        Boolean(resource.name) && resource.name.indexOf(beacon['u'] as string) === 0;
+    function resourceMatcher(resource: PerformanceResourceTiming): boolean {
+      return (
+        (resource.initiatorType === 'fetch' || resource.initiatorType === 'xmlhttprequest') &&
+        Boolean(resource.name) &&
+        resource.name.indexOf(beacon['u'] as string) === 0
+      );
     }
 
     function onEnd(args: ObserveResourcePerformanceResult) {
@@ -176,11 +182,13 @@ const mutationIdentification = /^\s*mutation(\s|\{)/i;
 
 function addGraphQlProperties(beacon: Partial<XhrBeacon>, input: RequestInfo | URL, init?: RequestInit) {
   try {
-    if (typeof input !== 'string' ||
-        !init ||
-        init.method !== 'POST' ||
-        typeof init.body !== 'string' ||
-        !matchesAny(vars.urlsToCheckForGraphQlInsights, input)) {
+    if (
+      typeof input !== 'string' ||
+      !init ||
+      init.method !== 'POST' ||
+      typeof init.body !== 'string' ||
+      !matchesAny(vars.urlsToCheckForGraphQlInsights, input)
+    ) {
       return;
     }
 
@@ -204,7 +212,6 @@ function addGraphQlProperties(beacon: Partial<XhrBeacon>, input: RequestInfo | U
       debug('Failed to analyze request for GraphQL insights.', input, init);
     }
   }
-
 }
 
 function captureHttpHeaders(headers: Headers, beacon: Partial<XhrBeacon>) {
@@ -212,9 +219,9 @@ function captureHttpHeaders(headers: Headers, beacon: Partial<XhrBeacon>) {
     return;
   }
 
-  headers.forEach(function(value, name) {
+  headers.forEach(function (value, name) {
     if (matchesAny(vars.headersToCapture, name)) {
-      beacon['h_'+name.toLowerCase()] = value;
+      beacon['h_' + name.toLowerCase()] = value;
     }
   });
 }

@@ -1,5 +1,3 @@
-/* eslint-disable prefer-rest-params */
-
 import {hookIntoGlobalUnhandledRejectionEvent} from '../hooks/unhandledRejection';
 import {instrumentXMLHttpRequest} from '../hooks/XMLHttpRequest';
 import {hookIntoGlobalErrorEvent} from '../hooks/unhandledError';
@@ -104,21 +102,19 @@ const state: State = {
 };
 export default state;
 
-
 function processCommands(commands: Array<any>) {
   for (let i = 0, len = commands.length; i < len; i++) {
     processCommand(commands[i]);
   }
 }
 
-
 function addCommandAfterInitializationSupport() {
   const globalObjectName = (win as any)[vars.nameOfLongGlobal];
   (win as any)[globalObjectName] = function () {
+    /* eslint-disable prefer-rest-params */
     return processCommand(arguments as any);
   };
 }
-
 
 function fulfillsPrerequisites() {
   return win.XMLHttpRequest && win.JSON;

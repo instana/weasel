@@ -26,7 +26,7 @@ let generateUniqueIdImpl: () => string = function generateUniqueIdViaRandom(): s
   return result;
 };
 
-if (win?.crypto?.getRandomValues && win?.Uint32Array) {
+if (win.crypto && win.crypto.getRandomValues && win.Uint32Array) {
   generateUniqueIdImpl = function generateUniqueIdViaCrypto(): string {
     const array = new win.Uint32Array(2);
     win.crypto.getRandomValues(array);
@@ -44,7 +44,6 @@ export function addEventListener(target: EventTarget, eventType: string, callbac
   }
 }
 
-
 export function removeEventListener(target: EventTarget, eventType: string, callback: () => unknown) {
   if (target.removeEventListener) {
     target.removeEventListener(eventType, callback, false);
@@ -52,7 +51,6 @@ export function removeEventListener(target: EventTarget, eventType: string, call
     (target as any).detachEvent('on' + eventType, callback);
   }
 }
-
 
 export function matchesAny(regexp: RegExp[], s: string) {
   for (let i = 0, len = regexp.length; i < len; i++) {

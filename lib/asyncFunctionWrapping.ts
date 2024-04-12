@@ -5,7 +5,7 @@ import vars from './vars';
 export type EventListenerOptionsOrUseCapture =
   | boolean
   | {
-      capture?: boolean
+      capture?: boolean;
     };
 
 // Asynchronous function wrapping: The process of wrapping a listener which goes into one function, e.g.
@@ -54,14 +54,18 @@ function findInStorage(storageTarget: EventTarget, valuesForEqualityCheck: any[]
   for (let i = 0; i < storage.length; i++) {
     const storageItem = storage[i];
 
-    if (matchesEqualityCheck(storageItem?.valuesForEqualityCheck, valuesForEqualityCheck)) {
+    if (matchesEqualityCheck(storageItem.valuesForEqualityCheck, valuesForEqualityCheck)) {
       return i;
     }
   }
   return -1;
 }
 
-export function popWrappedFunction(storageTarget: EventTarget, valuesForEqualityCheck: any[], fallback?: EventListenerOrEventListenerObject): EventListenerOrEventListenerObject | undefined {
+export function popWrappedFunction(
+  storageTarget: EventTarget,
+  valuesForEqualityCheck: any[],
+  fallback?: EventListenerOrEventListenerObject
+): EventListenerOrEventListenerObject | undefined {
   const storage = (storageTarget as any)[vars.wrappedEventHandlersOriginalFunctionStorageKey];
   if (storage == null) {
     return fallback;

@@ -1,5 +1,3 @@
-/* eslint-disable prefer-rest-params */
-
 import {reportError, ignoreNextOnErrorEvent} from './unhandledError';
 import {isRunningZoneJs} from '../timers';
 import {win} from '../browser';
@@ -7,10 +5,12 @@ import {warn} from '../debug';
 import vars from '../vars';
 
 export function wrapTimers() {
-  if (vars?.wrapTimers) {
+  if (vars.wrapTimers) {
     if (isRunningZoneJs) {
       if (DEBUG) {
-        warn('We discovered a usage of Zone.js. In order to avoid any incompatibility issues timer wrapping is not going to be enabled.');
+        warn(
+          'We discovered a usage of Zone.js. In order to avoid any incompatibility issues timer wrapping is not going to be enabled.'
+        );
       }
       return;
     }
@@ -30,6 +30,7 @@ function wrapTimer(name: 'setTimeout' | 'setInterval') {
     // non-deopt arguments copy
     const args = new Array(arguments.length);
     for (let i = 0; i < arguments.length; i++) {
+      // eslint-disable-next-line prefer-rest-params
       args[i] = arguments[i];
     }
     args[0] = wrap(fn);
@@ -45,6 +46,7 @@ function wrap(fn: TimerHandler) {
 
   return function wrappedTimerHandler(this: any) {
     try {
+      // eslint-disable-next-line prefer-rest-params
       return fn.apply(this, arguments);
     } catch (e) {
       reportError(e as any);

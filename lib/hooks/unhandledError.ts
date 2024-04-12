@@ -45,13 +45,13 @@ export function hookIntoGlobalErrorEvent() {
     if (ignoreNextOnError as boolean) {
       ignoreNextOnError = false;
       if (typeof globalOnError === 'function') {
-        /* eslint-disable prefer-rest-params */
+        // eslint-disable-next-line prefer-rest-params
         return globalOnError.apply(this, arguments as any);
       }
       return;
     }
 
-    let stack = error && error?.stack;
+    let stack = error && error.stack;
     if (!stack) {
       stack = 'at ' + fileName + ' ' + lineNumber;
       if (columnNumber != null) {
@@ -61,6 +61,7 @@ export function hookIntoGlobalErrorEvent() {
     onUnhandledError(String(message), stack);
 
     if (typeof globalOnError === 'function') {
+      // eslint-disable-next-line prefer-rest-params
       return globalOnError.apply(this, arguments as any);
     }
   };
@@ -94,7 +95,7 @@ function onUnhandledError(message: string, stack?: string, opts?: ReportErrorOpt
 
   message = String(message).substring(0, 300);
   stack = shortenStackTrace(stack);
-  const location = win?.location?.href;
+  const location = win.location.href;
   const parentId = getActiveTraceId();
   const key = message + stack + location + (parentId || '');
 
@@ -165,9 +166,9 @@ function send() {
 
   for (const key in seenErrors) {
     // eslint-disable-next-line no-prototype-builtins
-    if (seenErrors?.hasOwnProperty(key)) {
+    if (seenErrors.hasOwnProperty(key)) {
       const seenError = seenErrors[key];
-      if (seenError?.seenCount > seenError?.transmittedCount) {
+      if (seenError.seenCount > seenError.transmittedCount) {
         sendBeaconForError(seenError);
         reportedErrors++;
       }
@@ -179,5 +180,5 @@ function send() {
 }
 
 function sendBeaconForError(error: TrackedError) {
-  sendBeacon(error?.beacon);
+  sendBeacon(error.beacon);
 }

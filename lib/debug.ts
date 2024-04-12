@@ -1,7 +1,3 @@
-/* eslint-disable prefer-spread */
-/* eslint-disable prefer-rest-params */
-/* eslint-disable no-console */
-
 import {noop} from './util';
 
 type Logger = (...args: any[]) => void;
@@ -18,12 +14,14 @@ function createLogger(method: Extract<keyof Console, 'log' | 'info' | 'warn' | '
   }
 
   if (console[method] && typeof console[method].apply === 'function') {
-    return function() {
+    return function () {
+      // eslint-disable-next-line prefer-rest-params, prefer-spread
       console[method].apply(console, arguments as any);
     };
   }
 
-  return function() {
+  return function () {
+    // eslint-disable-next-line prefer-rest-params, prefer-spread
     console.log.apply(console, arguments as any);
   };
 }

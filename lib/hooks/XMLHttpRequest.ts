@@ -1,5 +1,3 @@
-/* eslint-disable prefer-rest-params */
-
 import {createExcessiveUsageIdentifier} from '../excessiveUsageIdentification';
 import type {ObserveResourcePerformanceResult} from '../performanceObserver';
 import {addResourceTiming, addCorrelationHttpHeaders} from './xhrHelpers';
@@ -47,8 +45,7 @@ const additionalStatuses = {
 const traceIdHeaderRegEx = /^X-INSTANA-T$/i;
 
 export function instrumentXMLHttpRequest() {
-  if (!XMLHttpRequest ||
-      !(new XMLHttpRequest()).addEventListener) {
+  if (!XMLHttpRequest || !new XMLHttpRequest().addEventListener) {
     if (DEBUG) {
       info('Browser does not support the features required for XHR instrumentation.');
     }
@@ -61,9 +58,11 @@ export function instrumentXMLHttpRequest() {
 
   if (!originalOpen || !originalSetRequestHeader || !originalSend) {
     if (DEBUG) {
-      warn('The XMLHttpRequest prototype is in an unsupported state due to some missing XMLHttpRequest.prototype ' +
-        'properties. This is most likely caused by third-party libraries that are instrumenting/changing the ' +
-        'XMLHttpRequest API in a specification incompliant way.');
+      warn(
+        'The XMLHttpRequest prototype is in an unsupported state due to some missing XMLHttpRequest.prototype ' +
+          'properties. This is most likely caused by third-party libraries that are instrumenting/changing the ' +
+          'XMLHttpRequest API in a specification incompliant way.'
+      );
     }
     return;
   }
@@ -76,22 +75,23 @@ export function instrumentXMLHttpRequest() {
         info('Reached the maximum number of XMLHttpRequests to monitor.');
       }
 
+      // eslint-disable-next-line prefer-rest-params
       return originalOpen.apply(xhr, arguments as any);
     }
 
-    const state = (xhr as any)[vars.secretPropertyKey] = (xhr as any)[vars.secretPropertyKey] || {};
+    const state = ((xhr as any)[vars.secretPropertyKey] = (xhr as any)[vars.secretPropertyKey] || {});
     // probably ignored due to disableMonitoringForXMLHttpRequest calls
     if (state.ignored) {
+      // eslint-disable-next-line prefer-rest-params
       return originalOpen.apply(xhr, arguments as any);
     }
 
     state.ignored = isUrlIgnored(url);
     if (state.ignored) {
       if (DEBUG) {
-        debug(
-          'Not generating XHR beacon because it should be ignored according to user configuration. URL: ' + url
-        );
+        debug('Not generating XHR beacon because it should be ignored according to user configuration. URL: ' + url);
       }
+      // eslint-disable-next-line prefer-rest-params
       return originalOpen.apply(xhr, arguments as any);
     }
 
@@ -121,9 +121,12 @@ export function instrumentXMLHttpRequest() {
 
     state.performanceObserver = observeResourcePerformance({
       entryTypes: ['resource'],
-      resourceMatcher: function resourceMatcher(resource:  PerformanceResourceTiming): boolean {
-        return (resource.initiatorType === 'fetch' || resource.initiatorType === 'xmlhttprequest') &&
-          !!resource.name && resource.name.indexOf(beacon['u'] as string) === 0;
+      resourceMatcher: function resourceMatcher(resource: PerformanceResourceTiming): boolean {
+        return (
+          (resource.initiatorType === 'fetch' || resource.initiatorType === 'xmlhttprequest') &&
+          !!resource.name &&
+          resource.name.indexOf(beacon['u'] as string) === 0
+        );
       },
       maxWaitForResourceMillis: vars.maxWaitForResourceTimingsMillis,
       maxToleranceForResourceTimingsMillis: vars.maxToleranceForResourceTimingsMillis,
@@ -137,6 +140,7 @@ export function instrumentXMLHttpRequest() {
     });
 
     try {
+      // eslint-disable-next-line prefer-rest-params
       const result = originalOpen.apply(xhr, arguments as any);
       xhr.addEventListener('timeout', onTimeout);
       xhr.addEventListener('error', onError);
@@ -173,10 +177,10 @@ export function instrumentXMLHttpRequest() {
       // we can not safely use beacon.property as the compilation/minification
       // step will rename the properties which results in JSON payloads with
       // wrong property keys.
-      beacon['d'] = Math.max(0, now() - (beacon['ts'] as number + vars.referenceTimestamp));
+      beacon['d'] = Math.max(0, now() - ((beacon['ts'] as number) + vars.referenceTimestamp));
 
       if (vars.headersToCapture.length > 0) {
-        try{
+        try {
           captureHttpHeaders(beacon, xhr.getAllResponseHeaders());
         } catch (e) {
           if (DEBUG) {
@@ -202,7 +206,7 @@ export function instrumentXMLHttpRequest() {
     }
 
     function onError(e: ProgressEvent<XMLHttpRequestEventTarget>) {
-      if (state?.ignored) {
+      if (state.ignored) {
         return;
       }
 
@@ -250,9 +254,7 @@ export function instrumentXMLHttpRequest() {
     // set this XHR to ignored in xhr.send.
     if (state && traceIdHeaderRegEx.test(header)) {
       if (DEBUG) {
-        debug(
-          'Not generating XHR beacon because correlation header is already set (possibly fetch polyfill applied).'
-        );
+        debug('Not generating XHR beacon because correlation header is already set (possibly fetch polyfill applied).');
       }
       state.ignored = true;
       if (state.performanceObserver) {
@@ -261,15 +263,17 @@ export function instrumentXMLHttpRequest() {
       }
     } else {
       if (matchesAny(vars.headersToCapture, header)) {
-        state.beacon['h_'+header.toLowerCase()] = value;
+        state.beacon['h_' + header.toLowerCase()] = value;
       }
     }
+    // eslint-disable-next-line prefer-rest-params
     return originalSetRequestHeader.apply(this, arguments as any);
   };
 
   XMLHttpRequest.prototype.send = function send() {
     const state = (this as any)[vars.secretPropertyKey];
     if (!state || state.ignored) {
+      // eslint-disable-next-line prefer-rest-params
       return originalSend.apply(this, arguments as any);
     }
 
@@ -280,16 +284,17 @@ export function instrumentXMLHttpRequest() {
     state.beacon['ts'] = now() - vars.referenceTimestamp;
     addCommonBeaconProperties(state.beacon);
     state.performanceObserver.onBeforeResourceRetrieval();
+    // eslint-disable-next-line prefer-rest-params
     return originalSend.apply(this, arguments as any);
   };
 }
 
 export function captureHttpHeaders(beacon: Partial<XhrBeacon>, headerString: string) {
   const lines = headerString.trim().split(/[\r\n]+/);
-  for (let i=0; i<lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     const items = lines[i].split(': ', 2);
     if (matchesAny(vars.headersToCapture, items[0])) {
-      beacon['h_'+items[0].toLowerCase()] = items[1];
+      beacon['h_' + items[0].toLowerCase()] = items[1];
     }
   }
 }

@@ -8,10 +8,10 @@ const event: Event = {
   name: 'e:onLoad',
   time: null,
   initialize() {
-    if (document?.readyState === 'complete') {
+    if (document.readyState === 'complete') {
       return onReady();
     }
-    addEventListener(win, 'load', function() {
+    addEventListener(win, 'load', function () {
       // we want to get timing data for loadEventEnd,
       // so asynchronously process this
       setTimeout(onReady, 0);
@@ -21,7 +21,7 @@ const event: Event = {
 
 function onReady() {
   event.time = now();
-  emit(event?.name, event?.time);
+  emit(event.name, event.time);
 }
 
 export default event;

@@ -1,8 +1,7 @@
-/* eslint-disable prefer-rest-params */
-import { addWrappedDomEventListener, popWrappedDomEventListener } from '../asyncFunctionWrapping';
-import type { EventListenerOptionsOrUseCapture } from '../asyncFunctionWrapping';
-import { reportError, ignoreNextOnErrorEvent } from './unhandledError';
-import { win } from '../browser';
+import {addWrappedDomEventListener, popWrappedDomEventListener} from '../asyncFunctionWrapping';
+import type {EventListenerOptionsOrUseCapture} from '../asyncFunctionWrapping';
+import {reportError, ignoreNextOnErrorEvent} from './unhandledError';
+import {win} from '../browser';
 import vars from '../vars';
 
 export function wrapEventHandlers() {
@@ -29,17 +28,20 @@ function wrapEventTarget(EventTarget: typeof win.EventTarget) {
     optionsOrCapture?: EventListenerOptionsOrUseCapture
   ) {
     if (typeof fn !== 'function') {
+      // eslint-disable-next-line prefer-rest-params
       return originalAddEventListener.apply(this, arguments as any);
     }
 
     // non-deopt arguments copy
     const args = new Array(arguments.length);
     for (let i = 0; i < arguments.length; i++) {
+      // eslint-disable-next-line prefer-rest-params
       args[i] = arguments[i];
     }
 
     args[1] = function wrappedEventListener() {
       try {
+        // eslint-disable-next-line prefer-rest-params
         return fn.apply(this, arguments as any);
       } catch (e) {
         reportError(e as any);
@@ -59,12 +61,14 @@ function wrapEventTarget(EventTarget: typeof win.EventTarget) {
     optionsOrCapture?: EventListenerOptionsOrUseCapture
   ) {
     if (typeof fn !== 'function') {
+      // eslint-disable-next-line prefer-rest-params
       return originalRemoveEventListener.apply(this, arguments as any);
     }
 
     // non-deopt arguments copy
     const args = new Array(arguments.length);
     for (let i = 0; i < arguments.length; i++) {
+      // eslint-disable-next-line prefer-rest-params
       args[i] = arguments[i];
     }
 

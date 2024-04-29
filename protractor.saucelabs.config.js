@@ -34,7 +34,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'weasel e2e',
+    name: 'Testing for only CLS values',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

@@ -1,0 +1,45 @@
+platform: linux
+image_resource:
+  type: registry-image
+  source:
+    repository: delivery.instana.io/int-docker-private-virtual/node
+    tag: 18.18.0
+    username: ((delivery-instana-io-internal-project-artifact-read-writer-creds.username))
+    password: ((delivery-instana-io-internal-project-artifact-read-writer-creds.password))
+
+inputs:
+  - name: source
+outputs:
+  - name: sonarqube-analysis-input
+
+run:
+  dir: source
+  path: bash
+  args:
+    - -cx
+    - |
+      set -e
+      export BUILD_PATH=$(pwd)
+      export ARTIFACTORY_USERNAME="((delivery-instana-io-internal-project-artifact-read-writer-creds.username))"
+      export ARTIFACTORY_PASSWORD="((delivery-instana-io-internal-project-artifact-read-writer-creds.password))"
+
+      # Replace variables
+      sed -i "s|'EumObject'|'InstanaEumObject'|g" lib/vars.ts
+      sed -i "s|reportingUrl: null|reportingUrl: 'https://eum.instana.io'|g" lib/vars.ts
+      sed -i "s|__weaselOriginalFunctions__|__instanaOriginalFunctions__|g" lib/vars.ts
+      sed -i "s|__weaselSecretData_|__instanaSecretData__|g" lib/vars.ts
+      sed -i "s|beaconBatchingTime: 500|beaconBatchingTime: 2000|g" lib/vars.ts
+      sed -i "s|sessionStorageKey: 'session'|sessionStorageKey: 'in-session'|g" lib/vars.ts
+
+      chmod -R 777 .concourse/scripts/check-update-weasel-version.sh
+      .concourse/scripts/check-update-weasel-version.sh
+
+      echo "Building Weasel Agent"
+      apt-get update
+      apt-get install -y xxd
+      yarn
+      yarn build
+      yarn test:quick
+      ls -lt target/
+
+      echo "Build finished"

@@ -1,0 +1,91 @@
+platform: linux
+image_resource:
+  type: registry-image
+  source:
+    repository: delivery.instana.io/int-docker-private-virtual/node
+    tag: 18.18.0
+    username: ((delivery-instana-io-internal-project-artifact-read-writer-creds.username))
+    password: ((delivery-instana-io-internal-project-artifact-read-writer-creds.password))
+
+params:
+  GITHUB_TOKEN: ((ibm-github-e-api-token))
+
+inputs:
+  - name: source
+  - name: sonarqube-analysis-input
+
+run:
+  path: bash
+  args:
+    - -cx
+    - |
+      set -e
+      export ARTIFACTORY_USERNAME=((delivery-instana-io-internal-project-artifact-read-writer-creds.username))
+      export ARTIFACTORY_PASSWORD=((delivery-instana-io-internal-project-artifact-read-writer-creds.password))
+      export SONARQUBE_TOKEN=((sonarqube-instana-io-token))
+      export BRANCH_NAME=((branch))
+
+      cd source
+      git checkout $BRANCH_NAME
+      apt update
+      apt install gh
+      gh auth login --with-token <<< ((ibm-github-e-api-token)) --hostname github.ibm.com
+      export PR_KEY=`gh pr view --json baseRefName,number --jq .number`
+      export PR_BASE=`gh pr view --json baseRefName,number --jq .baseRefName`
+      git fetch https://$GITHUB_TOKEN@github.ibm.com/instana/weasel.git main:main
+      cd ..
+
+
+      echo "Performing sonarqube scan"
+
+      if [ ! -d "sonar-scanner-5.0.1.3006-linux" ]; then
+          curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+          export PATH="$PATH:`pwd`/sonar-scanner-5.0.1.3006-linux/bin"
+      fi
+
+      apt-get update
+
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+      export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+      cd source
+
+      if [ -f "coverage/lcov.info" ]; then
+        rm -rf coverage
+      fi
+
+      nvm install
+      nvm use
+      nvm version
+
+      corepack enable
+
+      yarn
+      yarn test:quick
+
+      echo Perform sonarqube scan
+
+      if [ -z "$PR_KEY" ]; then
+        sonar-scanner \
+          -Dsonar.projectKey=weasel \
+          -Dsonar.host.url=https://sonarqube.instana.io/ \
+          -Dsonar.login="${SONARQUBE_TOKEN}" \
+          -Dsonar.branch.name="${BRANCH_NAME}" \
+          -Dsonar.sources=./lib \
+          -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
+          -Dsonar.dynamicAnalysis=reuseReports
+
+      else
+        sonar-scanner \
+          -Dsonar.projectKey=weasel \
+          -Dsonar.host.url=https://sonarqube.instana.io/ \
+          -Dsonar.login="${SONARQUBE_TOKEN}" \
+          -Dsonar.pullrequest.key="${PR_KEY}" \
+          -Dsonar.pullrequest.branch="${BRANCH_NAME}" \
+          -Dsonar.pullrequest.base="${PR_BASE}" \
+          -Dsonar.sources=./lib \
+          -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
+          -Dsonar.dynamicAnalysis=reuseReports
+      fi

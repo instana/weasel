@@ -1,0 +1,103 @@
+meta:
+  artifactory-creds: &artifactory_creds
+    username: ((delivery-instana-io-internal-project-artifact-read-writer-creds.username))
+    password: ((delivery-instana-io-internal-project-artifact-read-writer-creds.password))
+  gh-status_hooks: &gh-status-hooks
+    on_success:
+      put: gh-status
+      inputs: [ source ]
+      params: { state: success }
+    on_failure: &on-failure-status-hook
+      put: gh-status
+      inputs: [ source ]
+      params: { state: failure }
+    on_error: &on-error-status-hook
+      put: gh-status
+      inputs: [ source ]
+      params: { state: error }
+  gh-status-set-pending: &gh-status-set-pending
+    put: gh-status
+    inputs: [ source ]
+    params: { state: pending }
+  gh-status-set-pending-build: &gh-status-set-pending-build-and-test
+    put: gh-status
+    inputs: [ source ]
+    params: { state: pending, context: build-and-test }
+
+resources:
+  - name: source
+    type: git
+    icon: github
+    source:
+      uri: https://github.ibm.com/instana/weasel.git
+      username: ((ibm-github-e-api-token))
+      password: x-oauth-basic
+      branch: ((branch))
+  - name: gh-status
+    type: cogito
+    source:
+      owner: instana
+      repo: weasel
+      access_token: ((ibm-github-e-api-token))
+      context_prefix: concourse
+
+jobs:
+  - name: &self-update-job self-update
+    plan:
+      - get: source
+        trigger: true
+      - set_pipeline: self
+        file: source/.concourse/pipeline.yml
+        vars:
+          branch: ((branch))
+          ibm-github-e-api-token: ((ibm-github-e-api-token))
+
+  - name: &build-job build-and-test
+    max_in_flight: 1
+    <<: *gh-status-hooks
+    plan:
+      - get: source
+        trigger: true
+        passed: [ self-update ]
+      - <<: *gh-status-set-pending-build-and-test
+      - task: build-and-test
+        file: source/.concourse/tasks/build-and-test.yml
+        on_failure:
+          put: gh-status
+          inputs: [ source ]
+          params: { state: failure, context: build-and-test }
+        on_error:
+          put: gh-status
+          inputs: [ source ]
+          params: { state: error, context: build-and-test }
+      - task: sonar-analysis
+        file: source/.concourse/tasks/sonar-analysis.yml
+        input_mapping:
+          sonarqube-analysis-input: sonarqube-analysis-input
+        vars:
+          branch: ((branch))
+        on_success:
+          put: gh-status
+          inputs: [ source ]
+          params: { state: success, context: sonar-analysis }
+        on_failure:
+          put: gh-status
+          inputs: [ source ]
+          params: { state: failure, context: sonar-analysis }
+        on_error:
+          put: gh-status
+          inputs: [ source ]
+          params: { state: error, context: sonar-analysis }
+        on_abort:
+          put: gh-status
+          inputs: [ source ]
+          params: { state: error, context: sonar-analysis }
+
+resource_types:
+  - name: cogito
+    type: registry-image
+    check_every: never
+    source:
+      repository: delivery.instana.io/int-docker-ci-utility-images-local/cogito-gh-status-resource
+      tag: 1.0.1-instana
+      <<: *artifactory_creds

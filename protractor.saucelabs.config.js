@@ -28,7 +28,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'Testing for only CLS values in chrome 124',
+    name: 'Testing for only INP values in chrome 124',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

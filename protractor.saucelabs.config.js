@@ -9,11 +9,14 @@ exports.config = {
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
-    newSaucelabsCapability('chrome', '124.0', 'OS X 10.11'),
-    newSaucelabsCapability('chrome', '124.0', 'macOS'),
-    newSaucelabsCapability('chrome', '124.0', 'Windows 7'),
-    newSaucelabsCapability('chrome', '124.0', 'Windows 10'),
-    newSaucelabsCapability('chrome', '124.0', 'Windows 11')
+    newSaucelabsCapability('chrome', '124.0', 'macOS 11.00'),
+    newSaucelabsCapability('firefox', '125.0', 'macOS 11.00'),
+    newSaucelabsCapability('chrome', '124.0', 'macOS 12.00'),
+    newSaucelabsCapability('firefox', '125.0', 'macOS 12.00'),
+    newSaucelabsCapability('chrome', '124.0', 'macOS 13.00'),
+    newSaucelabsCapability('firefox', '125.0', 'macOS 13.00'),
+    newSaucelabsCapability('chrome', '124.0', 'macOS 14.00'),
+    newSaucelabsCapability('firefox', '125.0', 'macOS 14.00')
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -28,7 +31,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'Testing for only INP values in chrome 124',
+    name: 'Testing for only INP values',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

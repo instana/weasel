@@ -13,6 +13,9 @@ describe('12_webvitalsAsCustomEvent', () => {
       // webvital CLS does not work if following another test, so restart browser to cleanup all context
       restartBrowser();
 
+      const gg = browser.getCapabilities()
+      console.log('jhgjhghj', gg)
+
       browser.get(getE2ETestBaseUrl('12_webvitalsAsCustomEvent/webvitalsAsCustomEvent'));
       // wait for webvital metrics
       browser.sleep(5000);

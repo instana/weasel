@@ -81,6 +81,19 @@
 
   <a id="open-blank-tab" href="about:blank" target="_blank">Open new blank tab</a>
 
+  <div id="webVitals_wrapper">
+    <div>
+      <h1 id="webVitals_cls">Web vitals CLICK HERE...!!</h1>
+
+      <h3 id="cls">CLS: </h3>
+      <h3 id="inp">INP: </h3>
+      <h3 id="fid">FID: </h3>
+      <h3 id="lcp">LCP: </h3>
+      <h3 id="fcp">FCP: </h3>
+      <h3 id="ttfb">TTFB: </h3>
+    </div>
+  </div>
+
   <div class="jumbotron" id="resultwrap" style="display: none">
     <div class="media">
       <div class="media-body">
@@ -89,7 +102,57 @@
     </div>
   </div>
 
+  <script src="https://unpkg.com/web-vitals"></script>
+
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const metrics = {
+        cls: undefined,
+        fid: undefined,
+        lcp: undefined,
+        inp: undefined,
+        fcp: undefined,
+        ttfb: undefined
+      };
+
+      const updateMetrics = (name, value) => {
+        metrics[name.toLowerCase()] = value;
+        updateUI();
+      };
+
+      const updateUI = () => {
+        document.getElementById("cls").innerText = `CLS: ${metrics.cls}`;
+        document.getElementById("fid").innerText = `FID: ${metrics.fid}`;
+        document.getElementById("lcp").innerText = `LCP: ${metrics.lcp}`;
+        document.getElementById("inp").innerText = `INP: ${metrics.inp}`;
+        document.getElementById("fcp").innerText = `FCP: ${metrics.fcp}`;
+        document.getElementById("ttfb").innerText = `TTFB: ${metrics.ttfb}`;
+      };
+
+      const reportWebVitals = ({ name, value }) => {
+        console.log('METRICS', name, value)
+        console.log('---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------')
+        updateMetrics(name, value);
+      };
+
+      window.addEventListener('load', function () {
+        webVitals.onCLS(console.log);
+        webVitals.onFID(console.log);
+        webVitals.onLCP(console.log);
+        webVitals.onINP(console.log);
+        webVitals.onFCP(console.log);
+        webVitals.onTTFB(console.log);
+
+        webVitals.onCLS(reportWebVitals);
+        webVitals.onFID(reportWebVitals);
+        webVitals.onLCP(reportWebVitals);
+        webVitals.onINP(reportWebVitals);
+        webVitals.onFCP(reportWebVitals);
+        webVitals.onTTFB(reportWebVitals);
+      });
+    });
+
+
     $('#button3').on('click', function () {
       $('#button1').show();
     });

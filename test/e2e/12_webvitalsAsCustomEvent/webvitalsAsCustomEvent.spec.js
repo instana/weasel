@@ -11,7 +11,6 @@ describe('12_webvitalsAsCustomEvent', () => {
   describe('webvitalsAsCustomEvent', () => {
     function isLCPTestApplicable(capabilities) {
       const version = Number(capabilities.version);
-      console.log('WEWEWEWEWE-capabilities', capabilities);
       return (
         (capabilities.browserName === 'chrome' && version > 77) ||
         (capabilities.browserName === 'MicrosoftEdge' && version > 79) ||

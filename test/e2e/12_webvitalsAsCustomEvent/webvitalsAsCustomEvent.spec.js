@@ -9,6 +9,16 @@ describe('12_webvitalsAsCustomEvent', () => {
   registerBaseHooks();
 
   describe('webvitalsAsCustomEvent', () => {
+    function isLCPTestApplicable(capabilities) {
+      const version = Number(capabilities.version);
+      console.log('WEWEWEWEWE-capabilities', capabilities)
+      return (
+        (capabilities.browserName === 'chrome' && version > 77) ||
+        (capabilities.browserName === 'MicrosoftEdge' && version > 79) ||
+        (capabilities.browserName === 'firefox' && version > 122)
+      );
+    }
+
     beforeEach(() => {
       // webvital CLS does not work if following another test, so restart browser to cleanup all context
       restartBrowser();
@@ -38,15 +48,18 @@ describe('12_webvitalsAsCustomEvent', () => {
             cexpect(beacon.ty).to.equal('pl');
           });
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(parseFloat(beacon.d)).to.be.above(3000);
-            cexpect(beacon.n).to.equal('instana-webvitals-LCP');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+          // LCP test: Run for chrome > 77, MicrosoftEdge > 79, firefox > 122
+          if (isLCPTestApplicable(capabilities)) {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(parseFloat(beacon.d)).to.be.above(3000);
+              cexpect(beacon.n).to.equal('instana-webvitals-LCP');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
           expectOneMatching(beacons, beacon => {
             cexpect(beacon.ty).to.equal('cus');

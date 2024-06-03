@@ -11,7 +11,7 @@ describe('12_webvitalsAsCustomEvent', () => {
   describe('webvitalsAsCustomEvent', () => {
     function isLCPTestApplicable(capabilities) {
       const version = Number(capabilities.version);
-      console.log('WEWEWEWEWE-capabilities', capabilities)
+      console.log('WEWEWEWEWE-capabilities', capabilities);
       return (
         (capabilities.browserName === 'chrome' && version > 77) ||
         (capabilities.browserName === 'MicrosoftEdge' && version > 79) ||
@@ -42,7 +42,7 @@ describe('12_webvitalsAsCustomEvent', () => {
     });
 
     it('must report web-vitals as custom events', () => {
-      return getCapabilities().then(capabilities => {
+      return browser.getCapabilities().then(capabilities => {
         return retry(() => {
           return getBeacons().then(beacons => {
             const pageLoadBeacon = expectOneMatching(beacons, beacon => {
@@ -90,7 +90,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             });
           });
         });
-      })
+      });
     });
   });
 });

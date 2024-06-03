@@ -42,53 +42,55 @@ describe('12_webvitalsAsCustomEvent', () => {
     });
 
     it('must report web-vitals as custom events', () => {
-      return retry(() => {
-        return getBeacons().then(beacons => {
-          const pageLoadBeacon = expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('pl');
-          });
+      return getCapabilities().then(capabilities => {
+        return retry(() => {
+          return getBeacons().then(beacons => {
+            const pageLoadBeacon = expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('pl');
+            });
 
-          // LCP test: Run for chrome > 77, MicrosoftEdge > 79, firefox > 122
-          if (isLCPTestApplicable(capabilities)) {
+            // LCP test: Run for chrome > 77, MicrosoftEdge > 79, firefox > 122
+            if (isLCPTestApplicable(capabilities)) {
+              expectOneMatching(beacons, beacon => {
+                cexpect(beacon.ty).to.equal('cus');
+                cexpect(beacon.ts).to.be.a('string');
+                cexpect(parseFloat(beacon.d)).to.be.above(3000);
+                cexpect(beacon.n).to.equal('instana-webvitals-LCP');
+                cexpect(beacon.l).to.be.a('string');
+                cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+                cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+              });
+            }
+
             expectOneMatching(beacons, beacon => {
               cexpect(beacon.ty).to.equal('cus');
               cexpect(beacon.ts).to.be.a('string');
-              cexpect(parseFloat(beacon.d)).to.be.above(3000);
-              cexpect(beacon.n).to.equal('instana-webvitals-LCP');
+              cexpect(beacon.n).to.equal('instana-webvitals-FID');
               cexpect(beacon.l).to.be.a('string');
               cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
               cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
             });
-          }
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-FID');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-CLS');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-CLS');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
-
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-INP');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-INP');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
           });
         });
-      });
+      })
     });
   });
 });

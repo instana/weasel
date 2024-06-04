@@ -9,6 +9,7 @@ describe('12_webvitalsAsCustomEvent', () => {
   registerBaseHooks();
 
   describe('webvitalsAsCustomEvent', () => {
+    // isLCPTestApplicable
     function isLCPTestApplicable(capabilities) {
       const version = Number(capabilities.version);
       return (

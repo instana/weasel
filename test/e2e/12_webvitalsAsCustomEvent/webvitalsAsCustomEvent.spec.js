@@ -1,5 +1,5 @@
 const {registerTestServerHooks, getE2ETestBaseUrl, getBeacons} = require('../../server/controls');
-const {registerBaseHooks, restartBrowser} = require('../base');
+const {registerBaseHooks, restartBrowser, getCapabilities} = require('../base');
 const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
@@ -42,7 +42,10 @@ describe('12_webvitalsAsCustomEvent', () => {
     });
 
     it('must report web-vitals as custom events', () => {
-      return browser.getCapabilities().then(capabilities => {
+      return getCapabilities().then(capabilities => {
+        if (!isLCPTestApplicable(capabilities)) {
+          return true;
+        }
         return retry(() => {
           return getBeacons().then(beacons => {
             const pageLoadBeacon = expectOneMatching(beacons, beacon => {

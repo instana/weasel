@@ -9,28 +9,25 @@ exports.config = {
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
+    // Old browser+OS platforms for non-web-vitals tests
     newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
     newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10'),
-    newSaucelabsCapability('MicrosoftEdge', '79.0', 'Windows 10'),
-    newSaucelabsCapability('MicrosoftEdge', '80.0', 'Windows 10'),
-    newSaucelabsCapability('MicrosoftEdge', '96.0', 'Windows 10'),
     newSaucelabsCapability('safari', '9.0', 'OS X 10.11'),
     newSaucelabsCapability('safari', '10.1', 'macOS 10.12'),
     newSaucelabsCapability('safari', '11.0', 'macOS 10.12'),
     newSaucelabsCapability('safari', '11.1', 'macOS 10.13'),
-    newSaucelabsCapability('firefox', '58.0', 'Windows 11'),
     newSaucelabsCapability('firefox', '78.0', 'Windows 7'),
-    newSaucelabsCapability('firefox', '89.0', 'Windows 11'),
-    newSaucelabsCapability('firefox', '122.0', 'Windows 11'),
-    newSaucelabsCapability('firefox', '123.0', 'Windows 11'),
+    newSaucelabsCapability('firefox', '58.0', 'Windows 11'),
     newSaucelabsCapability('chrome', '67.0', 'Windows 10'),
     newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
     newSaucelabsCapability('chrome', '65.0', 'OS X 10.11'),
-    newSaucelabsCapability('chrome', '76.0', 'Windows 10'),
-    newSaucelabsCapability('chrome', '77.0', 'Windows 10'),
-    newSaucelabsCapability('chrome', '78.0', 'Windows 10'),
-    newSaucelabsCapability('chrome', '79.0', 'Windows 10'),
-    newSaucelabsCapability('chrome', '96.0', 'Windows 10')
+
+    // Specific supported browser+OS for web-vitals tests
+    newSaucelabsCapability('chrome', '80.0', 'Windows 10', true),
+    newSaucelabsCapability('chrome', '83.0', 'OS X 10.11', true),
+    newSaucelabsCapability('MicrosoftEdge', '80.0', 'Windows 10', true),
+    newSaucelabsCapability('firefox', '123.0', 'Windows 7', true),
+    newSaucelabsCapability('firefox', '123.0', 'Windows 11', true)
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -40,13 +37,17 @@ exports.config = {
   }
 };
 
-function newSaucelabsCapability(browserName, version, platform) {
+function newSaucelabsCapability(browserName, version, platform, isWebVitalsTest = false) {
   return {
     browserName,
     version,
     platform,
-    name: 'weasel e2e',
+    shardTestFiles: true, // allows specs to be executed in parallel.
+    maxInstances: 2, // total number of specs that can be run at once.
+    name: isWebVitalsTest ? 'weasel e2e - web vitals' : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
-    build: process.env.GITHUB_RUN_NUMBER
+    build: process.env.GITHUB_RUN_NUMBER,
+    specs: isWebVitalsTest ? ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'] : ['test/e2e/**/*.spec.js'],
+    exclude: isWebVitalsTest ? [] : ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js']
   };
 }

@@ -42,8 +42,8 @@ function newSaucelabsCapability(browserName, version, platform, isWebVitalsTest 
     browserName,
     version,
     platform,
-    shardTestFiles: true, // allows specs to be executed in parallel.
-    maxInstances: 2, // total number of specs that can be run at once.
+    // shardTestFiles: true, // allows specs to be executed in parallel.
+    // maxInstances: 2, // total number of specs that can be run at once.
     name: isWebVitalsTest ? 'weasel e2e - web vitals' : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,

@@ -23,7 +23,7 @@ exports.config = {
     // newSaucelabsCapability('chrome', '65.0', 'OS X 10.11'),
 
     // Specific supported browser+OS for web-vitals tests
-    newSaucelabsCapability('chrome', '124.0', 'macOS 11.00', true)
+    newSaucelabsCapability('chrome', '124.0', 'Windows 11', true)
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -33,11 +33,11 @@ exports.config = {
   }
 };
 
-function newSaucelabsCapability(browserName, version, platform, isWebVitalsTest = false) {
+function newSaucelabsCapability(browserName, browserVersion, platformName, isWebVitalsTest = false) {
   return {
     browserName,
-    version,
-    platform,
+    browserVersion,
+    platformName,
     // shardTestFiles: true, // allows specs to be executed in parallel.
     // maxInstances: 2, // total number of specs that can be run at once.
     name: isWebVitalsTest ? 'weasel e2e - web vitals' : 'weasel e2e',

@@ -21,6 +21,18 @@ export type ReportingBackend = {
   key: string;
 };
 
+// RegExp is regular expression
+// string is the replacement string for the matches
+export type MappingRule = [RegExp, string];
+
+// ignorePopstateEvent: listen to popstate event or not. Deault value is false.
+// For static content app (which handles hashchange directly), ignorePopstateEvent should be set to true.
+export type AutoPageDetectionType = {
+  mappingRule?: Array<MappingRule>;
+  ignorePopstateEvent?: boolean;
+  titleAsPageName?: boolean;
+}
+
 export interface Beacon {
   // The API key.
   k: string | null;

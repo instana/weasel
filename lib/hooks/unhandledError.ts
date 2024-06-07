@@ -99,7 +99,7 @@ function onUnhandledError(message: string, stack?: string, opts?: ReportErrorOpt
   const parentId = getActiveTraceId();
   const key = message + stack + location + (parentId || '');
 
-  let trackedError = seenErrors[key as string];
+  let trackedError = seenErrors[key];
   if (trackedError) {
     trackedError.seenCount++;
     trackedError.beacon['c'] = trackedError.seenCount - trackedError.transmittedCount;

@@ -1,9 +1,9 @@
 // aliasing globals for improved minifications
 
 export const win: typeof window = window;
-export const doc: any = win.document;
-export const nav: any = navigator;
-export const encodeURIComponent: (arg: string) => string = win.encodeURIComponent;
+export const doc: typeof win.document = win.document;
+export const nav: typeof navigator = navigator;
+export const inEncodeURIComponent: (arg: string) => string = win.encodeURIComponent;
 export const XMLHttpRequest = win.XMLHttpRequest;
 export const originalFetch = win.fetch;
 export const localStorage: Storage | null = (function () {

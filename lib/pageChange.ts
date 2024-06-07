@@ -1,5 +1,5 @@
 import {createExcessiveUsageIdentifier} from './excessiveUsageIdentification';
-import {addCommonBeaconProperties} from './commonBeaconProperties';
+import {addCommonBeaconProperties, addInternalMetaDataToBeacon} from './commonBeaconProperties';
 import {pageLoad as pageLoadPhase} from './phases';
 import {sendBeacon} from './transmission/index';
 import type {PageChangeBeacon} from './types';
@@ -8,12 +8,15 @@ import {info} from './debug';
 import {now} from './util';
 import vars from './vars';
 
+type InternalMetaKey = 'view.title' | 'view.url';
+export type InternalMeta = Partial<Record<InternalMetaKey, string>>;
+
 const isExcessiveUsage = createExcessiveUsageIdentifier({
   maxCallsPerTenMinutes: 128,
   maxCallsPerTenSeconds: 32
 });
 
-export function setPage(page?: string): void {
+export function setPage(page?: string, internalMeta?: InternalMeta): void {
   const previousPage = vars.page;
   vars.page = page;
 
@@ -24,17 +27,20 @@ export function setPage(page?: string): void {
         info('Reached the maximum number of page changes to monitor.');
       }
     } else {
-      reportPageChange();
+      reportPageChange(internalMeta);
     }
   }
 }
 
-function reportPageChange(): void {
+function reportPageChange(internalMeta?: InternalMeta): void {
   // Some properties deliberately left our for js file size reasons.
   const beacon: Partial<PageChangeBeacon> = {
     'ty': 'pc',
     'ts': now()
   };
   addCommonBeaconProperties(beacon);
+  if (internalMeta) {
+    addInternalMetaDataToBeacon(beacon, internalMeta);
+  }
   sendBeacon(beacon);
 }

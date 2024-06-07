@@ -13,7 +13,7 @@ try {
   }
 }
 
-export function normalizeUrl(url: string): string {
+export function normalizeUrl(url: string, includeHash?: boolean): string {
   if (urlAnalysisElement) {
     try {
       // "a"-elements normalize the URL when setting a relative URL or URLs
@@ -27,11 +27,14 @@ export function normalizeUrl(url: string): string {
     }
   }
 
-  // Hashes are never transmitted to the server and they are also not included in resource
-  // timings. Do not include them in the normalized URL.
-  const hashIndex = url.indexOf('#');
-  if (hashIndex >= 0) {
-    url = url.substring(0, hashIndex);
+  // in case of view detection, we still user a chance to extract useful information from hash strings
+  if (!includeHash) {
+    // Hashes are never transmitted to the server and they are also not included in resource
+    // timings. Do not include them in the normalized URL.
+    const hashIndex = url.indexOf('#');
+    if (hashIndex >= 0) {
+      url = url.substring(0, hashIndex);
+    }
   }
 
   if (url.length > maximumHttpRequestUrlLength) {

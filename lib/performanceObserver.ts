@@ -6,18 +6,18 @@ import {doc, win} from './browser';
 const ONE_DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
 
 export type ObserveResourcePerformanceResult = {
-  duration: number,
+  duration: number;
   resource?: PerformanceResourceTiming | null;
 };
 
 type ObserveResourcePerformanceResultCallback = (arg: ObserveResourcePerformanceResult) => any;
 
 type ObserveResourcePerformanceOptions = {
-  entryTypes: string[],
-  resourceMatcher: (arg: PerformanceResourceTiming) => boolean,
-  maxWaitForResourceMillis: number,
-  maxToleranceForResourceTimingsMillis: number,
-  onEnd: ObserveResourcePerformanceResultCallback
+  entryTypes: string[];
+  resourceMatcher: (arg: PerformanceResourceTiming) => boolean;
+  maxWaitForResourceMillis: number;
+  maxToleranceForResourceTimingsMillis: number;
+  onEnd: ObserveResourcePerformanceResultCallback;
 };
 
 // Implements the capability to observe the performance data for a single entry on the performance timeline.
@@ -50,7 +50,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     startTime = performance.now();
     try {
       observer = new win['PerformanceObserver'](onResource);
-      observer['observe']({ 'entryTypes': opts.entryTypes });
+      observer['observe']({'entryTypes': opts.entryTypes});
     } catch (e) {
       // Some browsers may not support the passed entryTypes and decide to throw an error.
       // This would then result in an error with a message like:
@@ -78,12 +78,15 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     disposeGlobalResources();
 
     let duration;
-    if (resource && resource.duration != null &&
-        // In some old web browsers, e.g. Chrome 31, the value provided as the duration
-        // can be very wrong. We have seen cases where this value is measured in years.
-        // If this does seem be the case, then we will ignore the duration property and
-        // instead prefer our approximation.
-        resource.duration < ONE_DAY_IN_MILLIS) {
+    if (
+      resource &&
+      resource.duration != null &&
+      // In some old web browsers, e.g. Chrome 31, the value provided as the duration
+      // can be very wrong. We have seen cases where this value is measured in years.
+      // If this does seem be the case, then we will ignore the duration property and
+      // instead prefer our approximation.
+      resource.duration < ONE_DAY_IN_MILLIS
+    ) {
       duration = Math.round(resource.duration);
     } else {
       duration = Math.round(endTime - startTime);
@@ -95,9 +98,11 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     const entries = list.getEntries();
     for (let i = 0; i < entries.length; i++) {
       const entry = entries[i] as PerformanceResourceTiming;
-      if (entry.startTime >= startTime
-          && (!endTime || endTime + opts.maxToleranceForResourceTimingsMillis >= entry.responseEnd)
-          && opts.resourceMatcher(entry)) {
+      if (
+        entry.startTime >= startTime &&
+        (!endTime || endTime + opts.maxToleranceForResourceTimingsMillis >= entry.responseEnd) &&
+        opts.resourceMatcher(entry)
+      ) {
         resource = entry;
         disconnectResourceObserver();
 
@@ -171,7 +176,7 @@ function observeWithoutPerformanceObserverSupport(onEnd: ObserveResourcePerforma
 
   function onAfterResourceRetrieved() {
     const end = now();
-    onEnd({ duration: end - start });
+    onEnd({duration: end - start});
   }
 }
 
@@ -179,5 +184,5 @@ function observeWithoutPerformanceObserverSupport(onEnd: ObserveResourcePerforma
 // of becoming visible. In all other cases we might lose data when waiting, e.g. when the document
 // is in the process of being disposed.
 function isWaitingAcceptable() {
-  return doc.visibilityState === 'visible' || doc.visibilityState === 'prerender';
+  return doc.visibilityState === 'visible' || (doc.visibilityState as string) === 'prerender';
 }

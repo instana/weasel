@@ -1,6 +1,6 @@
 import {generateUniqueId, now} from './util';
 import {performance} from './performance';
-import type {Meta, ReportingBackend} from './types';
+import type {Meta, ReportingBackend, AutoPageDetectionType} from './types';
 
 const defaultVars: {
   // This is the global object name which the user of the EUM
@@ -22,7 +22,7 @@ const defaultVars: {
   // to a backend trace.
   // Set via:
   // eum('traceId', '123');
-  pageLoadBackendTraceId: null;
+  pageLoadBackendTraceId?: string | null;
 
   // Name of the server timing entry under which the backend trace
   // ID can be found. Expects a server timing entry in the following
@@ -173,6 +173,29 @@ const defaultVars: {
   // Set via:
   // eum('wrapEventHandlers', true)
   wrapEventHandlers: boolean;
+
+  /**
+   * Whether to automatically detect page transitions
+   *
+   * A boolean `true` or valid {@link AutoPageDetectionType} to enable this feature.
+   * the {@link AutoPageDetectionType.mappingRule} could be an array of
+   * pathname regular expression and each entry maps to a new page name.
+   * If the mapping result is empty, this transition will be ignored.
+   * {@link AutoPageDetectionType.ignorePopstateEvent}: whether to ignore popstate event.
+   * {@link AutoPageDetectionType.titleAsPageName}: whether to use document title to generate page name.
+   *
+   * @example
+   * eum('autoPageDetection', true)
+   *
+   * @example
+   * eum('autoPageDetection', {
+   *   mappingRule: [
+   *     [/regex-with-group-(.*)/, 'Customized Page Name with $1 group references'],
+   *     [/regex-to-ignore/, ''],
+   *   ],
+   * })
+   */
+  autoPageDetection: boolean | AutoPageDetectionType | null;
 
   // When wrapping event handlers (enabled only when wrapEventHandlers=true),
   // we will have to wrap user provided callbacks in addEventListener. This
@@ -326,6 +349,7 @@ const defaultVars: {
   allowedOrigins: [],
   page: undefined,
   wrapEventHandlers: false,
+  autoPageDetection: false,
   wrappedEventHandlersOriginalFunctionStorageKey: '__weaselOriginalFunctions__',
   wrapTimers: false,
   secretPropertyKey: '__weaselSecretData__',

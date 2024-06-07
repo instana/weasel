@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1
+
+- Auto detect page transitions on route change.
+
 ## 1.7.0
 
 - Migrate the project to typescript.

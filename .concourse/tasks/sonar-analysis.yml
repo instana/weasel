@@ -73,7 +73,8 @@ run:
           -Dsonar.host.url=https://sonarqube.instana.io/ \
           -Dsonar.login="${SONARQUBE_TOKEN}" \
           -Dsonar.branch.name="${BRANCH_NAME}" \
-          -Dsonar.sources=./lib \
+          -Dsonar.sources=lib/ \
+          -Dsonar.exclusions=lib/__mocks__/** \
           -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
           -Dsonar.dynamicAnalysis=reuseReports
 
@@ -85,7 +86,8 @@ run:
           -Dsonar.pullrequest.key="${PR_KEY}" \
           -Dsonar.pullrequest.branch="${BRANCH_NAME}" \
           -Dsonar.pullrequest.base="${PR_BASE}" \
-          -Dsonar.sources=./lib \
+          -Dsonar.sources=lib/ \
+          -Dsonar.exclusions=lib/__mocks__/** \
           -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
           -Dsonar.dynamicAnalysis=reuseReports
       fi

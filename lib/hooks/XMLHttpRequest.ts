@@ -291,8 +291,8 @@ export function instrumentXMLHttpRequest() {
 
 export function captureHttpHeaders(beacon: Partial<XhrBeacon>, headerString: string) {
   const lines = headerString.trim().split(/[\r\n]+/);
-  for (let i = 0; i < lines.length; i++) {
-    const items = lines[i].split(': ', 2);
+  for (const line of lines) {
+    const items = line.split(': ', 2);
     if (matchesAny(vars.headersToCapture, items[0])) {
       beacon['h_' + items[0].toLowerCase()] = items[1];
     }

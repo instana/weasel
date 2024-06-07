@@ -1,5 +1,5 @@
-import {XMLHttpRequest, encodeURIComponent, executeImageRequest} from '../browser';
-import { disableMonitoringForXMLHttpRequest } from '../hooks/xhrHelpers';
+import {XMLHttpRequest, inEncodeURIComponent, executeImageRequest} from '../browser';
+import {disableMonitoringForXMLHttpRequest} from '../hooks/xhrHelpers';
 import {hasOwnProperty} from '../util';
 import type {Beacon, ReportingBackend} from '../types';
 import vars from '../vars';
@@ -52,7 +52,7 @@ function stringify(data: Partial<Beacon>) {
     if (hasOwnProperty(data, key)) {
       const value = data[key];
       if (value != null) {
-        str += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(String(data[key]));
+        str += '&' + inEncodeURIComponent(key) + '=' + inEncodeURIComponent(String(data[key]));
       }
     }
   }

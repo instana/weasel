@@ -33,22 +33,22 @@ function onUserTiming(performanceEntry: PerformanceEntry) {
   }
 
   let duration;
-  let timestamp;
   if (performanceEntry.entryType !== 'mark') {
     duration = Math.round(performanceEntry.duration);
-    timestamp = Math.round(performance['timeOrigin'] + performanceEntry.startTime);
   } else {
+    // timestamp for mark also equals to "performance['timeOrigin'] + performanceEntry.startTime"
+    // otherwise we'll see all UserTiming cus events starting at 0 offset to timeOrigin
+    // which will cause confusion while UI ordering beacons by timestamp.
+    //
+    // see also: https://github.com/instana/weasel/pull/91/files#diff-6bfdd81c3c734033fa8c5709e4faee07476683733f76c3d254fc03841a125d27R44
+    // basically we keep the duration change in this PR but revert the timestamp
     duration = Math.round(performanceEntry.startTime);
-    timestamp = Math.round(performance['timeOrigin']);
   }
 
   // We have to write it this way because of the Closure compiler advanced mode.
   reportCustomEvent(performanceEntry.name, {
     // Do not allow the timestamp to be before our Notion of page load start.
-    'timestamp': Math.max(
-      pageLoadStartTimestamp,
-      timestamp
-    ),
+    'timestamp': Math.max(pageLoadStartTimestamp, Math.round(performance['timeOrigin'] + performanceEntry.startTime)),
     'duration': duration,
     'meta': {
       'userTimingType': performanceEntry.entryType

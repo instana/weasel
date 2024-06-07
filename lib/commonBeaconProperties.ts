@@ -5,11 +5,16 @@ import {hasOwnProperty} from './util';
 import {getActivePhase} from './fsm';
 import {warn} from './debug';
 import vars from './vars';
+import {isAutoPageDetectionEnabled} from './hooks/autoPageDetection';
 
 const maximumNumberOfMetaDataFields = 25;
 const maximumLengthPerMetaDataField = 1024;
 
 const languages = determineLanguages();
+
+// Internal Meta data
+const maximumNumberOfInternalMetaDataFields = 128;
+const maximumLengthPerInternalMetaDataField = 1024;
 
 export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
   if (vars.reportingBackends && vars.reportingBackends.length > 0) {
@@ -34,8 +39,9 @@ export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
   beacon['agv'] = vars.agentVersion;
   // Google Closure compiler is not yet aware of these globals. Make sure it doesn't
   // mangle them.
-  if (nav['connection'] && nav['connection']['effectiveType']) {
-    beacon['ct'] = nav['connection']['effectiveType'];
+  const anyNav = nav as any;
+  if (anyNav['connection'] && anyNav['connection']['effectiveType']) {
+    beacon['ct'] = anyNav['connection']['effectiveType'];
   }
 
   if (doc.visibilityState) {
@@ -43,6 +49,11 @@ export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
   }
 
   addMetaDataToBeacon(beacon, vars.meta);
+
+  if (isAutoPageDetectionEnabled()) {
+    // uf field will be a comma separated string if more than one use features are supported
+    beacon['uf'] = 'sn';
+  }
 }
 
 function determineLanguages() {
@@ -50,22 +61,49 @@ function determineLanguages() {
     return nav.languages.slice(0, 5).join(',');
   }
 
-  if (typeof nav.userLanguage === 'string') {
-    return [nav.userLanguage].join(',');
+  const anyNav = nav as any;
+  if (typeof anyNav.userLanguage === 'string') {
+    return [anyNav.userLanguage].join(',');
   }
 
   return undefined;
 }
 
 export function addMetaDataToBeacon(beacon: Partial<Beacon>, meta: Meta) {
+  addMetaDataImpl(beacon, meta);
+}
+
+export function addInternalMetaDataToBeacon(beacon: Partial<Beacon>, meta: Meta) {
+  const options = {
+    keyPrefix: 'im_',
+    maxFields: maximumNumberOfInternalMetaDataFields,
+    maxLengthPerField: maximumLengthPerInternalMetaDataField,
+    maxFieldsWarningMsg:
+      'Maximum number of internal meta data fields exceeded. Not all internal meta data fields will be transmitted.'
+  };
+  addMetaDataImpl(beacon, meta, options);
+}
+
+function addMetaDataImpl(
+  beacon: Partial<Beacon>,
+  meta: Meta,
+  options?: {keyPrefix?: string; maxFields?: number; maxLengthPerField?: number; maxFieldsWarningMsg?: string}
+) {
+  const keyPrefix = options?.keyPrefix || 'm_';
+  const maxFields = options?.maxFields || maximumNumberOfMetaDataFields;
+  const maxLength = options?.maxLengthPerField || maximumLengthPerMetaDataField;
+  const maxFieldsWarningMsg =
+    options?.maxFieldsWarningMsg ||
+    'Maximum number of meta data fields exceeded. Not all meta data fields will be transmitted.';
+
   let i = 0;
 
   for (const key in meta) {
     if (hasOwnProperty(meta, key)) {
       i++;
-      if (i > maximumNumberOfMetaDataFields) {
+      if (i > maxFields) {
         if (DEBUG) {
-          warn('Maximum number of meta data fields exceeded. Not all meta data fields will be transmitted.');
+          warn(maxFieldsWarningMsg);
         }
         return;
       }
@@ -83,12 +121,14 @@ export function addMetaDataToBeacon(beacon: Partial<Beacon>, meta: Meta) {
           serializedValue = win.JSON.stringify(meta[key]);
         } catch (e) {
           if (DEBUG) {
-            warn('JSON serialization of meta data',
+            warn(
+              'JSON serialization of meta data',
               key,
               meta[key],
               'failed due to',
               e,
-              '. This value will not be transmitted.');
+              '. This value will not be transmitted.'
+            );
           }
           continue;
         }
@@ -96,7 +136,7 @@ export function addMetaDataToBeacon(beacon: Partial<Beacon>, meta: Meta) {
         serializedValue = String(meta[key]);
       }
 
-      beacon['m_' + key] = serializedValue.substring(0, maximumLengthPerMetaDataField);
+      beacon[keyPrefix + key] = serializedValue.substring(0, maxLength);
     }
   }
 }

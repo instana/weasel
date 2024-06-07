@@ -63,6 +63,9 @@ export function processCommand(command: any[]): any {
     case 'wrapEventHandlers':
       vars.wrapEventHandlers = command[1];
       break;
+    case 'autoPageDetection':
+      vars.autoPageDetection = command[1];
+      break;
     case 'wrapTimers':
       vars.wrapTimers = command[1];
       break;

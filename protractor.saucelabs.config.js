@@ -33,11 +33,11 @@ exports.config = {
   }
 };
 
-function newSaucelabsCapability(browserName, browserVersion, platformName, isWebVitalsTest = false) {
+function newSaucelabsCapability(browserName, version, platform, isWebVitalsTest = false) {
   return {
     browserName,
-    browserVersion,
-    platformName,
+    version,
+    platform,
     // shardTestFiles: true, // allows specs to be executed in parallel.
     // maxInstances: 2, // total number of specs that can be run at once.
     name: isWebVitalsTest ? 'weasel e2e - web vitals' : 'weasel e2e',

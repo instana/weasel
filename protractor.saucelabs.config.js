@@ -20,15 +20,10 @@ exports.config = {
     // newSaucelabsCapability('firefox', '58.0', 'Windows 11'),
     // newSaucelabsCapability('chrome', '67.0', 'Windows 10'),
     // newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
-    newSaucelabsCapability('chrome', '65.0', 'OS X 10.11'),
+    // newSaucelabsCapability('chrome', '65.0', 'OS X 10.11'),
 
     // Specific supported browser+OS for web-vitals tests
-    newSaucelabsCapability('chrome', '124.0', 'macOS 11.00', true),
-    newSaucelabsCapability('chrome', '80.0', 'Windows 10', true),
-    newSaucelabsCapability('chrome', '83.0', 'OS X 10.11', true),
-    newSaucelabsCapability('MicrosoftEdge', '80.0', 'Windows 10', true),
-    newSaucelabsCapability('firefox', '123.0', 'Windows 7', true),
-    newSaucelabsCapability('firefox', '123.0', 'Windows 11', true)
+    newSaucelabsCapability('chrome', '124.0', 'macOS 11.00', true)
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

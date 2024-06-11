@@ -3,6 +3,7 @@
 exports.config = {
   specs: ['test/e2e/**/*.spec.js'],
   // TODO: disable webvital tests for saucelab for now, since browsers in saucelab seems never return webvital metrics
+  // test with out web vital
   exclude: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,

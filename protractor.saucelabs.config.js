@@ -21,18 +21,7 @@ exports.config = {
 
     // Specific supported browser+OS for web-vitals tests
     newSaucelabsCapability('chrome', '107', 'Windows 7', true),
-    newSaucelabsCapability('chrome', '109', 'Windows 8', true),
-    newSaucelabsCapability('chrome', '109', 'Windows 8.1', true),
-    newSaucelabsCapability('chrome', '125', 'Windows 10', true),
-    newSaucelabsCapability('chrome', '122', 'Windows 11', true),
-    newSaucelabsCapability('chrome', '125', 'Windows 11', true),
     newSaucelabsCapability('chrome', '125', 'macOS 11', true),
-    newSaucelabsCapability('chrome', '125', 'macOS 12', true),
-    newSaucelabsCapability('chrome', '125', 'macOS 13', true),
-    newSaucelabsCapability('chrome', '103', 'macOS 10.12', true),
-    newSaucelabsCapability('chrome', '107', 'macOS 10.13', true),
-    newSaucelabsCapability('chrome', '116', 'macOS 10.14', true),
-    newSaucelabsCapability('chrome', '125', 'macOS 10.15', true),
     newSaucelabsCapability('chrome', '103', 'OS X 10.11', true)
   ],
   // Do not allow parallel test execution. Makes the test execution a lot

@@ -33,7 +33,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'MicrosoftEdge, 14.14393, Windows 10 - in FID',
+    name: 'MicrosoftEdge, 14.14393, Windows 10 - in CLS',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

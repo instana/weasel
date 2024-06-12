@@ -8,8 +8,8 @@ exports.config = {
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
-    newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
-    // newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10'),
+    // newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
+    newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10'),
     // newSaucelabsCapability('safari', '9.0', 'OS X 10.11'),
     // newSaucelabsCapability('safari', '10.1', 'macOS 10.12'),
     // newSaucelabsCapability('safari', '11.0', 'macOS 10.12'),
@@ -33,7 +33,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'internet explorer, 11.103, Windows 10 - in INP',
+    name: 'MicrosoftEdge, 14.14393, Windows 10 - in LCP',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

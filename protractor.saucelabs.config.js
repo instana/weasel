@@ -19,7 +19,7 @@ exports.config = {
     newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
     newSaucelabsCapability('chrome', '65.0', 'OS X 10.11'),
 
-    // Specific supported browser+OS for web-vitals tests
+    // Specific supported browser+OS for web-vitals tests.
     newSaucelabsCapability('chrome', '107', 'Windows 7', true),
     newSaucelabsCapability('chrome', '125', 'macOS 11', true),
     newSaucelabsCapability('chrome', '103', 'OS X 10.11', true)

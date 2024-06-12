@@ -33,7 +33,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'internet explorer, 11.103, Windows 10 - in CLS',
+    name: 'internet explorer, 11.103, Windows 10 - in INP',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

@@ -22,7 +22,7 @@ exports.config = {
     // newSaucelabsCapability('chrome', '107', 'Windows 7'),
     // newSaucelabsCapability('chrome', '125', 'macOS 11'),
     // newSaucelabsCapability('chrome', '103', 'OS X 10.11'),
-    newSaucelabsCapability('firefox', '126', 'OS X 10.0')
+    newSaucelabsCapability('firefox', '126', 'OS X 10.11')
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -37,7 +37,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'firefox, 126, OS X 10.0 - LCP',
+    name: 'firefox, 126, OS X 10.11 - LCP',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

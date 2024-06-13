@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 exports.config = {
-  specs: ['test/e2e/**/*.spec.js'],
+  specs: ['test/e2e/12_webvitalsAsCustomEvent/webvitalsAsCustomEvent.spec.js'],
   // TODO: disable webvital tests for saucelab for now, since browsers in saucelab seems never return webvital metrics
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,

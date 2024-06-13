@@ -30,13 +30,13 @@ exports.config = {
     // newSaucelabsCapability('chrome', '78', 'OS X 10.10'),
 
   // LCP - firefox - osx with firefox 122 not supporting from sauceLab config
-    newSaucelabsCapability('firefox', '122', 'macOS 10.15'),
-    newSaucelabsCapability('firefox', '122', 'Windows 10'),
+    // newSaucelabsCapability('firefox', '122', 'macOS 10.15'),
+    // newSaucelabsCapability('firefox', '122', 'Windows 10'),
 
   // LCP - MicrosoftEdge
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'),
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'),
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'),
+    newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'),
+    newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'),
+    newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'),
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -51,7 +51,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'LCP - firefox',
+    name: 'LCP - MicrosoftEdge',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

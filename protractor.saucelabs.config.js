@@ -38,7 +38,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'firefox 122, macOS 11.00 - CLS',
+    name: 'firefox 122, macOS 11.00 - FID',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

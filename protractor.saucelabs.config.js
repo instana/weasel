@@ -37,7 +37,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'LCP, FID, CLS, INP in chrome 125, macOS 11 --&-- chrome 103, OS X 10.11',
+    name: 'firefox, 126, OS X 10.0 - LCP',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

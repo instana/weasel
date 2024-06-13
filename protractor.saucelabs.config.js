@@ -33,7 +33,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'chrome, 65.0, OS X 10.11 - in LCP',
+    name: 'chrome, 65.0, OS X 10.11 - in FID',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

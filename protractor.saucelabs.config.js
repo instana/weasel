@@ -20,9 +20,9 @@ exports.config = {
     // newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
     // newSaucelabsCapability('chrome', '65.0', 'OS X 10.11'),
     // newSaucelabsCapability('chrome', '107', 'Windows 7'),
-    // newSaucelabsCapability('chrome', '125', 'macOS 11', true),
-    // newSaucelabsCapability('chrome', '103', 'OS X 10.11', true),
-    newSaucelabsCapability('firefox', '126', 'OS X 10.0', true)
+    // newSaucelabsCapability('chrome', '125', 'macOS 11'),
+    // newSaucelabsCapability('chrome', '103', 'OS X 10.11'),
+    newSaucelabsCapability('firefox', '126', 'OS X 10.0')
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

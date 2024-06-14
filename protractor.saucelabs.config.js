@@ -31,7 +31,7 @@ exports.config = {
     // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'),
 
   // LCP - Chrome - PASSED
-    newSaucelabsCapability('chrome', '78', 'macOS 10.12'),
+    // newSaucelabsCapability('chrome', '78', 'macOS 10.12'), // passed - 323
     // newSaucelabsCapability('chrome', '78', 'macOS 10.15'), // passed - 315
     // newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 316
     // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed 317
@@ -39,6 +39,7 @@ exports.config = {
 // Testing
   // LCP - firefox - osx with firefox 122 not supporting from sauceLab config
     // newSaucelabsCapability('firefox', '124', 'macOS 10.15'),// passed - 321
+    newSaucelabsCapability('firefox', '124', 'macOS 10.12'),
     // newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
 
 
@@ -56,7 +57,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'LCP chrome - 78, macOS 10.12',
+    name: 'LCP firefox - 124, macOS 10.12',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

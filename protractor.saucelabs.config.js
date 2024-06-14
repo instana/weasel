@@ -26,24 +26,24 @@ exports.config = {
 
 // LCP
 // LCP - MicrosoftEdge - PASSED
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'),
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'),
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'),
+    newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // PASSED
+    newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // PASSED
+    newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // PASSED
 
   // LCP - Chrome - PASSED
-    // newSaucelabsCapability('chrome', '78', 'macOS 10.12'), // passed - 323
-    // newSaucelabsCapability('chrome', '78', 'macOS 10.15'), // passed - 315
-    // newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 316
-    // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed 317
+    newSaucelabsCapability('chrome', '78', 'macOS 10.12'), // passed - 323
+    newSaucelabsCapability('chrome', '78', 'macOS 10.15'), // passed - 315
+    newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 316
+    newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed 317
 
-// Testing
-  // LCP - firefox - osx with firefox 122 not supporting from sauceLab config
-    // newSaucelabsCapability('firefox', '124', 'macOS 10.15'),// passed - 321
-    // newSaucelabsCapability('firefox', '124', 'macOS 10.12'),
-    newSaucelabsCapability('firefox', '122', 'macOS 10.12'),
-    // newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
-
-
+  // LCP firefox
+  // LCP - OS X 10.10 with firefox 122 not supporting from sauceLab config
+  // LCP - OS X 10.11 with firefox 122 not supporting from sauceLab config
+  // LCP - macOS 10.12 with firefox 122 not supporting from sauceLab config
+  // LCP - macOS 10.13 with firefox 122 not supporting from sauceLab config
+  // LCP - macOS 10.14 with firefox 122 not supporting from sauceLab config
+    newSaucelabsCapability('firefox', '124', 'macOS 10.15'),// passed - 321
+    newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

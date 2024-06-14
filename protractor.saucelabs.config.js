@@ -25,19 +25,19 @@ exports.config = {
     // newSaucelabsCapability('firefox', '126', 'macOS 11.00'),
 
 // LCP - MicrosoftEdge - PASSED
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'),
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'),
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'),
+    newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'),
+    newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'),
+    newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'),
 
   // LCP - Chrome - PASSED
-    // newSaucelabsCapability('chrome', '78', 'macOS 10.15'), // passed - 315
-    // newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 316
-    // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed 317
+    newSaucelabsCapability('chrome', '78', 'macOS 10.15'), // passed - 315
+    newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 316
+    newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed 317
 
 // Testing
   // LCP - firefox - osx with firefox 122 not supporting from sauceLab config
-    newSaucelabsCapability('firefox', '124', 'macOS 10.15'), // failed.
-    // newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed
+    newSaucelabsCapability('firefox', '124', 'macOS 10.15'),// passed - 321
+    newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
 
 
   ],

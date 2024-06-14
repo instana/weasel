@@ -39,7 +39,8 @@ exports.config = {
 // Testing
   // LCP - firefox - osx with firefox 122 not supporting from sauceLab config
     // newSaucelabsCapability('firefox', '124', 'macOS 10.15'),// passed - 321
-    newSaucelabsCapability('firefox', '124', 'macOS 10.12'),
+    // newSaucelabsCapability('firefox', '124', 'macOS 10.12'),
+    newSaucelabsCapability('firefox', '122', 'macOS 10.12'),
     // newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
 
 

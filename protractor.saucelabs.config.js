@@ -24,6 +24,7 @@ exports.config = {
     // newSaucelabsCapability('chrome', '103', 'OS X 10.11'),
     // newSaucelabsCapability('firefox', '126', 'macOS 11.00'),
 
+// LCP
 // LCP - MicrosoftEdge - PASSED
     newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'),
     newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'),
@@ -54,7 +55,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'LCP - firefox - 124, macOS 10.15',
+    name: 'LCP ALL PASS CASES - RETEST',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

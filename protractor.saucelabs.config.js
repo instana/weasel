@@ -49,8 +49,13 @@ exports.config = {
 // FID
 // FID - MicrosoftEdge
   // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // passed - 331
-  newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'),
+  // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // testing - 333
   // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // passed - 330
+
+// FID - Chrome
+    // newSaucelabsCapability('chrome', '77', 'macOS 10.12'),
+    // newSaucelabsCapability('chrome', '77', 'Windows 7'),
+    newSaucelabsCapability('chrome', '77', 'OS X 10.10'),
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -65,7 +70,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'FID - MicrosoftEdge - 80, Windows 10',
+    name: 'FID -chrome - 77, OS X 10.10',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

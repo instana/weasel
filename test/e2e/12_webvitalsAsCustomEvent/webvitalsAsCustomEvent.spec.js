@@ -38,9 +38,9 @@ describe('12_webvitalsAsCustomEvent', () => {
     function isLCPTestApplicable(capabilities) {
       const version = Number(capabilities.version);
       return (
-        (capabilities.browserName === 'chrome' && version > 77 && LCPsupportChromeBrowser.includes(platform)) ||
-        (capabilities.browserName === 'MicrosoftEdge' && version > 79 && LCPsupportEdgeBrowser.includes(platform)) ||
-        (capabilities.browserName === 'firefox' && version > 124 && LCPsupportFireFoxBrowser.includes(platform))
+        (capabilities.browserName === 'chrome' && version > 77 && LCPsupportChromeBrowser.includes(capabilities.platform)) ||
+        (capabilities.browserName === 'MicrosoftEdge' && version > 79 && LCPsupportEdgeBrowser.includes(capabilities.platform)) ||
+        (capabilities.browserName === 'firefox' && version > 124 && LCPsupportFireFoxBrowser.includes(capabilities.platform))
       );
     }
 

@@ -69,8 +69,8 @@ exports.config = {
     // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), //???
 
   // CLS - Chrome - ???
-    newSaucelabsCapability('chrome', '78', 'macOS 10.12'), //2???
-    // newSaucelabsCapability('chrome', '78', 'Windows 7'), //???
+    // newSaucelabsCapability('chrome', '78', 'macOS 10.12'), //2???
+    newSaucelabsCapability('chrome', '78', 'Windows 7'), //3???
     // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // 1???
 
   // CLS firefox - ???
@@ -96,7 +96,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'CLS - chrome - 78, macOS 10.12',
+    name: 'CLS - chrome - 78, Windows 7',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

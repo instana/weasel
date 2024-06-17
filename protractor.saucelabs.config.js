@@ -25,7 +25,7 @@ exports.config = {
     // newSaucelabsCapability('firefox', '126', 'macOS 11.00'),
 
 // LCP
-// LCP - MicrosoftEdge - PASSED
+  // LCP - MicrosoftEdge - PASSED
     // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // PASSED
     // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // PASSED
     // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // PASSED
@@ -43,26 +43,26 @@ exports.config = {
   // LCP - macOS 10.13 with firefox 122 not supporting from sauceLab config
   // LCP - macOS 10.14 with firefox 122 not supporting from sauceLab config
     // newSaucelabsCapability('firefox', '124', 'macOS 10.15'),// passed - 321
-    // newSaucelabsCapability('firefox', '122', 'macOS 10.15'),// TRY THIS ONCE
+    newSaucelabsCapability('firefox', '122', 'macOS 10.15'),// TRY THIS ONCE
     // newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
 
 // FID
-// FID - MicrosoftEdge
-  // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // passed - 331
-  // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // testing - 332
-  // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // passed - 330
+  // FID - MicrosoftEdge - PASSED
+    // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // passed - 331
+    // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // passed - 332
+    // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // passed - 330
 
-// FID - Chrome
+  // FID - Chrome - PASSED
     // newSaucelabsCapability('chrome', '77', 'macOS 10.12'), // passed - 334
     // newSaucelabsCapability('chrome', '77', 'Windows 7'), // passed - 335
     // newSaucelabsCapability('chrome', '77', 'OS X 10.10'), // passed - 333
 
 
-// FID firefox
+  // FID firefox - passed
   // FID - OS X 10.10 with firefox 90 not supporting from sauceLab config
   // FID - OS X 10.11 with firefox 90 not supporting from sauceLab config
-    newSaucelabsCapability('firefox', '90', 'macOS 10.12'), // TRY
-    newSaucelabsCapability('firefox', '90', 'Windows 7'), // TRY
+    // newSaucelabsCapability('firefox', '90', 'macOS 10.12'), // passed - 337
+    // newSaucelabsCapability('firefox', '90', 'Windows 7'), // passed - 338
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -77,7 +77,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'FID - firefox - 90, Windows 7',
+    name: 'LCP - firefox - 122, macOS 10.15',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

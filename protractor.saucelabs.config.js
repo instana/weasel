@@ -76,15 +76,14 @@ exports.config = {
 // INP
   // INP - MicrosoftEdge - ???
   // SauceLab not supporting MicrosoftEdge 97 with Windows 7, 8, 8.1 ??????
-    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12'), // passed - ???
-    // newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10'), // passed - ???
-    // newSaucelabsCapability('MicrosoftEdge', '97', 'OS X 10.10'), // passed - ???
+    newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12'), // testing - ???
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10'), // testing - ???
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'OS X 10.10'), // testing - ???
 
-  // INP - Chrome - ???
-    newSaucelabsCapability('chrome', '97', 'macOS 10.12'), // testing - 349
-    // newSaucelabsCapability('chrome', '97', 'Windows 7'), // testing - 348
-    // newSaucelabsCapability('chrome', '97', 'OS X 10.11'), // passed - 347
-
+  // INP - Chrome - PASSED
+    // newSaucelabsCapability('chrome', '97', 'macOS 10.12'), // passed - 350
+    // newSaucelabsCapability('chrome', '97', 'Windows 7'), // passed - 349
+    // newSaucelabsCapability('chrome', '97', 'OS X 10.11'), // passed - 348
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -99,7 +98,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'INP - chrome - 97, macOS 10.12',
+    name: 'INP - MicrosoftEdge - 97, macOS 10.12',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

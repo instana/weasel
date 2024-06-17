@@ -53,9 +53,15 @@ exports.config = {
   // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // passed - 330
 
 // FID - Chrome
-    // newSaucelabsCapability('chrome', '77', 'macOS 10.12'),
-    newSaucelabsCapability('chrome', '77', 'Windows 7'),
+    // newSaucelabsCapability('chrome', '77', 'macOS 10.12'), // passed - 334
+    // newSaucelabsCapability('chrome', '77', 'Windows 7'), // passed - 335
     // newSaucelabsCapability('chrome', '77', 'OS X 10.10'), // passed - 333
+
+
+// FID firefox
+  // FID - OS X 10.10 with firefox 90 not supporting from sauceLab config
+  // FID - OS X 10.11 with firefox 90 not supporting from sauceLab config
+    newSaucelabsCapability('firefox', '90', 'macOS 10.12'), // TRY
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

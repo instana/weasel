@@ -62,6 +62,7 @@ exports.config = {
   // FID - OS X 10.10 with firefox 90 not supporting from sauceLab config
   // FID - OS X 10.11 with firefox 90 not supporting from sauceLab config
     newSaucelabsCapability('firefox', '90', 'macOS 10.12'), // TRY
+    newSaucelabsCapability('firefox', '90', 'Windows 7'), // TRY
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -76,7 +77,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'FID - firefox - 90, macOS 10.12',
+    name: 'FID - firefox - 90, Windows 7',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

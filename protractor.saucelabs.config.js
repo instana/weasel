@@ -75,9 +75,9 @@ exports.config = {
 
 // INP
   // INP - MicrosoftEdge - ???
-  // SauceLab not supporting MicrosoftEdge 97 with Windows 7, 8, 8.1 ??????
-    newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12'), // testing - ???
-    // newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10'), // testing - ???
+  // SauceLab not supporting MicrosoftEdge 97 with Windows 7, 8, 8.1.
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12'), // testing - 351
+    newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10'), // testing - 352
     // newSaucelabsCapability('MicrosoftEdge', '97', 'OS X 10.10'), // testing - ???
 
   // INP - Chrome - PASSED
@@ -98,7 +98,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'INP - MicrosoftEdge - 97, macOS 10.12',
+    name: 'INP - MicrosoftEdge - 97, Windows 10',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

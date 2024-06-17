@@ -66,22 +66,13 @@ exports.config = {
   // CLS - MicrosoftEdge - ???
     // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // ???
     // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), //???
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), //???
+    newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), //???
 
   // CLS - Chrome - ???
-    // newSaucelabsCapability('chrome', '78', 'macOS 10.12'), //2???
-    newSaucelabsCapability('chrome', '78', 'Windows 7'), //3???
-    // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // 1???
+    // newSaucelabsCapability('chrome', '78', 'macOS 10.12'), // passed - 343
+    // newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 344
+    // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed - 342
 
-  // CLS firefox - ???
-  // CLS - OS X 10.10 with firefox 122 not supporting from sauceLab config //???
-  // CLS - OS X 10.11 with firefox 122 not supporting from sauceLab config //???
-  // CLS - macOS 10.12 with firefox 122 not supporting from sauceLab config //???
-  // CLS - macOS 10.13 with firefox 122 not supporting from sauceLab config //???
-  // CLS - macOS 10.14 with firefox 122 not supporting from sauceLab config //???
-    // newSaucelabsCapability('firefox', '124', 'macOS 10.15'), //???
-    // newSaucelabsCapability('firefox', '122', 'macOS 10.15'), //???
-    // newSaucelabsCapability('firefox', '122', 'Windows 10'), //???
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -96,7 +87,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'CLS - chrome - 78, Windows 7',
+    name: 'CLS - MicrosoftEdge - 80, OS X 10.10',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

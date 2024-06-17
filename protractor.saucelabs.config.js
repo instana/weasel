@@ -81,10 +81,9 @@ exports.config = {
     // newSaucelabsCapability('MicrosoftEdge', '97', 'OS X 10.10'), // passed - ???
 
   // INP - Chrome - ???
-  // SauceLab not supporting chrome 96 with OS X 10.10
     // newSaucelabsCapability('chrome', '97', 'macOS 10.12'), // passed - ???
-    // newSaucelabsCapability('chrome', '97', 'Windows 10'), // passed - ???
-    newSaucelabsCapability('chrome', '97', 'OS X 10.11'), // testing - ???
+    newSaucelabsCapability('chrome', '97', 'Windows 7'), // testing - ???
+    // newSaucelabsCapability('chrome', '97', 'OS X 10.11'), // testing - ???
 
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
@@ -100,7 +99,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'INP - chrome - 97, OS X 10.11',
+    name: 'INP - chrome - 97, Windows 7',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

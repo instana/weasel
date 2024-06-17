@@ -69,9 +69,9 @@ exports.config = {
     // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), //???
 
   // CLS - Chrome - ???
-    // newSaucelabsCapability('chrome', '78', 'macOS 10.12'), //???
+    newSaucelabsCapability('chrome', '78', 'macOS 10.12'), //2???
     // newSaucelabsCapability('chrome', '78', 'Windows 7'), //???
-    newSaucelabsCapability('chrome', '78', 'OS X 10.10'), //???
+    // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // 1???
 
   // CLS firefox - ???
   // CLS - OS X 10.10 with firefox 122 not supporting from sauceLab config //???
@@ -96,7 +96,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'CLS - chrome - 78, OS X 10.10',
+    name: 'CLS - chrome - 78, macOS 10.12',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

@@ -26,6 +26,7 @@ exports.config = {
 
 // LCP
   // LCP - MicrosoftEdge - PASSED
+  // SauceLab not supporting MicrosoftEdge 80 with Windows 7, 8, 8.1
     // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // passed - 314
     // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // passed - 314
     // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // passed - 314
@@ -35,18 +36,16 @@ exports.config = {
     // newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 316
     // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed 317
 
-  // LCP firefox
-  // LCP - OS X 10.10 with firefox 122 not supporting from sauceLab config
-  // LCP - OS X 10.11 with firefox 122 not supporting from sauceLab config
-  // LCP - macOS 10.12 with firefox 122 not supporting from sauceLab config
-  // LCP - macOS 10.13 with firefox 122 not supporting from sauceLab config
-  // LCP - macOS 10.14 with firefox 122 not supporting from sauceLab config
-    // newSaucelabsCapability('firefox', '124', 'macOS 10.15'), // passed - 321
+  // LCP firefox - PASSED
+  // SauceLab not supporting firefox 122 with OS X 10.10, OS X 10.11
+  // SauceLab not supporting firefox 122 with macOS 10.12, 10.13, 10.14
+  // SauceLab not supporting MicrosoftEdge 80 with Windows 7, 8, 8.1
     // newSaucelabsCapability('firefox', '122', 'macOS 10.15'), // passed - 341
     // newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
 
 // FID
   // FID - MicrosoftEdge - PASSED
+  // SauceLab not supporting MicrosoftEdge 80 with Windows 7, 8, 8.1
     // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // passed - 331
     // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // passed - 332
     // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // passed - 330
@@ -56,22 +55,36 @@ exports.config = {
     // newSaucelabsCapability('chrome', '77', 'Windows 7'), // passed - 335
     // newSaucelabsCapability('chrome', '77', 'OS X 10.10'), // passed - 333
 
-  // FID firefox - passed
-  // FID - OS X 10.10 with firefox 90 not supporting from sauceLab config
-  // FID - OS X 10.11 with firefox 90 not supporting from sauceLab config
+  // FID firefox - PASSED
+  // SauceLab not supporting firefox 90 with OS X 10.10, 10.11
     // newSaucelabsCapability('firefox', '90', 'macOS 10.12'), // passed - 337
     // newSaucelabsCapability('firefox', '90', 'Windows 7'), // passed - 338
 
 // CLS
-  // CLS - MicrosoftEdge - ???
-    newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // ???
-    // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // testing - 346
+  // CLS - MicrosoftEdge - PASSED
+  // SauceLab not supporting MicrosoftEdge 80 with Windows 7, 8, 8.1
+    // newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12'), // passed - 347
+    // newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10'), // passed - 346
     // newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10'), // passed - 345
 
-  // CLS - Chrome - ???
+  // CLS - Chrome - PASSED
+  // SauceLab not supporting chrome 78 with Windows 7, 8, 8.1
     // newSaucelabsCapability('chrome', '78', 'macOS 10.12'), // passed - 343
-    // newSaucelabsCapability('chrome', '78', 'Windows 7'), // passed - 344
+    // newSaucelabsCapability('chrome', '78', 'Windows 10'), // passed - 344
     // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed - 342
+
+// INP
+  // INP - MicrosoftEdge - ???
+  // SauceLab not supporting MicrosoftEdge 97 with Windows 7, 8, 8.1 ??????
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12'), // passed - ???
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10'), // passed - ???
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'OS X 10.10'), // passed - ???
+
+  // INP - Chrome - ???
+  // SauceLab not supporting chrome 96 with OS X 10.10
+    // newSaucelabsCapability('chrome', '97', 'macOS 10.12'), // passed - ???
+    // newSaucelabsCapability('chrome', '97', 'Windows 10'), // passed - ???
+    newSaucelabsCapability('chrome', '97', 'OS X 10.11'), // testing - ???
 
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
@@ -87,7 +100,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'CLS - MicrosoftEdge - 80, macOS 10.12',
+    name: 'INP - chrome - 97, OS X 10.11',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

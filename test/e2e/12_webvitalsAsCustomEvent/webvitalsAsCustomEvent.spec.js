@@ -4,11 +4,6 @@ const {retry, expectOneMatching} = require('../../util');
 
 const cexpect = require('chai').expect;
 
-// 1. UNCOMMENT FOR LCP
-// const LCPsupportChromeBrowser = ['macOS 10.12','macOS 10.15', 'Windows 7', 'OS X 10.10'];
-// const LCPsupportFireFoxBrowser = ['macOS 10.15', 'Windows 10'];
-// const LCPsupportEdgeBrowser = ['macOS 10.12', 'Windows 10', 'OS X 10.10'];
-
 describe('12_webvitalsAsCustomEvent', () => {
   registerTestServerHooks();
   registerBaseHooks();
@@ -35,25 +30,6 @@ describe('12_webvitalsAsCustomEvent', () => {
       browser.switchTo().window(currentHandle);
       browser.sleep(3000);
     });
-
-    // 2. UNCOMMENT FOR LCP
-    // function isLCPTestApplicable(capabilities) {
-    //   const version = Number(capabilities.version);
-    //   return (
-    //     (capabilities.browserName === 'chrome' && version > 77 && LCPsupportChromeBrowser.includes(capabilities.platform)) ||
-    //     (capabilities.browserName === 'MicrosoftEdge' && version > 79 && LCPsupportEdgeBrowser.includes(capabilities.platform)) ||
-    //     (capabilities.browserName === 'firefox' && version > 124 && LCPsupportFireFoxBrowser.includes(capabilities.platform))
-    //   );
-    // }
-
-    // function isINPTestApplicable(capabilities) {
-    //   const version = Number(capabilities.version);
-    //   return (
-    //     (capabilities.browserName === 'chrome' && version > 77 && LCPsupportChromeBrowser.includes(capabilities.platform)) ||
-    //     (capabilities.browserName === 'MicrosoftEdge' && version > 79 && LCPsupportEdgeBrowser.includes(capabilities.platform)) ||
-    //     (capabilities.browserName === 'firefox' && version > 124 && LCPsupportFireFoxBrowser.includes(capabilities.platform))
-    //   );
-    // }
 
     it('must report web-vitals as custom events', async() => {
       const capabilities = await getCapabilities();

@@ -46,6 +46,15 @@ describe('12_webvitalsAsCustomEvent', () => {
     //   );
     // }
 
+    // function isINPTestApplicable(capabilities) {
+    //   const version = Number(capabilities.version);
+    //   return (
+    //     (capabilities.browserName === 'chrome' && version > 77 && LCPsupportChromeBrowser.includes(capabilities.platform)) ||
+    //     (capabilities.browserName === 'MicrosoftEdge' && version > 79 && LCPsupportEdgeBrowser.includes(capabilities.platform)) ||
+    //     (capabilities.browserName === 'firefox' && version > 124 && LCPsupportFireFoxBrowser.includes(capabilities.platform))
+    //   );
+    // }
+
     it('must report web-vitals as custom events', async() => {
       const capabilities = await getCapabilities();
       return retry(() => {
@@ -54,45 +63,50 @@ describe('12_webvitalsAsCustomEvent', () => {
             cexpect(beacon.ty).to.equal('pl');
           });
 
-          // 3. UNCOMMENT FOR LCP
-          // if(isLCPTestApplicable(capabilities)) {
-          // expectOneMatching(beacons, beacon => {
-          //   cexpect(beacon.ty).to.equal('cus');
-          //   cexpect(beacon.ts).to.be.a('string');
-          //   cexpect(parseFloat(beacon.d)).to.be.above(3000);
-          //   cexpect(beacon.n).to.equal('instana-webvitals-LCP');
-          //   cexpect(beacon.l).to.be.a('string');
-          //   cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-          //   cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          // });
-          // }
+          if(capabilities.metricName === 'LCP') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(parseFloat(beacon.d)).to.be.above(3000);
+              cexpect(beacon.n).to.equal('instana-webvitals-LCP');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
-          // expectOneMatching(beacons, beacon => {
-          //   cexpect(beacon.ty).to.equal('cus');
-          //   cexpect(beacon.ts).to.be.a('string');
-          //   cexpect(beacon.n).to.equal('instana-webvitals-FID');
-          //   cexpect(beacon.l).to.be.a('string');
-          //   cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-          //   cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          // });
+          if(capabilities.metricName === 'FID') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-FID');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
-          // expectOneMatching(beacons, beacon => {
-          //   cexpect(beacon.ty).to.equal('cus');
-          //   cexpect(beacon.ts).to.be.a('string');
-          //   cexpect(beacon.n).to.equal('instana-webvitals-CLS');
-          //   cexpect(beacon.l).to.be.a('string');
-          //   cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-          //   cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          // });
+          if(capabilities.metricName === 'CLS') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-CLS');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-INP');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+          if(capabilities.metricName === 'INP') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-INP');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
         });
       });
     });

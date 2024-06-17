@@ -74,11 +74,11 @@ exports.config = {
     // newSaucelabsCapability('chrome', '78', 'OS X 10.10'), // passed - 342
 
 // INP
-  // INP - MicrosoftEdge - ???
+  // INP - MicrosoftEdge - PASSED
   // SauceLab not supporting MicrosoftEdge 97 with Windows 7, 8, 8.1.
-    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12'), // testing - 351
-    newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10'), // testing - 352
-    // newSaucelabsCapability('MicrosoftEdge', '97', 'OS X 10.10'), // testing - ???
+  // SauceLab not supporting MicrosoftEdge 97 with OS X 10.11, 10.11.
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12'), // passed - 351
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10'), // passed - 352
 
   // INP - Chrome - PASSED
     // newSaucelabsCapability('chrome', '97', 'macOS 10.12'), // passed - 350

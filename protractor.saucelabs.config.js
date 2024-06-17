@@ -42,8 +42,8 @@ exports.config = {
   // LCP - macOS 10.12 with firefox 122 not supporting from sauceLab config
   // LCP - macOS 10.13 with firefox 122 not supporting from sauceLab config
   // LCP - macOS 10.14 with firefox 122 not supporting from sauceLab config
-    // newSaucelabsCapability('firefox', '124', 'macOS 10.15'),// passed - 321
-    newSaucelabsCapability('firefox', '122', 'macOS 10.15'),// TRY THIS ONCE
+    // newSaucelabsCapability('firefox', '124', 'macOS 10.15'), // passed - 321
+    newSaucelabsCapability('firefox', '122', 'macOS 10.15'), // TRY THIS ONCE
     // newSaucelabsCapability('firefox', '122', 'Windows 10'), // passed - 320
 
 // FID
@@ -77,7 +77,7 @@ function newSaucelabsCapability(browserName, version, platform) {
     browserName,
     version,
     platform,
-    name: 'LCP - firefox - 122, macOS 10.15',
+    name: 'CLS - firefox - 122, macOS 10.15',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER
   };

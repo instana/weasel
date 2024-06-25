@@ -83,28 +83,44 @@ exports.config = {
     //     newSaucelabsCapability('chrome', '97', 'Windows 7', 'INP'), // passed - 349
     //     newSaucelabsCapability('chrome', '97', 'OS X 10.11', 'INP'), // passed - 348
 
-    // -------------TEST HERE
     // // TTFB
     //   // TTFB - MicrosoftEdge - PASSED
-    // newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'TTFB'), // passed - 385
-    // newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'TTFB'), // passed - 384
-    //     newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'TTFB'), // passed - 383
+    //    newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'TTFB'), // passed - 385
+    //    newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'TTFB'), // passed - 384
+    //    newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'TTFB'), // passed - 383
 
     //   // TTFB - Chrome - PASSED
     //     newSaucelabsCapability('chrome', '44', 'macOS 10.12', 'TTFB'), // passed - 362
     //     newSaucelabsCapability('chrome', '67', 'Windows 7', 'TTFB'), // passed - 382
     //     newSaucelabsCapability('chrome', '44', 'OS X 10.10', 'TTFB'), // passed - 359
 
+    //   // TTFB firefox - PASSED
+    //    newSaucelabsCapability('firefox', '35', 'OS X 10.10', 'TTFB'), // passed - 386
+    //    newSaucelabsCapability('firefox', '35', 'macOS 10.12', 'TTFB'), // passed - 387
+    //    newSaucelabsCapability('firefox', '35', 'Windows 7', 'TTFB'), // passed - 388
 
-    //   // TTFB firefox - ???
-    // newSaucelabsCapability('firefox', '35', 'OS X 10.10', 'TTFB'), // passed - 386
-    // newSaucelabsCapability('firefox', '35', 'macOS 10.12', 'TTFB'), // passed - 387
-    // newSaucelabsCapability('firefox', '35', 'Windows 7', 'TTFB'), // passed - 388
+    //   // TTFB safari - PASSED
+    //    newSaucelabsCapability('safari', '11', 'macOS 10.12', 'TTFB'), // passed - 390
 
-    //   // TTFB safari - ???
-    // newSaucelabsCapability('safari', '11', 'OS X 10.10', 'TTFB'), // test - 389
-    newSaucelabsCapability('safari', '11', 'macOS 10.12', 'TTFB'), // test - 390
-    // newSaucelabsCapability('safari', '11', 'Windows 7', 'TTFB'), // test -
+    // // FCP
+    //   // FCP - MicrosoftEdge - TEST
+    //    newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'FCP'), // TEST -
+    //    newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'FCP'), // TEST -
+    //    newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'FCP'), // TEST -
+
+    //   // FCP - Chrome - TEST
+    //     newSaucelabsCapability('chrome', '60', 'macOS 10.12', 'FCP'), // TEST -
+    //     newSaucelabsCapability('chrome', '60', 'Windows 7', 'FCP'), // TEST -
+    newSaucelabsCapability('chrome', '60', 'OS X 10.10', 'FCP'), // TEST -
+
+
+    //   // FCP firefox - TEST
+    //    newSaucelabsCapability('firefox', '35', 'OS X 10.10', 'FCP'), // TEST -
+    //    newSaucelabsCapability('firefox', '35', 'macOS 10.12', 'FCP'), // TEST -
+    //    newSaucelabsCapability('firefox', '35', 'Windows 7', 'FCP'), // TEST -
+
+    //   // FCP safari - TEST
+    //    newSaucelabsCapability('safari', '11', 'macOS 10.12', 'FCP'), // test -
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -121,7 +137,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} safari 11, macOS 10.12` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} chrome 60, OS X 10.10` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

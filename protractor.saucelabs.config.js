@@ -91,10 +91,9 @@ exports.config = {
     //     newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10', 'TTFB'), // passed - ???
 
     //   // TTFB - Chrome - ???
-    // newSaucelabsCapability('chrome', '44', 'macOS 10.12', 'TTFB'), // passed - ???
-        newSaucelabsCapability('chrome', '44', 'Windows 7', 'TTFB'), // passed - ???
-    // newSaucelabsCapability('chrome', '44', 'OS X 10.10', 'TTFB'), // passed - ???
-    //     newSaucelabsCapability('chrome', '122', 'Windows 11', 'TTFB'), // passed - 358
+    newSaucelabsCapability('chrome', '44', 'macOS 10.12', 'TTFB'), // passed - ???
+    //     newSaucelabsCapability('chrome', '44', 'Windows 7', 'TTFB'), // passed - ???
+    //     newSaucelabsCapability('chrome', '44', 'OS X 10.10', 'TTFB'), // passed - 359
 
 
     //   // TTFB firefox - ???
@@ -117,7 +116,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} chrome 44, Windows 7` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} chrome 44, macOS 10.12` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

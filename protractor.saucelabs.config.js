@@ -98,8 +98,13 @@ exports.config = {
 
     //   // TTFB firefox - ???
     // newSaucelabsCapability('firefox', '35', 'OS X 10.10', 'TTFB'), // passed - 386
-    // newSaucelabsCapability('firefox', '35', 'macOS 10.12', 'TTFB'), // passed - ???
-    newSaucelabsCapability('firefox', '35', 'Windows 7', 'TTFB'), // passed - ???
+    // newSaucelabsCapability('firefox', '35', 'macOS 10.12', 'TTFB'), // passed - 387
+    // newSaucelabsCapability('firefox', '35', 'Windows 7', 'TTFB'), // passed - 388
+
+    //   // TTFB safari - ???
+    newSaucelabsCapability('safari', '11', 'OS X 10.10', 'TTFB'), // test - 389
+    // newSaucelabsCapability('safari', '35', 'macOS 10.12', 'TTFB'), // test -
+    // newSaucelabsCapability('safari', '35', 'Windows 7', 'TTFB'), // test -
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -116,7 +121,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} firefox 35, Windows 7` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} safari 11, OS X 10.10` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

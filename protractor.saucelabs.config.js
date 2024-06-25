@@ -92,7 +92,8 @@ exports.config = {
 
     //   // TTFB - Chrome - ???
     //     newSaucelabsCapability('chrome', '44', 'macOS 10.12', 'TTFB'), // passed - 362
-    newSaucelabsCapability('chrome', '107', 'Windows 7', 'TTFB'), // passed - ???
+    // newSaucelabsCapability('chrome', '107', 'Windows 7', 'TTFB'), // passed - 365
+    newSaucelabsCapability('chrome', '45', 'Windows 7', 'TTFB'), // passed - ???
     //     newSaucelabsCapability('chrome', '44', 'OS X 10.10', 'TTFB'), // passed - 359
 
 

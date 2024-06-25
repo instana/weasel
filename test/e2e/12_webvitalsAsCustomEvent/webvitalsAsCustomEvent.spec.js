@@ -83,6 +83,17 @@ describe('12_webvitalsAsCustomEvent', () => {
               cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
             });
           }
+
+          if (capabilities.metricName === 'TTFB') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-TTFB');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
         });
       });
     });

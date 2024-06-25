@@ -87,8 +87,8 @@ exports.config = {
     // // TTFB
     //   // TTFB - MicrosoftEdge - ???
     //     newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12', 'TTFB'), // passed - ???
-    //     newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10', 'TTFB'), // passed - ???
-    newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'TTFB'), // passed - ???
+        newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'TTFB'), // passed - ???
+    //     newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'TTFB'), // passed - 383
 
     //   // TTFB - Chrome - PASSED
     //     newSaucelabsCapability('chrome', '44', 'macOS 10.12', 'TTFB'), // passed - 362
@@ -116,7 +116,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} MicrosoftEdge 79, OS X 10.10` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} MicrosoftEdge 13, Windows 10` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

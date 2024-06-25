@@ -93,6 +93,16 @@ describe('12_webvitalsAsCustomEvent', () => {
               cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
             });
           }
+
+          if (capabilities.metricName === 'FCP') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('pl');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.t_fcp).to.be.a('string');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+            });
+          }
         });
       });
     });

@@ -105,22 +105,23 @@ exports.config = {
     // // FCP
     //   // FCP - MicrosoftEdge - TEST
     //    newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'FCP'), // TEST -
-    //    newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'FCP'), // TEST -
+    //    newSaucelabsCapability('MicrosoftEdge', '79', 'Windows 10', 'FCP'), // TEST -
     //    newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'FCP'), // TEST -
 
     //   // FCP - Chrome - TEST
-    //     newSaucelabsCapability('chrome', '60', 'macOS 10.12', 'FCP'), // TEST -
+    newSaucelabsCapability('chrome', '60', 'macOS 10.12', 'FCP'), // TEST -
     //     newSaucelabsCapability('chrome', '60', 'Windows 7', 'FCP'), // TEST -
-    newSaucelabsCapability('chrome', '60', 'OS X 10.10', 'FCP'), // TEST -
+    //     newSaucelabsCapability('chrome', '60', 'OS X 10.10', 'FCP'), // TEST - 391
 
 
     //   // FCP firefox - TEST
-    //    newSaucelabsCapability('firefox', '35', 'OS X 10.10', 'FCP'), // TEST -
-    //    newSaucelabsCapability('firefox', '35', 'macOS 10.12', 'FCP'), // TEST -
-    //    newSaucelabsCapability('firefox', '35', 'Windows 7', 'FCP'), // TEST -
+    //    newSaucelabsCapability('firefox', '84', 'OS X 10.10', 'FCP'), // TEST -
+    //    newSaucelabsCapability('firefox', '84', 'macOS 10.12', 'FCP'), // TEST -
+    //    newSaucelabsCapability('firefox', '84', 'Windows 7', 'FCP'), // TEST -
 
     //   // FCP safari - TEST
-    //    newSaucelabsCapability('safari', '11', 'macOS 10.12', 'FCP'), // test -
+    //    newSaucelabsCapability('safari', '14.1', 'macOS 10.12', 'FCP'), // TEST -
+    //    newSaucelabsCapability('safari', '14.1', 'OS X 10.10', 'FCP'), // TEST -
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -137,7 +138,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} chrome 60, OS X 10.10` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} chrome 60, macOS 10.12` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

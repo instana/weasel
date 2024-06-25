@@ -85,9 +85,9 @@ exports.config = {
 
     // -------------TEST HERE
     // // TTFB
-    //   // TTFB - MicrosoftEdge - ???
-        newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'TTFB'), // passed - ???
-        // newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'TTFB'), // passed - 384
+    //   // TTFB - MicrosoftEdge - PASSED
+    // newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'TTFB'), // passed - 385
+    // newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'TTFB'), // passed - 384
     //     newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'TTFB'), // passed - 383
 
     //   // TTFB - Chrome - PASSED
@@ -97,8 +97,8 @@ exports.config = {
 
 
     //   // TTFB firefox - ???
-    //   // SauceLab not supporting firefox 90 with OS X 10.10, 10.11
-    //     newSaucelabsCapability('firefox', '90', 'macOS 10.12', 'TTFB'), // passed - ???
+    newSaucelabsCapability('firefox', '35', 'OS X 10.10', 'TTFB'), // passed - ???
+    // newSaucelabsCapability('firefox', '36', 'macOS 10.12', 'TTFB'), // passed - ???
     //     newSaucelabsCapability('firefox', '90', 'Windows 7', 'TTFB'), // passed - ???
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
@@ -116,7 +116,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} MicrosoftEdge 79, macOS 10.12` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} firefox 35, OS X 10.10` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

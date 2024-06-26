@@ -8,8 +8,8 @@ exports.config = {
   multiCapabilities: [
     // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'LCP'),// pass in 80
     // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'FID'),// pass in 80
-    newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'CLS'),// pass in 80
-    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'INP'),// pass in 97
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'CLS'),// pass in 80
+    newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'INP'),// pass in 97
     // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'TTFB'),//pass in 79
     // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'FCP'),//pass in 79
   ],

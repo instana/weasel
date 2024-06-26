@@ -119,7 +119,7 @@ exports.config = {
     // newSaucelabsCapability('firefox', '85', 'Windows 7', 'FCP'), // passed - 421
 
     //   // FCP safari - TEST
-    newSaucelabsCapability('safari', '15', 'macOS 10.15', 'FCP'), // TEST -
+    newSaucelabsCapability('safari', '15', 'macOS 12', 'FCP'), // TEST -
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -136,7 +136,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} safari 15, macOS 10.15` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} safari 15, macOS 12` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

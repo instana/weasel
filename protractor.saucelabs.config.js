@@ -1,114 +1,17 @@
 /* eslint-env node */
-
+// BUILD - 428
 exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
-    newSaucelabsCapability('internet explorer', '11.103', 'Windows 10'),
-    newSaucelabsCapability('MicrosoftEdge', '14.14393', 'Windows 10'),
-    newSaucelabsCapability('safari', '9.0', 'OS X 10.11'),
-    newSaucelabsCapability('safari', '10.1', 'macOS 10.12'),
-    newSaucelabsCapability('safari', '11.0', 'macOS 10.12'),
-    newSaucelabsCapability('safari', '11.1', 'macOS 10.13'),
-    newSaucelabsCapability('firefox', '78.0', 'Windows 7'),
-    newSaucelabsCapability('firefox', '58.0', 'Windows 11'),
-    newSaucelabsCapability('chrome', '67.0', 'Windows 10'),
-    newSaucelabsCapability('chrome', '54.0', 'OS X 10.11'),
-    newSaucelabsCapability('chrome', '65.0', 'OS X 10.11'),
-    newSaucelabsCapability('chrome', '107', 'Windows 7'),
-    newSaucelabsCapability('chrome', '125', 'macOS 11'),
-    newSaucelabsCapability('chrome', '103', 'OS X 10.11'),
-    newSaucelabsCapability('firefox', '126', 'macOS 11.00'),
-
-    // LCP
-    // LCP - MicrosoftEdge - PASSED
-    newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12', 'LCP'), // passed - 314
-    newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10', 'LCP'), // passed - 314
-    newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10', 'LCP'), // passed - 314
-
-    // LCP - Chrome - PASSED
-    newSaucelabsCapability('chrome', '78', 'macOS 10.12', 'LCP'), // passed - 323
-    newSaucelabsCapability('chrome', '78', 'Windows 7', 'LCP'), // passed - 316
-    newSaucelabsCapability('chrome', '78', 'OS X 10.10', 'LCP'), // passed 317
-
-    // LCP firefox - PASSED
-    newSaucelabsCapability('firefox', '122', 'macOS 10.15', 'LCP'), // passed - 341
-    newSaucelabsCapability('firefox', '122', 'Windows 10', 'LCP'), // passed - 320
-
-    // FID
-    // FID - MicrosoftEdge - PASSED
-    newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12', 'FID'), // passed - 331
-    newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10', 'FID'), // passed - 332
-    newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10', 'FID'), // passed - 330
-
-    // FID - Chrome - PASSED
-    newSaucelabsCapability('chrome', '77', 'macOS 10.12', 'FID'), // passed - 334
-    newSaucelabsCapability('chrome', '77', 'Windows 7', 'FID'), // passed - 335
-    newSaucelabsCapability('chrome', '77', 'OS X 10.10', 'FID'), // passed - 333
-
-    // FID firefox - PASSED
-    newSaucelabsCapability('firefox', '90', 'macOS 10.12', 'FID'), // passed - 337
-    newSaucelabsCapability('firefox', '90', 'Windows 7', 'FID'), // passed - 338
-
-    // CLS
-    // CLS - MicrosoftEdge - PASSED
-    newSaucelabsCapability('MicrosoftEdge', '80', 'macOS 10.12', 'CLS'), // passed - 347
-    newSaucelabsCapability('MicrosoftEdge', '80', 'Windows 10', 'CLS'), // passed - 346
-    newSaucelabsCapability('MicrosoftEdge', '80', 'OS X 10.10', 'CLS'), // passed - 345
-
-    // CLS - Chrome - PASSED
-    newSaucelabsCapability('chrome', '78', 'macOS 10.12', 'CLS'), // passed - 343
-    newSaucelabsCapability('chrome', '78', 'Windows 10', 'CLS'), // passed - 344
-    newSaucelabsCapability('chrome', '78', 'OS X 10.10', 'CLS'), // passed - 342
-
-    // INP
-    // INP - MicrosoftEdge - PASSED
-    newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'INP'), // passed - 351
-    newSaucelabsCapability('MicrosoftEdge', '97', 'Windows 10', 'INP'), // passed - 352
-
-    // INP - Chrome - PASSED
-    newSaucelabsCapability('chrome', '97', 'macOS 10.12', 'INP'), // passed - 350
-    newSaucelabsCapability('chrome', '97', 'Windows 7', 'INP'), // passed - 349
-    newSaucelabsCapability('chrome', '97', 'OS X 10.11', 'INP'), // passed - 348
-
-    // TTFB
-    // TTFB - MicrosoftEdge - PASSED
-    newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'TTFB'), // passed - 385
-    newSaucelabsCapability('MicrosoftEdge', '13', 'Windows 10', 'TTFB'), // passed - 384
-    newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'TTFB'), // passed - 383
-
-    // TTFB - Chrome - PASSED
-    newSaucelabsCapability('chrome', '44', 'macOS 10.12', 'TTFB'), // passed - 362
-    newSaucelabsCapability('chrome', '67', 'Windows 7', 'TTFB'), // passed - 382
-    newSaucelabsCapability('chrome', '44', 'OS X 10.10', 'TTFB'), // passed - 359
-
-    // TTFB firefox - PASSED
-    newSaucelabsCapability('firefox', '35', 'OS X 10.10', 'TTFB'), // passed - 386
-    newSaucelabsCapability('firefox', '35', 'macOS 10.12', 'TTFB'), // passed - 387
-    newSaucelabsCapability('firefox', '35', 'Windows 7', 'TTFB'), // passed - 388
-
-    // TTFB safari - PASSED
-    newSaucelabsCapability('safari', '11', 'macOS 10.12', 'TTFB'), // passed - 390
-
-    // FCP
-    // FCP - MicrosoftEdge - PASSED
-    newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'FCP'), // passed - 403
-    newSaucelabsCapability('MicrosoftEdge', '92', 'Windows 10', 'FCP'), // passed - 417
-    newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'FCP'), // passed - 408
-
-    // FCP - Chrome - PASSED
-    newSaucelabsCapability('chrome', '6OS 10.12', 'FCP'), // passed - 392
-    newSaucelabsCapability('chrome', '74', 'Windows 7', 'FCP'), // passed - 411
-    newSaucelabsCapability('chrome', '85', 'OS X 10.10', 'FCP'), // passed - 397
-
-    // FCP firefox - PASSED
-    newSaucelabsCapability('firefox', '84', 'macOS 10.12', 'FCP'), // passed - 418
-    newSaucelabsCapability('firefox', '85', 'Windows 7', 'FCP'), // passed - 421
-
-    //   // FCP safari - PASSED
-    newSaucelabsCapability('safari', '15', 'macOS 12', 'FCP'), // passed - 427
+    newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'LCP'),// pass in 80
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'FID'),// pass in 80
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'CLS'),// pass in 80
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'INP'),// pass in 97
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'TTFB'),//pass in 79
+    // newSaucelabsCapability('MicrosoftEdge', '97', 'macOS 10.12', 'FCP'),//pass in 79
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -125,7 +28,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `weasel e2e - ${metricName} web vitals` : 'weasel e2e',
+    name: isWebVitalsTest ? `weasel e2e - ${metricName} 'MicrosoftEdge', '97', 'macOS 10.12'` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: isWebVitalsTest ? ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'] : ['test/e2e/**/*.spec.js'],

@@ -105,11 +105,11 @@ exports.config = {
     // // FCP
     //   // FCP - MicrosoftEdge - TEST
     // newSaucelabsCapability('MicrosoftEdge', '79', 'macOS 10.12', 'FCP'), // passed - 403
-    newSaucelabsCapability('MicrosoftEdge', '85', 'Windows 10', 'FCP'), // TEST - 406
+    newSaucelabsCapability('MicrosoftEdge', '95', 'Windows 10', 'FCP'), // TEST - 406
     // newSaucelabsCapability('MicrosoftEdge', '79', 'OS X 10.10', 'FCP'), // passed - 408
 
     //   // FCP - Chrome - TEST
-    //     newSaucelabsCapability('chrome', '60', 'macOS 10.12', 'FCP'), // passed - 392
+    //     newSaucelabsCapability('chrome', '6OS 10.12', 'FCP'), // passed - 392
     // newSaucelabsCapability('chrome', '74', 'Windows 7', 'FCP'), // passed - 411
     // newSaucelabsCapability('chrome', '85', 'OS X 10.10', 'FCP'), // passed - 397
 
@@ -138,7 +138,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} MicrosoftEdge 85, Windows 10` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} MicrosoftEdge 95, Windows 10` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

@@ -115,9 +115,8 @@ exports.config = {
 
 
     //   // FCP firefox - TEST
-    // newSaucelabsCapability('firefox', '84', 'OS X 10.10', 'FCP'), // TEST -
-    newSaucelabsCapability('firefox', '84', 'macOS 10.12', 'FCP'), // TEST -
-    //    newSaucelabsCapability('firefox', '84', 'Windows 7', 'FCP'), // TEST -
+    // newSaucelabsCapability('firefox', '84', 'macOS 10.12', 'FCP'), // TEST -
+    newSaucelabsCapability('firefox', '84', 'Windows 7', 'FCP'), // TEST -
 
     //   // FCP safari - TEST
     //    newSaucelabsCapability('safari', '14.1', 'macOS 10.12', 'FCP'), // TEST -
@@ -138,7 +137,7 @@ function newSaucelabsCapability(browserName, version, platform, metricName = '')
     version,
     platform,
     metricName,
-    name: isWebVitalsTest ? `${metricName} firefox 84, macOS 10.12` : 'weasel e2e',
+    name: isWebVitalsTest ? `${metricName} firefox 84, Windows 7` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
     build: process.env.GITHUB_RUN_NUMBER,
     specs: ['test/e2e/12_webvitalsAsCustomEvent/*.spec.js'],

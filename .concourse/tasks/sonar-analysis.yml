@@ -32,7 +32,7 @@ run:
       gh auth login --with-token <<< ((ibm-github-e-api-token)) --hostname github.ibm.com
       export PR_KEY=`gh pr view --json baseRefName,number --jq .number`
       export PR_BASE=`gh pr view --json baseRefName,number --jq .baseRefName`
-      git fetch https://$GITHUB_TOKEN@github.ibm.com/instana/weasel.git main:main
+
       cd ..
 
 
@@ -79,6 +79,9 @@ run:
           -Dsonar.dynamicAnalysis=reuseReports
 
       else
+        echo "\$PR_KEY is defined. Executing Sonar Analysis WITH PR decoration"
+        # git fetch command will only be used to fetch the PR base branch if there is a PR key.
+        git fetch https://$GITHUB_TOKEN@github.ibm.com/instana/weasel.git "${PR_BASE}":"${PR_BASE}"
         sonar-scanner \
           -Dsonar.projectKey=weasel \
           -Dsonar.host.url=https://sonarqube.instana.io/ \

@@ -38,12 +38,15 @@ exports.config = {
     ...generateCapabilities('MicrosoftEdge', '13', 'Windows 10', { excludes: excludeTTFB }), // done10-1
     ...generateCapabilities('MicrosoftEdge', '92', 'Windows 10', { excludes: excludeFCP }), // done10-2
     ...generateMetricsCapabilities('chrome', '44', ['macOS 10.12', 'OS X 10.10'], excludeTTFB),// done11
-    ...generateCapabilities('chrome', '67', 'Windows 7', { excludes: ['LCP', 'FID', 'INP', 'TTFB'] }), // done11-1
+    ...generateCapabilities('chrome', '67', 'Windows 7', { excludes: excludeTTFB }), // done11-1
     ...generateMetricsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], excludeTTFB),// done12
     ...generateCapabilities('safari', '11', 'macOS 10.12', { excludes: excludeTTFB }),// done13
     ...generateCapabilities('firefox', '84', 'macOS 10.12', { excludes: excludeFCP }), // done15
     ...generateCapabilities('firefox', '85', 'Windows 7', { excludes: excludeFCP }), // done16
     ...generateCapabilities('safari', '15', 'macOS 12', { excludes: excludeFCP }),// done17
+    ...generateCapabilities('chrome', '60', 'macOS 10.12', { excludes: excludeFCP }), // done18
+    ...generateCapabilities('chrome', '74', 'Windows 7', { excludes: excludeFCP }), // done19
+    ...generateCapabilities('chrome', '85', 'OS X 10.10', { excludes: excludeFCP }), // done20
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

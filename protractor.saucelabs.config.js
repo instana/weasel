@@ -56,7 +56,6 @@ exports.config = {
   }
 };
 
-
 function generateCapabilities(browserName, version, platform, options = {}) {
   const { excludes = [] } = options;
   const includes = excludes.length === 0
@@ -69,7 +68,6 @@ function generateCapabilities(browserName, version, platform, options = {}) {
 
   return includes.map(metric => newSaucelabsCapability(browserName, version, platform, metric));
 }
-
 
 function generateMetricsCapabilities(browserName, version, platforms, excludes) {
   return platforms.flatMap(platform => generateCapabilities(browserName, version, platform, { excludes }));

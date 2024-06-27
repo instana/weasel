@@ -27,9 +27,7 @@ exports.config = {
     ...generateCapabilities('firefox', '126', 'macOS 11.00'),
     // Specific Metric Capabilities
     ...generateMetricsCapabilities('MicrosoftEdge', '80', ['macOS 10.12', 'Windows 10', 'OS X 10.10'], ['INP', 'TTFB', 'FCP']), // done1
-    ...generateMetricsCapabilities('chrome', '78', ['macOS 10.12', 'OS X 10.10'], ['FID', 'INP', 'TTFB', 'FCP']), // done2
-    ...generateCapabilities('chrome', '78', 'Windows 10', { excludes: ['LCP', 'FID', 'INP', 'TTFB', 'FCP'] }), // done 2-1
-    ...generateCapabilities('chrome', '78', 'Windows 7', { excludes: ['CLS', 'FID', 'INP', 'TTFB', 'FCP'] }), // done 2-2
+    ...generateMetricsCapabilities('chrome', '78', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], ['FID', 'INP', 'TTFB', 'FCP']), // done2
     ...generateMetricsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], ['FID', 'CLS', 'INP', 'TTFB', 'FCP']), // done3
     ...generateMetricsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], ['LCP', 'CLS', 'INP', 'TTFB', 'FCP']), // done4
     ...generateMetricsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], ['LCP', 'CLS', 'INP', 'TTFB', 'FCP']), // done5

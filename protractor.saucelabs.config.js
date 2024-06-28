@@ -1,4 +1,5 @@
 /* eslint-env node */
+
 const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
 const excludeTTFB = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
 const excludeFCP = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];

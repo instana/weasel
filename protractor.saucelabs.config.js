@@ -34,22 +34,22 @@ exports.config = {
     ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }), // done3
     ...generateSauceLabsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // done4
     ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // done5
-    ...generateSauceLabsCapabilities('chrome', '78', 'Windows 10', { excludes: ['LCP', 'FID', 'INP', 'TTFB', 'FCP'] }),// done7
+    ...generateSauceLabsCapabilities('chrome', '78', ['Windows 10'], { excludes: ['LCP', 'FID', 'INP', 'TTFB', 'FCP'] }),// done7
     ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }),// done8
     ...generateSauceLabsCapabilities('chrome', '97', ['macOS 10.12', 'Windows 7', 'OS X 10.11'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }),// done9
     ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }),// done10
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '13', 'Windows 10', { excludes: excludeTTFB }), // done10-1
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '92', 'Windows 10', { excludes: excludeFCP }), // done10-2
+    ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { excludes: excludeTTFB }), // done10-1
+    ...generateSauceLabsCapabilities('MicrosoftEdge', '92', ['Windows 10'], { excludes: excludeFCP }), // done10-2
     ...generateSauceLabsCapabilities('chrome', '44', ['macOS 10.12', 'OS X 10.10'], { excludes: excludeTTFB }),// done11
-    ...generateSauceLabsCapabilities('chrome', '67', 'Windows 7', { excludes: excludeTTFB }), // done11-1
+    ...generateSauceLabsCapabilities('chrome', '67', ['Windows 7'], { excludes: excludeTTFB }), // done11-1
     ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { excludes: excludeTTFB }),// done12
-    ...generateSauceLabsCapabilities('safari', '11', 'macOS 10.12', { excludes: excludeTTFB }),// done13
-    ...generateSauceLabsCapabilities('firefox', '84', 'macOS 10.12', { excludes: excludeFCP }), // done15
-    ...generateSauceLabsCapabilities('firefox', '85', 'Windows 7', { excludes: excludeFCP }), // done16
-    ...generateSauceLabsCapabilities('safari', '15', 'macOS 12', { excludes: excludeFCP }),// done17
-    ...generateSauceLabsCapabilities('chrome', '60', 'macOS 10.12', { excludes: excludeFCP }), // done18
-    ...generateSauceLabsCapabilities('chrome', '74', 'Windows 7', { excludes: excludeFCP }), // done19
-    ...generateSauceLabsCapabilities('chrome', '85', 'OS X 10.10', { excludes: excludeFCP }), // done20
+    ...generateSauceLabsCapabilities('safari', '11', ['macOS 10.12'], { excludes: excludeTTFB }),// done13
+    ...generateSauceLabsCapabilities('firefox', '84', ['macOS 10.12'], { excludes: excludeFCP }), // done15
+    ...generateSauceLabsCapabilities('firefox', '85', ['Windows 7'], { excludes: excludeFCP }), // done16
+    ...generateSauceLabsCapabilities('safari', '15', ['macOS 12'], { excludes: excludeFCP }),// done17
+    ...generateSauceLabsCapabilities('chrome', '60', ['macOS 10.12'], { excludes: excludeFCP }), // done18
+    ...generateSauceLabsCapabilities('chrome', '74', ['Windows 7'], { excludes: excludeFCP }), // done19
+    ...generateSauceLabsCapabilities('chrome', '85', ['OS X 10.10'], { excludes: excludeFCP }), // done20
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

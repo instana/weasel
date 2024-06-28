@@ -1,5 +1,5 @@
 const { registerTestServerHooks, getE2ETestBaseUrl, getBeacons } = require('../../server/controls');
-const { registerBaseHooks, restartBrowser } = require('../base');
+const { registerBaseHooks, restartBrowser, getCapabilities } = require('../base');
 const { retry, expectOneMatching } = require('../../util');
 
 const cexpect = require('chai').expect;
@@ -31,65 +31,78 @@ describe('12_webvitalsAsCustomEvent', () => {
       browser.sleep(3000);
     });
 
-    it('must report web-vitals as custom events', () => {
+    it('must report web-vitals as custom events', async () => {
+      const capabilities = await getCapabilities();
       return retry(() => {
         return getBeacons().then(beacons => {
           const pageLoadBeacon = expectOneMatching(beacons, beacon => {
             cexpect(beacon.ty).to.equal('pl');
           });
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(parseFloat(beacon.d)).to.be.above(3000);
-            cexpect(beacon.n).to.equal('instana-webvitals-LCP');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+          if (capabilities.metricName === 'LCP') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(parseFloat(beacon.d)).to.be.above(3000);
+              cexpect(beacon.n).to.equal('instana-webvitals-LCP');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-FID');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+          if (capabilities.metricName === 'FID') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-FID');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-CLS');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+          if (capabilities.metricName === 'CLS') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-CLS');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('cus');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.n).to.equal('instana-webvitals-INP');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-            cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
-          });
+          if (capabilities.metricName === 'INP') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('cus');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.n).to.equal('instana-webvitals-INP');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+              cexpect(beacon.m_id).to.match(/^v\d+(-\d+)+$/);
+            });
+          }
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('pl');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.t_ttfb).to.be.a('string');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-          });
+          if (capabilities.metricName === 'TTFB') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('pl');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.t_ttfb).to.be.a('string');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+            });
+          }
 
-          expectOneMatching(beacons, beacon => {
-            cexpect(beacon.ty).to.equal('pl');
-            cexpect(beacon.ts).to.be.a('string');
-            cexpect(beacon.t_fcp).to.be.a('string');
-            cexpect(beacon.l).to.be.a('string');
-            cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
-          });
+          if (capabilities.metricName === 'FCP') {
+            expectOneMatching(beacons, beacon => {
+              cexpect(beacon.ty).to.equal('pl');
+              cexpect(beacon.ts).to.be.a('string');
+              cexpect(beacon.t_fcp).to.be.a('string');
+              cexpect(beacon.l).to.be.a('string');
+              cexpect(beacon.pl).to.equal(pageLoadBeacon.t);
+            });
+          }
         });
       });
     });

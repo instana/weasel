@@ -4,6 +4,8 @@ const excludeTTFB = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
 const excludeFCP = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];
 
 exports.config = {
+  specs: ['test/e2e/**/*.spec.js'],
+  // TODO: disable webvital tests for saucelab for now, since browsers in saucelab seems never return webvital metrics
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
@@ -73,7 +75,6 @@ function newSaucelabsCapability(browserName, version, platform, metrics) {
     metrics,
     name: metrics.length ? `weasel e2e - ${metrics} web vitals` : 'weasel e2e',
     'tunnel-identifier': 'github-action-tunnel',
-    build: process.env.GITHUB_RUN_NUMBER,
-    specs: ['test/e2e/**/*.spec.js']
+    build: process.env.GITHUB_RUN_NUMBER
   };
 }

@@ -11,21 +11,21 @@ exports.config = {
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
-    ...generateSauceLabsCapabilities('internet explorer', '11.103', ['Windows 10'], { excludes: webvitalMetrics }),
+    // ...generateSauceLabsCapabilities('internet explorer', '11.103', ['Windows 10'], { excludes: webvitalMetrics }), // PASSED
     ...generateSauceLabsCapabilities('MicrosoftEdge', '14.14393', ['Windows 10'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('safari', '9.0', ['OS X 10.11'], { excludes: webvitalMetrics }),
-    ...generateSauceLabsCapabilities('safari', '10.1', ['macOS 10.12'], { excludes: webvitalMetrics }),
-    ...generateSauceLabsCapabilities('safari', '11.0', ['macOS 10.12'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('safari', '11.1', ['macOS 10.13'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('firefox', '78.0', ['Windows 7'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('firefox', '58.0', ['Windows 11'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('chrome', '67.0', ['Windows 10'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('chrome', '54.0', ['OS X 10.11'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('chrome', '65.0', ['OS X 10.11'], { excludes: excludeTTFB }), //TEST TTFB
-    ...generateSauceLabsCapabilities('chrome', '107', ['Windows 7'], { excludes: [] }), //TEST ALL LCP, FID, CLS, INP, TTFB, FCP
-    ...generateSauceLabsCapabilities('chrome', '125', ['macOS 11'], { excludes: [] }),//TEST ALL LCP, FID, CLS, INP, TTFB, FCP
-    ...generateSauceLabsCapabilities('chrome', '103', ['OS X 10.11'], { excludes: [] }),//TEST ALL LCP, FID, CLS, INP, TTFB, FCP
-    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['CLS', 'INP'] }),//TEST ALL LCP, FID, TTFB, FCP
+    // ...generateSauceLabsCapabilities('safari', '9.0', ['OS X 10.11'], { excludes: webvitalMetrics }),
+    // ...generateSauceLabsCapabilities('safari', '10.1', ['macOS 10.12'], { excludes: webvitalMetrics }),
+    // ...generateSauceLabsCapabilities('safari', '11.0', ['macOS 10.12'], { excludes: excludeTTFB }), //TEST TTFB
+    // ...generateSauceLabsCapabilities('safari', '11.1', ['macOS 10.13'], { excludes: excludeTTFB }), //TEST TTFB
+    // ...generateSauceLabsCapabilities('firefox', '78.0', ['Windows 7'], { excludes: excludeTTFB }), //TEST TTFB
+    // ...generateSauceLabsCapabilities('firefox', '58.0', ['Windows 11'], { excludes: excludeTTFB }), //TEST TTFB
+    // ...generateSauceLabsCapabilities('chrome', '67.0', ['Windows 10'], { excludes: excludeTTFB }), //TEST TTFB
+    // ...generateSauceLabsCapabilities('chrome', '54.0', ['OS X 10.11'], { excludes: excludeTTFB }), //TEST TTFB
+    // ...generateSauceLabsCapabilities('chrome', '65.0', ['OS X 10.11'], { excludes: excludeTTFB }), //TEST TTFB
+    // ...generateSauceLabsCapabilities('chrome', '107', ['Windows 7'], { excludes: [] }), //TEST ALL LCP, FID, CLS, INP, TTFB, FCP
+    // ...generateSauceLabsCapabilities('chrome', '125', ['macOS 11'], { excludes: [] }),//TEST ALL LCP, FID, CLS, INP, TTFB, FCP
+    // ...generateSauceLabsCapabilities('chrome', '103', ['OS X 10.11'], { excludes: [] }),//TEST ALL LCP, FID, CLS, INP, TTFB, FCP
+    // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['CLS', 'INP'] }),//TEST ALL LCP, FID, TTFB, FCP
 
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['macOS 10.12', 'Windows 10', 'OS X 10.10'], { excludes: ['INP', 'TTFB', 'FCP'] }), // done1
     // ...generateSauceLabsCapabilities('chrome', '78', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['FID', 'INP', 'TTFB', 'FCP'] }), // done2

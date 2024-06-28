@@ -39,7 +39,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             cexpect(beacon.ty).to.equal('pl');
           });
 
-          if (capabilities.metricName === 'LCP') {
+          if (capabilities.metrics.includes('LCP')) {
             expectOneMatching(beacons, beacon => {
               cexpect(beacon.ty).to.equal('cus');
               cexpect(beacon.ts).to.be.a('string');
@@ -51,7 +51,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             });
           }
 
-          if (capabilities.metricName === 'FID') {
+          if (capabilities.metrics.includes('FID')) {
             expectOneMatching(beacons, beacon => {
               cexpect(beacon.ty).to.equal('cus');
               cexpect(beacon.ts).to.be.a('string');
@@ -62,7 +62,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             });
           }
 
-          if (capabilities.metricName === 'CLS') {
+          if (capabilities.metrics.includes('CLS')) {
             expectOneMatching(beacons, beacon => {
               cexpect(beacon.ty).to.equal('cus');
               cexpect(beacon.ts).to.be.a('string');
@@ -73,7 +73,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             });
           }
 
-          if (capabilities.metricName === 'INP') {
+          if (capabilities.metrics.includes('INP')) {
             expectOneMatching(beacons, beacon => {
               cexpect(beacon.ty).to.equal('cus');
               cexpect(beacon.ts).to.be.a('string');
@@ -84,7 +84,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             });
           }
 
-          if (capabilities.metricName === 'TTFB') {
+          if (capabilities.metrics.includes('TTFB')) {
             expectOneMatching(beacons, beacon => {
               cexpect(beacon.ty).to.equal('pl');
               cexpect(beacon.ts).to.be.a('string');
@@ -94,7 +94,7 @@ describe('12_webvitalsAsCustomEvent', () => {
             });
           }
 
-          if (capabilities.metricName === 'FCP') {
+          if (capabilities.metrics.includes('FCP')) {
             expectOneMatching(beacons, beacon => {
               cexpect(beacon.ty).to.equal('pl');
               cexpect(beacon.ts).to.be.a('string');

@@ -11,12 +11,12 @@ exports.config = {
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   multiCapabilities: [
-    // ...generateSauceLabsCapabilities('internet explorer', '11.103', ['Windows 10'], { excludes: webvitalMetrics }), //PASSED
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '14.14393', ['Windows 10'], { excludes: TTFBTestMetrics }),
+    // ...generateSauceLabsCapabilities('internet explorer', '11.103', ['Windows 10'], { excludes: webvitalMetrics }), // PASSED 449
+    // ...generateSauceLabsCapabilities('MicrosoftEdge', '14.14393', ['Windows 10'], { excludes: TTFBTestMetrics }), // PASSED 450
+    // ...generateSauceLabsCapabilities('safari', '9.0', ['OS X 10.11'], { excludes: webvitalMetrics }), // PASSED 449
+    // ...generateSauceLabsCapabilities('safari', '10.1', ['macOS 10.12'], { excludes: webvitalMetrics }), // PASSED 449
 
-    // ...generateSauceLabsCapabilities('safari', '9.0', ['OS X 10.11'], { excludes: webvitalMetrics }),
-    // ...generateSauceLabsCapabilities('safari', '10.1', ['macOS 10.12'], { excludes: webvitalMetrics }),
-    // ...generateSauceLabsCapabilities('safari', '11.0', ['macOS 10.12'], { excludes: TTFBTestMetrics }),
+    ...generateSauceLabsCapabilities('safari', '11.0', ['macOS 10.12'], { excludes: TTFBTestMetrics }), // TESTING 451
     // ...generateSauceLabsCapabilities('safari', '11.1', ['macOS 10.13'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('firefox', '78.0', ['Windows 7'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('firefox', '58.0', ['Windows 11'], { excludes: TTFBTestMetrics }),

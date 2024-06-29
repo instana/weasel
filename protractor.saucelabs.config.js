@@ -35,7 +35,7 @@ exports.config = {
 
     // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], webvitalMetrics), // FAILED
 
-    generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, unsupported_matrices_in_firefox),
+    generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, { excludes: unsupported_matrices_in_firefox }),
 
 
     // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }),

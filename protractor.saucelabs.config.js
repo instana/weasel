@@ -4,7 +4,7 @@ const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
 // const TTFBTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
 // const FCPTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];
 
-const metrics_support_fireFox = ['LCP', 'FID', 'TTFB', 'FCP'];
+const unsupported_matrices_in_firefox = ['CLS', 'INP'];
 const platforms_support_fireFox_126 = ['macOS 10.15', 'macOS 11.00', 'macOS 12', 'macOS 13', 'Windows 10', 'Windows 11'];
 
 exports.config = {
@@ -35,7 +35,7 @@ exports.config = {
 
     // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], webvitalMetrics), // FAILED
 
-    generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, metrics_support_fireFox),
+    generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, unsupported_matrices_in_firefox),
 
 
     // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }),

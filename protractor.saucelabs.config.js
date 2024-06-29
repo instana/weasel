@@ -1,7 +1,7 @@
 /* eslint-env node */
 // comparing with 449
 const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
-const TTFBTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
+// const TTFBTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
 // const FCPTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];
 
 exports.config = {
@@ -25,7 +25,12 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '107', ['Windows 7'], { excludes: [] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '125', ['macOS 11'], { excludes: [] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '103', ['OS X 10.11'], { excludes: [] }), // PASSED 449
-    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['CLS', 'INP', 'FCP'] }),// 452 failed, TEST 453
+
+    // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['CLS', 'INP', 'FCP'] }),// 449, 452, 453 failed, TEST
+
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }),// TEST
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }),// TEST
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'FID', 'CLS', 'INP', 'FCP'] }),// TEST
 
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['macOS 10.12', 'Windows 10', 'OS X 10.10'], { excludes: ['INP', 'TTFB', 'FCP'] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '78', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['FID', 'INP', 'TTFB', 'FCP'] }), // PASSED 449

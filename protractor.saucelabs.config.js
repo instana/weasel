@@ -37,9 +37,10 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '97', ['macOS 10.12', 'Windows 7', 'OS X 10.11'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // PASSED 449
 
 
-    // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], webvitalMetrics), // FAILED
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], webvitalMetrics), // FAILED
+
     // ...generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, { excludes: unsupported_matrices_in_firefox }), // FAILED BUILD 460
-    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: unsupported_matrices_in_firefox }), // FAILED BUILD 460
+    // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: unsupported_matrices_in_firefox }), // FAILED BUILD 460
 
     // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }), // FAILED 449 - to test LCP
     // https://app.saucelabs.com/dashboard/tests?build=449&browser=Firefox+122.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime

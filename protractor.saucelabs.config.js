@@ -4,7 +4,7 @@ const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
 // const TTFBTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
 // const FCPTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];
 
-const unsupported_matrices_in_firefox = ['CLS', 'INP'];
+const unsupported_matrices_in_firefox = ['FCP', 'CLS', 'INP'];
 const platforms_support_fireFox_126 = ['macOS 10.15', 'macOS 11.00', 'macOS 12', 'macOS 13', 'Windows 10', 'Windows 11'];
 
 exports.config = {
@@ -32,17 +32,23 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '103', ['OS X 10.11'], { excludes: [] }), // PASSED 449
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['macOS 10.12', 'Windows 10', 'OS X 10.10'], { excludes: ['INP', 'TTFB', 'FCP'] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '78', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['FID', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
+    // ...generateSauceLabsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
+    // ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // PASSED 449
+    // ...generateSauceLabsCapabilities('chrome', '97', ['macOS 10.12', 'Windows 7', 'OS X 10.11'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // PASSED 449
+
 
     // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], webvitalMetrics), // FAILED
+    // ...generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, { excludes: unsupported_matrices_in_firefox }), // FAILED BUILD 460
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: unsupported_matrices_in_firefox }), // FAILED BUILD 460
 
-    ...generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, { excludes: unsupported_matrices_in_firefox }),
+    // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }), // FAILED 449 - to test LCP
+    // https://app.saucelabs.com/dashboard/tests?build=449&browser=Firefox+122.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
+
+    // ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // FAILED 449
+    // https://app.saucelabs.com/dashboard/tests?build=449&browser=Firefox+90.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
 
 
-    // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }),
-    // ...generateSauceLabsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }),
-    // ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }),
-    // ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }),
-    // ...generateSauceLabsCapabilities('chrome', '97', ['macOS 10.12', 'Windows 7', 'OS X 10.11'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }),
+
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }),
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '92', ['Windows 10'], { excludes: FCPTestMetrics }),

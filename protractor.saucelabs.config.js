@@ -26,7 +26,14 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '125', ['macOS 11'], { excludes: [] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '103', ['OS X 10.11'], { excludes: [] }), // PASSED 449
 
-    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }),// 449, 452, 453 failed, TEST
+    // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // 449, 452, 453 failed, TEST 455
+
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }), // 449, 452, 453 failed, TEST 455
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // 449, 452, 453 failed, TEST 455
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'FID', 'INP', 'TTFB', 'FCP'] }), // 449, 452, 453 failed, TEST 455
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // 449, 452, 453 failed, TEST 455
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'FID', 'CLS', 'INP', 'FCP'] }), // 449, 452, 453 failed, TEST 455
+    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: ['LCP', 'FID', 'CLS', 'INP', 'TTFB'] }), // 449, 452, 453 failed, TEST 455
 
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['macOS 10.12', 'Windows 10', 'OS X 10.10'], { excludes: ['INP', 'TTFB', 'FCP'] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '78', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['FID', 'INP', 'TTFB', 'FCP'] }), // PASSED 449

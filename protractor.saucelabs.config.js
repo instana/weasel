@@ -58,10 +58,9 @@ exports.config = {
     // https://app.saucelabs.com/dashboard/tests?platform=Windows+10&browser=Edge+92.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
 
     // inconsistent
-    ...generateSauceLabsCapabilities('chrome', '44', ['macOS 10.12', 'OS X 10.10'], { excludes: TTFBTestMetrics }),
+    // ...generateSauceLabsCapabilities('chrome', '44', ['macOS 10.12', 'OS X 10.10'], { excludes: TTFBTestMetrics }),
     // https://app.saucelabs.com/dashboard/tests?platform=macOS+10.10&platform=macOS+Sierra&browser=Chrome+44.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
 
-    // ...generateSauceLabsCapabilities('chrome', '67', ['Windows 7'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('firefox', '84', ['macOS 10.12'], { excludes: FCPTestMetrics }),
     // ...generateSauceLabsCapabilities('firefox', '85', ['Windows 7'], { excludes: FCPTestMetrics }),

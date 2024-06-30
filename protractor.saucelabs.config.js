@@ -46,14 +46,12 @@ exports.config = {
 
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '97', ['macOS 10.12', 'Windows 7', 'OS X 10.11'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // PASSED 449
+    // ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }), // PASSED - 463
 
 
+    ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { excludes: TTFBTestMetrics }), // TEST 464 - failed
 
-
-    // ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }), // TEST - 463
-
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { excludes: TTFBTestMetrics }), // TEST 464
-    // ...generateSauceLabsCapabilities('MicrosoftEdge', '92', ['Windows 10'], { excludes: FCPTestMetrics }),
+    // ...443generateSauceLabsCapabilities('MicrosoftEdge', '92', ['Windows 10'], { excludes: FCPTestMetrics }),
     // ...generateSauceLabsCapabilities('chrome', '44', ['macOS 10.12', 'OS X 10.10'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('chrome', '67', ['Windows 7'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { excludes: TTFBTestMetrics }),

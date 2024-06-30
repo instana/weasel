@@ -1,11 +1,7 @@
 /* eslint-env node */
-// comparing with 449
 const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
 const TTFBTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
 const FCPTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];
-
-const unsupported_matrices_in_firefox = ['FCP', 'CLS', 'INP'];
-const platforms_support_fireFox_126 = ['macOS 10.15', 'macOS 11.00', 'macOS 12', 'macOS 13', 'Windows 10', 'Windows 11'];
 
 exports.config = {
   specs: ['test/e2e/**/*.spec.js'],
@@ -13,6 +9,7 @@ exports.config = {
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceBuild: process.env.GITHUB_RUN_NUMBER,
   // See https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
+
   // some of the APIs required to capture these metrics are currently only available in Chromium- based browsers
   // (e.g. Chrome, Edge, Opera, Samsung Internet). - https://github.com/GoogleChrome/web-vitals -
   multiCapabilities: [

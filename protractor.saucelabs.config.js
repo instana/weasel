@@ -27,30 +27,30 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '67.0', ['Windows 10'], { excludes: TTFBTestMetrics }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '54.0', ['OS X 10.11'], { excludes: TTFBTestMetrics }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '65.0', ['OS X 10.11'], { excludes: TTFBTestMetrics }), // PASSED 449
+
     // ...generateSauceLabsCapabilities('chrome', '107', ['Windows 7'], { excludes: [] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '125', ['macOS 11'], { excludes: [] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '103', ['OS X 10.11'], { excludes: [] }), // PASSED 449
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['macOS 10.12', 'Windows 10', 'OS X 10.10'], { excludes: ['INP', 'TTFB', 'FCP'] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '78', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['FID', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
+
+    // FAILED 449 - to test LCP
+    // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }),
+    // https://app.saucelabs.com/dashboard/tests?build=449&browser=Firefox+122.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
+
     // ...generateSauceLabsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
+
+    // FAILED 449
+    // ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }),
+    // https://app.saucelabs.com/dashboard/tests?build=449&browser=Firefox+90.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
+
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // PASSED 449
     // ...generateSauceLabsCapabilities('chrome', '97', ['macOS 10.12', 'Windows 7', 'OS X 10.11'], { excludes: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // PASSED 449
 
 
-    ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], webvitalMetrics), // FAILED
-
-    // ...generateSauceLabsCapabilities('firefox', '126', platforms_support_fireFox_126, { excludes: unsupported_matrices_in_firefox }), // FAILED BUILD 460
-    // ...generateSauceLabsCapabilities('firefox', '126', ['macOS 11.00'], { excludes: unsupported_matrices_in_firefox }), // FAILED BUILD 460
-
-    // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }), // FAILED 449 - to test LCP
-    // https://app.saucelabs.com/dashboard/tests?build=449&browser=Firefox+122.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
-
-    // ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // FAILED 449
-    // https://app.saucelabs.com/dashboard/tests?build=449&browser=Firefox+90.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&start=alltime
 
 
-
-    // ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }),
+    ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }),
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '92', ['Windows 10'], { excludes: FCPTestMetrics }),
     // ...generateSauceLabsCapabilities('chrome', '44', ['macOS 10.12', 'OS X 10.10'], { excludes: TTFBTestMetrics }),

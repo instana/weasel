@@ -1,8 +1,8 @@
 /* eslint-env node */
 // comparing with 449
 const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
-// const TTFBTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
-// const FCPTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];
+const TTFBTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'FCP'];
+const FCPTestMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB'];
 
 const unsupported_matrices_in_firefox = ['FCP', 'CLS', 'INP'];
 const platforms_support_fireFox_126 = ['macOS 10.15', 'macOS 11.00', 'macOS 12', 'macOS 13', 'Windows 10', 'Windows 11'];
@@ -50,8 +50,9 @@ exports.config = {
 
 
 
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }),
-    // ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { excludes: TTFBTestMetrics }),
+    // ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { excludes: ['LCP', 'FID', 'CLS', 'INP'] }), // TEST - 463
+
+    ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { excludes: TTFBTestMetrics }), // TEST 464
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '92', ['Windows 10'], { excludes: FCPTestMetrics }),
     // ...generateSauceLabsCapabilities('chrome', '44', ['macOS 10.12', 'OS X 10.10'], { excludes: TTFBTestMetrics }),
     // ...generateSauceLabsCapabilities('chrome', '67', ['Windows 7'], { excludes: TTFBTestMetrics }),

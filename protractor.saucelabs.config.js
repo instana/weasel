@@ -33,7 +33,8 @@ exports.config = {
     // // inconsistent TEST LCP - https://app.saucelabs.com/dashboard/tests?platform=Windows+10&platform=macOS+Catalina&browser=Firefox+122.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&search=LCP&start=alltime
     // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['CLS', 'INP'] }),
 
-    ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.11'], { excludes: ['LCP', 'FID', 'CLS', 'INP', 'FCP'] }), //test TTFB
+    // ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.11'], { includedMetrics: ['TTFB'] }), // TEST TTFB
+    ...generateSauceLabsCapabilities('firefox', '89', ['macOS 10.12'], { includedMetrics: ['FID'] }), // TEST FID
 
     // ...generateSauceLabsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
 
@@ -65,8 +66,8 @@ exports.config = {
 
 // Filter out the metrics that are in the excludes array, and generate capabilities for each platform.
 // Note that not all web vital metrics are supported across all compatibilities.
-function generateSauceLabsCapabilities(browserName, version, platforms, options) {
-  const includedMetrics = webvitalMetrics.filter(metric => !options.excludes.includes(metric));
+function generateSauceLabsCapabilities(browserName, version, platforms, includedMetrics) {
+  // const includedMetrics = webvitalMetrics.filter(metric => !options.excludes.includes(metric));
   return platforms.flatMap(platform => {
     return newSaucelabsCapability(browserName, version, platform, includedMetrics);
   });

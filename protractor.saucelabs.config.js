@@ -31,7 +31,9 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '78', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['FID', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
 
     // // inconsistent TEST LCP - https://app.saucelabs.com/dashboard/tests?platform=Windows+10&platform=macOS+Catalina&browser=Firefox+122.0&ownerId=myorganization&ownerType=organization&ownerName=My+organization&search=LCP&start=alltime
-    ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['CLS', 'INP'] }),
+    // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['CLS', 'INP'] }),
+
+    ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['FID', 'CLS', 'INP', 'TTFB', 'FCP'] }), //test LCP
 
     // ...generateSauceLabsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
 

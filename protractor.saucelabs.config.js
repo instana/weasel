@@ -35,7 +35,8 @@ exports.config = {
     // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { excludes: ['CLS', 'INP'] }),
 
     // ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10'], { includedMetrics: ['TTFB'] }), // PASS TTFB - 486
-    ...generateSauceLabsCapabilities('firefox', '89', ['macOS 10.12'], { includedMetrics: ['FID'] }), // TEST FID
+    // ...generateSauceLabsCapabilities('firefox', '89', ['macOS 10.12'], { includedMetrics: ['FID'] }), // TEST FID
+    ...generateSauceLabsCapabilities('firefox', '122', ['macOS 11.00'], { includedMetrics: ['LCP', 'FID', 'TTFB', 'FCP'] }), // TEST 'LCP', 'FID', 'TTFB', 'FCP'
 
     // ...generateSauceLabsCapabilities('chrome', '77', ['macOS 10.12', 'Windows 7', 'OS X 10.10'], { excludes: ['LCP', 'CLS', 'INP', 'TTFB', 'FCP'] }), // PASSED 449
 

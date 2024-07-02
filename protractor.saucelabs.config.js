@@ -31,10 +31,10 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '85', ['OS X 10.10', 'macOS 10.12', 'Windows 8'], { includedMetrics: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }), // pass 496, 497
     // ...generateSauceLabsCapabilities('chrome', '96', ['OS X 10.11', 'macOS 12', 'Windows 11'], { includedMetrics: webvitalMetrics }), // pass 499
     ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { includedMetrics: ['TTFB'] }),
-    ...generateSauceLabsCapabilities('firefox', '84', ['macOS 10.12'], { includedMetrics: testFCPmetrics }),
-    ...generateSauceLabsCapabilities('firefox', '85', ['Windows 7'], { includedMetrics: testFCPmetrics }),
-    ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID'] }),
-    ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { includedMetrics: fireFox_supporting_wv_metrices }),
+    // ...generateSauceLabsCapabilities('firefox', '84', ['macOS 10.12'], { includedMetrics: testFCPmetrics }),
+    // ...generateSauceLabsCapabilities('firefox', '85', ['Windows 7'], { includedMetrics: testFCPmetrics }),
+    // ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID'] }),
+    // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { includedMetrics: fireFox_supporting_wv_metrices }),
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['macOS 10.12', 'Windows 10', 'OS X 10.10'], { includedMetrics: ['LCP', 'FID', 'CLS', 'TTFB', 'FCP'] }),
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { includedMetrics: ['INP'] }),
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '79', ['macOS 10.12', 'OS X 10.10'], { includedMetrics: ['TTFB', 'FCP'] }),

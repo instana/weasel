@@ -1,5 +1,6 @@
 /* eslint-env node */
 const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
+const webvitalMetricsWithoutINP = webvitalMetrics.filter(metric => metric !== 'INP');
 const webvitalMetricsWithoutINPandFCP = webvitalMetrics.filter(metric => metric !== 'INP' && metric !== 'FCP');
 const webvitalMetricsWithoutFCP = webvitalMetrics.filter(metric => metric !== 'FCP');
 const testFCPmetrics = ['FCP'];

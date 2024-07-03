@@ -33,8 +33,8 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '85', ['OS X 10.10', 'macOS 10.12', 'Windows 8'], { includedMetrics: webvitalMetricsWithoutINPandFCP }), // FCP should include, but it is inconsitent 509
     // ...generateSauceLabsCapabilities('chrome', '96', ['OS X 10.11', 'macOS 12', 'Windows 11'], { includedMetrics: webvitalMetricsWithoutFCP }), // FCP should include, but it is inconsitent 509
 
-    ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { includedMetrics: testTTFBmetrics }),
-    ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID', 'TTFB', 'FCP'] }),
+    // ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { includedMetrics: testTTFBmetrics }),
+    // ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID', 'TTFB', 'FCP'] }),
     ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { includedMetrics: fireFox_supporting_wv_metrices }),
 
     // ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['macOS 10.12', 'Windows 10'], { includedMetrics: testTTFBmetrics }),

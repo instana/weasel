@@ -1,6 +1,6 @@
 /* eslint-env node */
 const webvitalMetrics = ['LCP', 'FID', 'CLS', 'INP', 'TTFB', 'FCP'];
-const webvitalMetricsWithoutINP = webvitalMetrics.filter(metric => metric !== 'INP');
+const webvitalMetricsWithoutINPandFCP = webvitalMetrics.filter(metric => metric !== 'INP' && metric !== 'FCP');
 const testFCPmetrics = ['FCP'];
 const testTTFBmetrics = ['TTFB'];
 const fireFox_supporting_wv_metrices = ['LCP', 'FID', 'TTFB', 'FCP'];
@@ -29,7 +29,7 @@ exports.config = {
     // ...generateSauceLabsCapabilities('chrome', '54.0', ['OS X 10.11'], { includedMetrics: testTTFBmetrics }),
     // ...generateSauceLabsCapabilities('chrome', '65.0', ['OS X 10.11'], { includedMetrics: testTTFBmetrics }),
 
-    ...generateSauceLabsCapabilities('chrome', '85', ['OS X 10.10', 'macOS 10.12', 'Windows 8'], { includedMetrics: webvitalMetricsWithoutINP }),
+    ...generateSauceLabsCapabilities('chrome', '85', ['OS X 10.10', 'macOS 10.12', 'Windows 8'], { includedMetrics: webvitalMetricsWithoutINPandFCP }),
     // ...generateSauceLabsCapabilities('chrome', '96', ['OS X 10.11', 'macOS 12', 'Windows 11'], { includedMetrics: webvitalMetrics }),
 
     // ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { includedMetrics: testTTFBmetrics }),

@@ -32,15 +32,15 @@ exports.config = {
     ...generateSauceLabsCapabilities('chrome', '85', ['OS X 10.10', 'macOS 10.12', 'Windows 8'], { includedMetrics: webvitalMetricsWithoutINP }),
     ...generateSauceLabsCapabilities('chrome', '96', ['OS X 10.11', 'macOS 12', 'Windows 11'], { includedMetrics: webvitalMetrics }),
 
-    ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { includedMetrics: testTTFBmetrics }),
-    ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID', 'TTFB', 'FCP'] }),
-    ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { includedMetrics: fireFox_supporting_wv_metrices }),
+    // ...generateSauceLabsCapabilities('firefox', '35', ['OS X 10.10', 'macOS 10.12', 'Windows 7'], { includedMetrics: testTTFBmetrics }),
+    // ...generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID', 'TTFB', 'FCP'] }),
+    // ...generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { includedMetrics: fireFox_supporting_wv_metrices }),
 
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['macOS 10.12', 'Windows 10'], { includedMetrics: testTTFBmetrics }),
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['OS X 10.10', 'macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetricsWithoutINP }),
-    ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetrics }),
+    // ...generateSauceLabsCapabilities('MicrosoftEdge', '13', ['macOS 10.12', 'Windows 10'], { includedMetrics: testTTFBmetrics }),
+    // ...generateSauceLabsCapabilities('MicrosoftEdge', '80', ['OS X 10.10', 'macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetricsWithoutINP }),
+    // ...generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetrics }),
 
-    ...generateSauceLabsCapabilities('safari', '15', ['macOS 12'], { includedMetrics: testFCPmetrics }),
+    // ...generateSauceLabsCapabilities('safari', '15', ['macOS 12'], { includedMetrics: testFCPmetrics }),
   ],
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.

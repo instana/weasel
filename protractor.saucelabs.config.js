@@ -11,8 +11,7 @@ const webvitalMetrics = {
 };
 
 exports.config = {
-  // specs: ['test/e2e/**/*.spec.js'],
-  specs: ['test/e2e/12_webvitalsAsCustomEvent/webvitalsAsCustomEvent.spec.js'],
+  specs: ['test/e2e/**/*.spec.js'],
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceBuild: process.env.GITHUB_RUN_NUMBER,

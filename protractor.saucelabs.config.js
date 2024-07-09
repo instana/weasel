@@ -18,29 +18,29 @@ exports.config = {
   // some of the APIs required to capture these metrics are currently only available in Chromium- based browsers
   // (e.g. Chrome, Edge, Opera, Samsung Internet). - https://github.com/GoogleChrome/web-vitals -
   multiCapabilities: [
-    generateSauceLabsCapabilities('internet explorer', '11.103', ['Windows 10'], { includedMetrics: [] }),
-    generateSauceLabsCapabilities('MicrosoftEdge', '14.14393', ['Windows 10'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('safari', '9.0', ['OS X 10.11'], { includedMetrics: [] }),
-    generateSauceLabsCapabilities('safari', '10.1', ['macOS 10.12'], { includedMetrics: [] }),
-    generateSauceLabsCapabilities('safari', '11.0', ['macOS 10.12'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('safari', '11.1', ['macOS 10.13'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('firefox', '78.0', ['Windows 7'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('firefox', '58.0', ['Windows 11'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('chrome', '67.0', ['Windows 10'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('chrome', '54.0', ['OS X 10.11'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('chrome', '65.0', ['OS X 10.11'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('internet explorer', '11.103', ['Windows 10'], { includedMetrics: [] }),
+    newSaucelabsCapability('MicrosoftEdge', '14.14393', ['Windows 10'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('safari', '9.0', ['OS X 10.11'], { includedMetrics: [] }),
+    newSaucelabsCapability('safari', '10.1', ['macOS 10.12'], { includedMetrics: [] }),
+    newSaucelabsCapability('safari', '11.0', ['macOS 10.12'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('safari', '11.1', ['macOS 10.13'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('firefox', '78.0', ['Windows 7'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('firefox', '58.0', ['Windows 11'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('chrome', '67.0', ['Windows 10'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('chrome', '54.0', ['OS X 10.11'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('chrome', '65.0', ['OS X 10.11'], { includedMetrics: testTTFBmetrics }),
 
-    generateSauceLabsCapabilities('chrome', '85', ['OS X 10.10', 'macOS 10.12', 'Windows 8'], { includedMetrics: webvitalMetricsWithoutINPandFCP }), // FCP should include, but it is inconsitent 509
-    generateSauceLabsCapabilities('chrome', '96', ['OS X 10.11', 'macOS 12', 'Windows 11'], { includedMetrics: webvitalMetricsWithoutFCP }), // FCP should include, but it is inconsitent 509
+    newSaucelabsCapability('chrome', '85', ['OS X 10.10', 'macOS 10.12', 'Windows 8'], { includedMetrics: webvitalMetricsWithoutINPandFCP }), // FCP should include, but it is inconsitent 509
+    newSaucelabsCapability('chrome', '96', ['OS X 10.11', 'macOS 12', 'Windows 11'], { includedMetrics: webvitalMetricsWithoutFCP }), // FCP should include, but it is inconsitent 509
 
-    generateSauceLabsCapabilities('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID', 'TTFB', 'FCP'] }), // 510 pass
-    generateSauceLabsCapabilities('firefox', '122', ['macOS 10.15', 'Windows 10'], { includedMetrics: fireFox_supporting_wv_metrices }), // bit inconsistent, 510 failed, 511 passed
+    newSaucelabsCapability('firefox', '90', ['macOS 10.12', 'Windows 7'], { includedMetrics: ['FID', 'TTFB', 'FCP'] }), // 510 pass
+    newSaucelabsCapability('firefox', '122', ['macOS 10.15', 'Windows 10'], { includedMetrics: fireFox_supporting_wv_metrices }), // bit inconsistent, 510 failed, 511 passed
 
-    generateSauceLabsCapabilities('MicrosoftEdge', '13', ['Windows 10'], { includedMetrics: testTTFBmetrics }),
-    generateSauceLabsCapabilities('MicrosoftEdge', '80', ['OS X 10.10', 'macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetricsWithoutINP }), //pass 513
-    generateSauceLabsCapabilities('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetrics }), //pass 513
+    newSaucelabsCapability('MicrosoftEdge', '13', ['Windows 10'], { includedMetrics: testTTFBmetrics }),
+    newSaucelabsCapability('MicrosoftEdge', '80', ['OS X 10.10', 'macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetricsWithoutINP }), //pass 513
+    newSaucelabsCapability('MicrosoftEdge', '97', ['macOS 10.12', 'Windows 10'], { includedMetrics: webvitalMetrics }), //pass 513
 
-    generateSauceLabsCapabilities('safari', '15', ['macOS 12'], { includedMetrics: testFCPmetrics }),
+    newSaucelabsCapability('safari', '15', ['macOS 12'], { includedMetrics: testFCPmetrics }),
   ].flat(),
   // Do not allow parallel test execution. Makes the test execution a lot
   // slower, but the setup simpler.
@@ -52,13 +52,13 @@ exports.config = {
 
 // Filter out the metrics that are in the excludes array, and generate capabilities for each platform.
 // Note that not all web vital metrics are supported across all compatibilities.
-function generateSauceLabsCapabilities(browserName, version, platforms, options) {
+function newSaucelabsCapability(browserName, version, platforms, options) {
   return platforms.flatMap(platform => {
-    return newSaucelabsCapability(browserName, version, platform, options.includedMetrics);
+    return newSaucelabsCapabilityForSinglePlatform(browserName, version, platform, options.includedMetrics);
   });
 }
 
-function newSaucelabsCapability(browserName, version, platform, metrics) {
+function newSaucelabsCapabilityForSinglePlatform(browserName, version, platform, metrics) {
   return {
     browserName,
     version,

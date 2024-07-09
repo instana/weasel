@@ -15,7 +15,7 @@ describe('12_webvitalsAsCustomEvent', () => {
 
       browser.get(getE2ETestBaseUrl('12_webvitalsAsCustomEvent/webvitalsAsCustomEvent'));
       // wait for webvital metrics
-      browser.sleep(10000);
+      browser.sleep(12000);
       element(by.id('searchInput')).sendKeys('hello');
       element(by.id('searchButton')).click();
       browser.sleep(1000);

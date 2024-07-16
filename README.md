@@ -60,3 +60,7 @@ This being said, how would you go about using Weasel? We recommend the following
  7. Let us know about how you are using Weasel! This will help us get a better understanding for the community and the impact that our changes will have.
  8. Keep your fork up-to-date by periodically pulling from upstream.
  9. Have a great day ☀️!
+
+## APIs and documentation
+
+Please check for complete documentation in the [Website monitoring documentation](https://www.ibm.com/docs/en/instana-observability/current?topic=instana-monitoring-websites).

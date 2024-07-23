@@ -2,10 +2,12 @@ import {expect} from 'chai';
 
 import {win} from '@lib/browser';
 import defaultVars from '@lib/vars';
-import type {Beacon} from '@lib/types';
+import vars from '@lib/vars';
+import type {Beacon, AutoPageDetectionType} from '@lib/types';
 import {stripSecrets} from '@lib/stripSecrets';
 import {addCommonBeaconProperties} from '@lib/commonBeaconProperties';
 import {initAutoPageDetection, isAutoPageDetectionEnabled} from '@lib/hooks/autoPageDetection';
+import {ignorePopstateEvent, titleAsPageNameInAutoPageDetection, processAutoPageDetectionCommand} from '@lib/hooks/autoPageDetection';
 
 describe('autodetection of page transition', () => {
 
@@ -17,6 +19,10 @@ describe('autodetection of page transition', () => {
       const result: boolean = isAutoPageDetectionEnabled();
       addCommonBeaconProperties(beacon);
       expect(result).equal(false);
+
+      const titleResult: boolean = titleAsPageNameInAutoPageDetection();
+      expect(titleResult).equal(false);
+
       expect(beacon.uf).not.exist;
     });
 
@@ -36,11 +42,65 @@ describe('autodetection of page transition', () => {
       };
       const result: boolean = isAutoPageDetectionEnabled();
       expect(result).equal(true);
+
+      const titleResult: boolean = titleAsPageNameInAutoPageDetection();
+      expect(titleResult).equal(true);
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.uf).equal('sn');
     });
   });
+
+  describe('autoPageDetection command test', () => {
+    it('autoPageDetection command parsing normal', () => {
+      const cmd: any = {mappingRule: [[/.*section*/, 'Section 1']], ignorePopstateEvent: false, titleAsPageName: true};
+      vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
+      expect(isAutoPageDetectionEnabled()).equal(true);
+      expect(ignorePopstateEvent()).equal(false);
+      expect(titleAsPageNameInAutoPageDetection()).equal(true);
+      const resultAPD = vars.autoPageDetection as AutoPageDetectionType;
+      expect(resultAPD.mappingRule?.length).equal(1);
+    });
+
+    it('autoPageDetection command parsing empty', () => {
+      const cmd: any = {};
+      vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
+      expect(isAutoPageDetectionEnabled()).equal(true);
+      expect(ignorePopstateEvent()).equal(false);
+      expect(titleAsPageNameInAutoPageDetection()).equal(false);
+      const resultAPD = vars.autoPageDetection as AutoPageDetectionType;
+      expect(typeof resultAPD).equal('object');
+      expect(typeof resultAPD.mappingRule).equal('undefined');
+    });
+
+    it('autoPageDetection command parsing abnormal configs (negative)', () => {
+      let cmd: any = 101; //number is unexpected
+      vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
+      expect(isAutoPageDetectionEnabled()).equal(true);
+      let resultAPD = vars.autoPageDetection as AutoPageDetectionType;
+      expect(typeof resultAPD).equal('boolean');
+
+      cmd = 0; //number 0 is unexpected, 0 is treated as false
+      vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
+      expect(isAutoPageDetectionEnabled()).equal(false);
+
+      cmd = 'abc'; //string is unexpected
+      vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
+      expect(isAutoPageDetectionEnabled()).equal(true);
+      resultAPD = vars.autoPageDetection as AutoPageDetectionType;
+      expect(typeof resultAPD).equal('boolean');
+
+      cmd = {titleAsPageName: 'abc'}; //string is unexpected for titleAsPageName
+      vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
+      expect(isAutoPageDetectionEnabled()).equal(true);
+      expect(titleAsPageNameInAutoPageDetection()).equal(true); //string is treated as true
+      resultAPD = vars.autoPageDetection as AutoPageDetectionType;
+      expect(typeof resultAPD).equal('object');
+      expect(typeof resultAPD.titleAsPageName).equal('string');
+    });
+  });
+
   describe('listen to various event listeners for page transition', () => {
 
     it('must  listen to hashchange event and set page ', () => {
@@ -167,6 +227,10 @@ describe('autodetection of page transition', () => {
       const title = '';
       const url = 'http://localhost/#aboutNotGetMatched-about1Some-about2Where-about3SVL';
       window.history.pushState(state, title, url);
+
+      const titleResult: boolean = titleAsPageNameInAutoPageDetection();
+      expect(titleResult).equal(false);
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       console.log('check the regex pattern ', beacon);
@@ -181,12 +245,16 @@ describe('autodetection of page transition', () => {
             'checkregex?matchId=<redacted>'
           ]
         ],
-        titleAsPageName: undefined
+        titleAsPageName: false
       };
       const state = {page: 10};
       const title = '';
       const url = 'http://localhost/checkregex12*benifits.-functions12replace-match.textpattern?matchId=6847664458';
       window.history.pushState(state, title, url);
+
+      const titleResult: boolean = titleAsPageNameInAutoPageDetection();
+      expect(titleResult).equal(false);
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('checkregex?matchId=<redacted>');

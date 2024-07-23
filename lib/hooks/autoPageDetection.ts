@@ -1,5 +1,5 @@
 import {win, doc} from '../browser';
-import type {MappingRule} from '../types';
+import type {AutoPageDetectionType, MappingRule} from '../types';
 import vars from '../vars';
 import {info, debug, error} from '../debug';
 import {setPage} from '../pageChange';
@@ -20,7 +20,7 @@ function setupAutoPageDetection() {
 
   win.addEventListener('hashchange', function (event) {
     if (DEBUG) {
-      info(`hashchange to ${event.newURL} from ${event.newURL}, current location ${win.location}`);
+      info(`hashchange to ${event.newURL} from ${event.oldURL}, current location ${win.location}`);
     }
     handlePossibleUrlChange(event.newURL);
   });
@@ -115,7 +115,7 @@ function handlePossibleUrlChange(newUrl: string) {
 
 function applyCustomPageMappings(urlPath: string): string | null {
   const rules = getAutoPageDetectionMappingRule();
-  const effectivePath = (titleAsPageNameInAutoPageDetectio() ? doc.title : urlPath) || urlPath;
+  const effectivePath = (titleAsPageNameInAutoPageDetection() ? doc.title : urlPath) || urlPath;
   if (!effectivePath || !rules.length) {
     return effectivePath;
   }
@@ -149,11 +149,11 @@ export function isAutoPageDetectionEnabled(): boolean {
   return !!vars.autoPageDetection;
 }
 
-function ignorePopstateEvent(): boolean {
+export function ignorePopstateEvent(): boolean {
   return typeof vars.autoPageDetection === 'object' && !!vars.autoPageDetection?.ignorePopstateEvent;
 }
 
-function titleAsPageNameInAutoPageDetectio(): boolean {
+export function titleAsPageNameInAutoPageDetection(): boolean {
   return typeof vars.autoPageDetection === 'object' && !!vars.autoPageDetection?.titleAsPageName;
 }
 
@@ -162,4 +162,21 @@ function getAutoPageDetectionMappingRule(): Array<MappingRule> {
     return [];
   }
   return vars.autoPageDetection.mappingRule;
+}
+
+export function processAutoPageDetectionCommand(input: any): boolean | AutoPageDetectionType {
+  const guessCmd = input as boolean | AutoPageDetectionType | null;
+  if (!guessCmd) {
+    return false;
+  }
+
+  if (typeof guessCmd !== 'object') {
+    return !!guessCmd;
+  }
+
+  return {
+    ignorePopstateEvent: guessCmd['ignorePopstateEvent'],
+    titleAsPageName: guessCmd['titleAsPageName'],
+    mappingRule: guessCmd['mappingRule']
+  };
 }

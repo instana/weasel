@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 1.7.2
+
+- Fix autoPageDetection command error caused by closure-compiler.
+
 ## 1.7.1
 
 - Auto detect page transitions on route change.

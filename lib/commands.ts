@@ -5,6 +5,7 @@ import {hasOwnProperty} from './util';
 import {setPage} from './pageChange';
 import {warn} from './debug';
 import vars from './vars';
+import {processAutoPageDetectionCommand} from './hooks/autoPageDetection';
 
 export function processCommand(command: any[]): any {
   switch (command[0]) {
@@ -64,7 +65,7 @@ export function processCommand(command: any[]): any {
       vars.wrapEventHandlers = command[1];
       break;
     case 'autoPageDetection':
-      vars.autoPageDetection = command[1];
+      vars.autoPageDetection = processAutoPageDetectionCommand(command[1]);
       break;
     case 'wrapTimers':
       vars.wrapTimers = command[1];

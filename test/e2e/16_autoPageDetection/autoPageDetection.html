@@ -13,80 +13,32 @@
     <script>eum('autoPageDetection',true)</script>
 </head>
 <body>
-    <header>
-        <h1>AutoCaptureScreenNameTest</h1>
-        <nav>
-            <ul id="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main id="main-content">
-        <div id="home" class="content">
-            <h2>Welcome to the Home Page</h2>
-            <p>Hope you have a nice day!</p>
-        </div>
-        <div id="about" class="content">
-            <h2>About Us</h2>
-            <p>Learn m Add click event listeners to navigation links
-              var navLinks = document.querySelectorAll('#nav-links a'); // get all the elemnts with id : navlink within the <a> in html 
-              console.log('Nav links ',navLinks) 
-            </p>
-        </div>
-        <div id="contact" class="content">
-            <h2>Contact Us</h2>
-            <p>Contact us using the information provided.</p>
-        </div>
-    </main>
-    <script>
-        $(window).on('load', function() {
-            // Simulate clicks on all navigation links
-            var navLinks = document.querySelectorAll('#nav-links a');
-
-            // Click on Home
-            navLinks[0].click();
-
-            setTimeout(function() {
-            // Click on About
-            navLinks[1].click();
-
-            setTimeout(function() {
-                // Click on Contact
-                navLinks[2].click();
-            }, 200); 
-            }, 200); 
-        });
-    </script>
-
-    <script>
-        // Function to change content based on the clicked link
-        function changeContent(pageId) {
-            // Hide all content elements
-            var allContent = document.querySelectorAll('.content');
-            allContent.forEach(function(item) {
-                item.style.display = 'none';
-            });
-
-            // Show the content corresponding to the clicked link
-            var content = document.getElementById(pageId);
-            if (content) {
-                content.style.display = 'block';
-            }
-
-            // Update URL with the new hash
-            window.history.pushState(null, null, '#' + pageId);
-        }
-
-        // Function to handle URL hash change
-        function handleHashChange() {
-            var pageId = window.location.hash.substr(1); // Remove '#' from hash
-            changeContent(pageId);
-        }
-
-        // Add event listener for hash change
-        window.addEventListener('hashchange', handleHashChange);  
-    </script>
+  <header>
+    <h1>AutoCaptureScreenNameTest</h1>
+    <nav>
+        <ul id="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+  </header>
+  <main id="main-content">
+    <div id="home" class="content">
+      <h2>Welcome to the Home Page</h2>
+      <p>Hope you have a nice day!</p>
+    </div>
+    <div id="about" class="content">
+      <h2>About Us</h2>
+      <p>Learn m Add click event listeners to navigation links
+        var navLinks = document.querySelectorAll('#nav-links a'); // get all the elemnts with id : navlink within the <a> in html
+        console.log('Nav links ',navLinks)
+      </p>
+    </div>
+    <div id="contact" class="content">
+      <h2>Contact Us</h2>
+      <p>Contact us using the information provided.</p>
+    </div>
+  </main>
 </body>
 </html>

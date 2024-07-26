@@ -14,6 +14,21 @@ describe('16_autoPageDetection', () => {
     });
 
     it('must navigate to each nav-link and send page change beacons', () => {
+
+      var navLinks = element.all(by.css('#nav-links a'));
+
+      navLinks.get(0).click();
+
+      browser.sleep(200);
+
+      navLinks.get(1).click();
+
+      browser.sleep(200);
+
+      navLinks.get(2).click();
+
+      browser.sleep(200);
+
       return retry(async () => {
         const beacons = await getBeacons();
 

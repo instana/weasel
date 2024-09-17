@@ -1,6 +1,10 @@
 # Changelog
 
 
+## 1.7.3
+
+- Fix autoPageDetection to set page name for initial page load
+
 ## 1.7.2
 
 - Fix autoPageDetection command error caused by closure-compiler.

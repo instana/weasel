@@ -7,6 +7,7 @@ import shimmer from 'shimmer';
 import {isWrapped} from '../utilWrap';
 import {normalizeUrl} from './normalizeUrl';
 import {stripSecrets} from '../stripSecrets';
+import {getActivePhase} from '../fsm';
 
 export function initAutoPageDetection() {
   if (isAutoPageDetectionEnabled()) {
@@ -35,6 +36,9 @@ function setupAutoPageDetection() {
       }
       handlePossibleUrlChange(window.location.pathname);
     });
+  }
+  if (getActivePhase() === 'pl') {
+    handlePossibleUrlChange(window.location.pathname);
   }
 }
 

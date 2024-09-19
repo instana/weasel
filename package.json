@@ -35,11 +35,11 @@
   "author": "Ben Blackmore <ben@instana.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.23.2",
     "@babel/plugin-transform-block-scoping": "^7.0.0",
     "@babel/plugin-transform-modules-commonjs": "^7.0.0",
     "@babel/plugin-transform-shorthand-properties": "^7.0.0",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.16.7",
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-node-resolve": "^7.1.3",

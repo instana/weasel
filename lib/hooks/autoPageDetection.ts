@@ -9,37 +9,57 @@ import {normalizeUrl} from './normalizeUrl';
 import {stripSecrets} from '../stripSecrets';
 import {getActivePhase} from '../fsm';
 
-export function initAutoPageDetection() {
-  if (isAutoPageDetectionEnabled()) {
-    setupAutoPageDetection();
-  }
-}
+export function configAutoPageDetection() {
+  resetPageDetectionState();
 
-function setupAutoPageDetection() {
-  unwrapHistoryMethods();
+  if (!isAutoPageDetectionEnabled()) {
+    return;
+  }
+
   wrapHistoryMethods();
 
-  win.addEventListener('hashchange', function (event) {
-    if (DEBUG) {
-      info(`hashchange to ${event.newURL} from ${event.oldURL}, current location ${win.location}`);
-    }
-    handlePossibleUrlChange(event.newURL);
-  });
+  win.addEventListener('hashchange', hashChangeEventListener);
+  isHashChangeListenerAdded = true;
 
   if (!ignorePopstateEvent()) {
     if (DEBUG) {
       info('handlePossibleUrlChange on popstate event received');
     }
-    win.addEventListener('popstate', function (_event) {
-      if (DEBUG) {
-        info(`popstate current location ${win.location}`);
-      }
-      handlePossibleUrlChange(window.location.pathname);
-    });
+    win.addEventListener('popstate', popStateEventListener);
+    isPopstateEventListenerAdded = true;
   }
   if (getActivePhase() === 'pl') {
     handlePossibleUrlChange(window.location.pathname);
   }
+}
+
+let isHashChangeListenerAdded = false;
+let isPopstateEventListenerAdded = false;
+
+function resetPageDetectionState() {
+  unwrapHistoryMethods();
+  if (isHashChangeListenerAdded) {
+    win.removeEventListener('hashchange', hashChangeEventListener);
+    isHashChangeListenerAdded = false;
+  }
+  if (isPopstateEventListenerAdded) {
+    win.removeEventListener('popstate', popStateEventListener);
+    isPopstateEventListenerAdded = false;
+  }
+}
+
+function hashChangeEventListener(event: HashChangeEvent) {
+  if (DEBUG) {
+    info(`hashchange to ${event.newURL} from ${event.oldURL}, current location ${win.location}`);
+  }
+  handlePossibleUrlChange(event.newURL);
+}
+
+function popStateEventListener(_event: PopStateEvent) {
+  if (DEBUG) {
+    info(`popstate current location ${win.location}`);
+  }
+  handlePossibleUrlChange(window.location.pathname);
 }
 
 /**

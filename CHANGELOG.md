@@ -4,6 +4,7 @@
 ## 1.7.3
 
 - Upgrade dev packages to address security issues
+- Refactored code for autoPageDetection
 - Fix autoPageDetection to set page name for initial page load
 
 ## 1.7.2

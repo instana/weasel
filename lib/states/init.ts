@@ -15,7 +15,7 @@ import {transitionTo} from '../fsm';
 import type {State} from '../types';
 import {win} from '../browser';
 import vars from '../vars';
-import {initAutoPageDetection} from '../hooks/autoPageDetection';
+import {configAutoPageDetection} from '../hooks/autoPageDetection';
 
 const state: State = {
   onEnter() {
@@ -90,7 +90,7 @@ const state: State = {
     wrapTimers();
     wrapEventHandlers();
     hookIntoGlobalUnhandledRejectionEvent();
-    initAutoPageDetection();
+    configAutoPageDetection();
     transitionTo('waitForPageLoad');
   },
 

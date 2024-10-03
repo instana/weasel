@@ -6,8 +6,9 @@ import vars from '@lib/vars';
 import type {Beacon, AutoPageDetectionType} from '@lib/types';
 import {stripSecrets} from '@lib/stripSecrets';
 import {addCommonBeaconProperties} from '@lib/commonBeaconProperties';
-import {initAutoPageDetection, isAutoPageDetectionEnabled} from '@lib/hooks/autoPageDetection';
+import {configAutoPageDetection, isAutoPageDetectionEnabled} from '@lib/hooks/autoPageDetection';
 import {ignorePopstateEvent, titleAsPageNameInAutoPageDetection, processAutoPageDetectionCommand} from '@lib/hooks/autoPageDetection';
+import {isWrapped} from '@lib/utilWrap';
 
 describe('autodetection of page transition', () => {
 
@@ -105,7 +106,7 @@ describe('autodetection of page transition', () => {
 
     it('must  listen to hashchange event and set page ', () => {
       defaultVars.autoPageDetection = true;
-      initAutoPageDetection();
+      configAutoPageDetection();
 
       const event = new win.HashChangeEvent('hashchange', {
         oldURL: 'http://localhost/oldhashurl',
@@ -121,7 +122,7 @@ describe('autodetection of page transition', () => {
     it('must check for secretstrip when hashchange event occurs', () => {
       defaultVars.autoPageDetection = {mappingRule: [[/.*section*/, 'Section 1']], titleAsPageName: true};
       defaultVars.secrets = [/accountno/i];
-      initAutoPageDetection();
+      configAutoPageDetection();
       const urlRedacted = 'http://localhost/section?accountno=<redacted>';
 
       const event = new window.HashChangeEvent('hashchange', {
@@ -285,6 +286,20 @@ describe('autodetection of page transition', () => {
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('/checkURIInsteadFullUrlcheckURIInsteadFullUrlcheckURIInsteadFullUrl');
+    });
+  });
+
+  describe('test autoPageDetection configuration', () => {
+    it('must re-enter autoPageDetection configuration', () => {
+      defaultVars.autoPageDetection = {ignorePopstateEvent: false};
+      configAutoPageDetection();
+      expect(isWrapped(win.history.replaceState)).equal(true);
+      expect(isWrapped(win.history.pushState)).equal(true);
+
+      defaultVars.autoPageDetection = false;
+      configAutoPageDetection();
+      expect(isWrapped(win.history.replaceState)).equal(false);
+      expect(isWrapped(win.history.pushState)).equal(false);
     });
   });
 });

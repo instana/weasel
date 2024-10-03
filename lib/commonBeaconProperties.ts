@@ -5,7 +5,6 @@ import {hasOwnProperty} from './util';
 import {getActivePhase} from './fsm';
 import {warn} from './debug';
 import vars from './vars';
-import {isAutoPageDetectionEnabled} from './hooks/autoPageDetection';
 
 const maximumNumberOfMetaDataFields = 25;
 const maximumLengthPerMetaDataField = 1024;
@@ -50,7 +49,7 @@ export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
 
   addMetaDataToBeacon(beacon, vars.meta);
 
-  if (isAutoPageDetectionEnabled()) {
+  if (vars.autoPageDetection) {
     // uf field will be a comma separated string if more than one use features are supported
     beacon['uf'] = 'sn';
   }

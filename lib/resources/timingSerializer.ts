@@ -20,6 +20,7 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
       isCached = true;
     } else if (entry['transferSize'] > 0 && (entry['encodedBodySize'] === 0 || entry['transferSize'] < entry['encodedBodySize'])) {
       result.push(cachingTypes.validated);
+      isCached = true;
     } else {
       result.push(cachingTypes.fullLoad);
     }

@@ -6,6 +6,7 @@
 - Upgrade dev packages to address security issues
 - Refactored code for autoPageDetection
 - Fix autoPageDetection to set page name for initial page load
+- Remove backendTraceId for cached responses
 
 ## 1.7.2
 

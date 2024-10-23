@@ -89,7 +89,7 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
     }
   }
   else {
-    info("Response is cached, removed backendTraceId from response")
+    info('Response is cached, removed backendTraceId from response');
   }
   result.push(backendTraceId);
 

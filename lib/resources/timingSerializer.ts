@@ -1,4 +1,5 @@
 import { cachingTypes, initiatorTypes } from './consts';
+import {info} from '../debug';
 import vars from '../vars';
 
 export function serializeEntryToArray(entry: PerformanceResourceTiming) {
@@ -86,6 +87,9 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
       // Some browsers may not grant access to the field when the Timing-Allow-Origin
       // check fails. Better be safe than sorry here.
     }
+  }
+  else {
+    info("Response is cached, removed backendTraceId from response")
   }
   result.push(backendTraceId);
 

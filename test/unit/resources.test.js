@@ -59,7 +59,7 @@ describe('resources/timingSerializer', () => {
       };
       const result = toHumanReadableEntry(serializeEntry(entry));
       expect(result).toMatchSnapshot();
-      expect(result['backendTraceId']).toBe("");
+      expect(result['backendTraceId']).toBe('');
     });
 
     it('must identify full asset retrieval', () => {
@@ -124,7 +124,7 @@ describe('resources/timingSerializer', () => {
       };
       const result = toHumanReadableEntry(serializeEntry(entry));
       expect(result).toMatchSnapshot();
-      expect(result['backendTraceId']).toBe("");
+      expect(result['backendTraceId']).toBe('');
     });
   });
 });

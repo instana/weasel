@@ -72,25 +72,27 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
   }
 
   let backendTraceId = '';
-  if (!isCached){
-    try {
-      const serverTimings = entry['serverTiming'];
-      if (serverTimings instanceof Array) {
-        for (let i = 0; i < serverTimings.length; i++) {
-          const serverTiming = serverTimings[i];
-          if (serverTiming['name'] === vars.serverTimingBackendTraceIdEntryName) {
-            backendTraceId = serverTiming['description'];
+  try {
+    const serverTimings = entry['serverTiming'];
+    if (serverTimings instanceof Array) {
+      for (const element of serverTimings) {
+        const serverTiming = element;
+        if (serverTiming['name'] === vars.serverTimingBackendTraceIdEntryName) {
+          backendTraceId = serverTiming['description'];
+          if (isCached) {
+            if (DEBUG) {
+              info('Response is cached, removed backendTraceId from response');
+            }
+            backendTraceId = '';
           }
         }
       }
-    } catch (e) {
-      // Some browsers may not grant access to the field when the Timing-Allow-Origin
-      // check fails. Better be safe than sorry here.
     }
+  } catch (e) {
+    // Some browsers may not grant access to the field when the Timing-Allow-Origin
+    // check fails. Better be safe than sorry here.
   }
-  else {
-    info('Response is cached, removed backendTraceId from response');
-  }
+
   result.push(backendTraceId);
 
   if (hasValidTimings) {

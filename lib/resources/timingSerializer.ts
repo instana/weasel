@@ -75,8 +75,8 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
   try {
     const serverTimings = entry['serverTiming'];
     if (serverTimings instanceof Array) {
-      for (const element of serverTimings) {
-        const serverTiming = element;
+      for (let i = 0; i < serverTimings.length; i++) {
+        const serverTiming = serverTimings[i];
         if (serverTiming['name'] === vars.serverTimingBackendTraceIdEntryName) {
           backendTraceId = serverTiming['description'];
           if (isCached) {

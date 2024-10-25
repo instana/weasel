@@ -51,7 +51,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "apollo-server-express": "^2.14.2",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^29.7.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "bluebird": "^3.4.6",

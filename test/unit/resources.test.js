@@ -57,7 +57,9 @@ describe('resources/timingSerializer', () => {
         decodedBodySize: 16786,
         serverTiming: []
       };
-      expect(toHumanReadableEntry(serializeEntry(entry))).toMatchSnapshot();
+      const result = toHumanReadableEntry(serializeEntry(entry));
+      expect(result).toMatchSnapshot();
+      expect(result['backendTraceId']).toBe('');
     });
 
     it('must identify full asset retrieval', () => {
@@ -90,7 +92,9 @@ describe('resources/timingSerializer', () => {
           }
         ]
       };
-      expect(toHumanReadableEntry(serializeEntry(entry))).toMatchSnapshot();
+      const result = toHumanReadableEntry(serializeEntry(entry));
+      expect(result).toMatchSnapshot();
+      expect(result['backendTraceId']).not.toBeNull();
     });
 
     it('must identify cache validation', () => {
@@ -118,7 +122,9 @@ describe('resources/timingSerializer', () => {
         decodedBodySize: 16786,
         serverTiming: []
       };
-      expect(toHumanReadableEntry(serializeEntry(entry))).toMatchSnapshot();
+      const result = toHumanReadableEntry(serializeEntry(entry));
+      expect(result).toMatchSnapshot();
+      expect(result['backendTraceId']).toBe('');
     });
   });
 });

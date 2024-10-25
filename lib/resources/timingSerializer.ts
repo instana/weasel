@@ -1,4 +1,5 @@
 import { cachingTypes, initiatorTypes } from './consts';
+import {info} from '../debug';
 import vars from '../vars';
 
 export function serializeEntryToArray(entry: PerformanceResourceTiming) {
@@ -10,14 +11,17 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
 
   // When timing data is available, we can provide additional information about
   // caching and resource sizes.
+  let isCached = false;
   if (typeof entry['transferSize'] === 'number' &&
       typeof entry['encodedBodySize'] === 'number' &&
       // All this information may not be available due to the timing allow origin check.
       entry['encodedBodySize'] > 0) {
     if (entry['transferSize'] === 0) {
       result.push(cachingTypes.cached);
+      isCached = true;
     } else if (entry['transferSize'] > 0 && (entry['encodedBodySize'] === 0 || entry['transferSize'] < entry['encodedBodySize'])) {
       result.push(cachingTypes.validated);
+      isCached = true;
     } else {
       result.push(cachingTypes.fullLoad);
     }
@@ -75,6 +79,12 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
         const serverTiming = serverTimings[i];
         if (serverTiming['name'] === vars.serverTimingBackendTraceIdEntryName) {
           backendTraceId = serverTiming['description'];
+          if (isCached) {
+            if (DEBUG) {
+              info('Response is cached, removed backendTraceId from response');
+            }
+            backendTraceId = '';
+          }
         }
       }
     }
@@ -82,6 +92,7 @@ export function serializeEntryToArray(entry: PerformanceResourceTiming) {
     // Some browsers may not grant access to the field when the Timing-Allow-Origin
     // check fails. Better be safe than sorry here.
   }
+
   result.push(backendTraceId);
 
   if (hasValidTimings) {

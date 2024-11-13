@@ -5,6 +5,7 @@ import {hasOwnProperty} from './util';
 import {getActivePhase} from './fsm';
 import {warn} from './debug';
 import vars from './vars';
+import {sriIntegrity} from './states/init';
 
 const maximumNumberOfMetaDataFields = 25;
 const maximumLengthPerMetaDataField = 1024;
@@ -16,6 +17,7 @@ const maximumNumberOfInternalMetaDataFields = 128;
 const maximumLengthPerInternalMetaDataField = 1024;
 
 export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
+  const arrayUseFeature = new Set();
   if (vars.reportingBackends && vars.reportingBackends.length > 0) {
     const reportingBackend: ReportingBackend = vars.reportingBackends[0];
     beacon['k'] = reportingBackend['key'];
@@ -51,7 +53,16 @@ export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
 
   if (vars.autoPageDetection) {
     // uf field will be a comma separated string if more than one use features are supported
-    beacon['uf'] = 'sn';
+    arrayUseFeature.add('sn');
+  }
+
+  if (sriIntegrity) {
+    arrayUseFeature.add('sri');
+  }
+  if (arrayUseFeature.size > 0) {
+    beacon['uf'] = `${Array.from(arrayUseFeature)
+      .map(item => `${item}`)
+      .join(',')}`;
   }
 }
 

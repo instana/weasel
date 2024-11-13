@@ -32,7 +32,10 @@ const state: State = {
     let beaconSent = false;
     if (doc.visibilityState !== 'visible') {
       if (DEBUG) {
-        info('Will not wait for additional page load beacon data because document.visibilityState is', doc.visibilityState);
+        info(
+          'Will not wait for additional page load beacon data because document.visibilityState is',
+          doc.visibilityState
+        );
       }
       sendPageLoadBeacon();
       return;
@@ -58,4 +61,3 @@ const state: State = {
   }
 };
 export default state;
-

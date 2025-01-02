@@ -49,6 +49,12 @@ export function processCommand(command: any[]): any {
       }
       vars.ignoreUserTimings = command[1];
       break;
+    case 'queryTrackedDomainList':
+      if (DEBUG) {
+        validateRegExpArray('queryTrackedDomainList', command[1]);
+      }
+      vars.queryTrackedDomainList = command[1];
+      break;
     case 'xhrTransmissionTimeout':
       vars.xhrTransmissionTimeout = command[1];
       break;

@@ -1,3 +1,4 @@
+import { isQueryTracked, removeQueryAndFragmentFromUrl } from '../queryTrackedDomainList';
 import {performance, isResourceTimingAvailable} from '../performance';
 import { isTransmitionRequest } from '../transmission/util';
 import type {BeaconWithResourceTiming} from '../types';
@@ -22,7 +23,6 @@ export function addResourceTimings(beacon: Partial<BeaconWithResourceTiming>, mi
   }
 }
 
-
 function getEntriesTransferFormat(performanceEntries: PerformanceEntryList, minStartTime?: number) {
   const trie = createTrie();
 
@@ -43,6 +43,13 @@ function getEntriesTransferFormat(performanceEntries: PerformanceEntryList, minS
         info('Will not include data about resource because resource URL is ignored via ignore rules.', entry);
       }
       continue;
+    }
+
+    if (!isQueryTracked(url)) {
+      url = removeQueryAndFragmentFromUrl(url);
+      if (DEBUG) {
+        info('Tracking url excluding query parameters and fragment strings', url);
+      }
     }
 
     const lowerCaseUrl = url.toLowerCase();

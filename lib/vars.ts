@@ -104,6 +104,8 @@ const defaultVars: {
   // eum('ignoreUrls', [/example.com/]);
   ignoreUrls: RegExp[];
 
+  queryTrackedDomainList: RegExp[];
+
   // Whether or not ping like requests should be ignored from AJAX
   // collection. This is separate from ignoreUrls to handle cases
   // where users start monitoring using weasel and generate tons
@@ -345,6 +347,7 @@ const defaultVars: {
   ignoreUrls: [],
   ignorePings: true,
   ignoreErrorMessages: [],
+  queryTrackedDomainList: [],
   xhrTransmissionTimeout: 20000,
   allowedOrigins: [],
   page: undefined,

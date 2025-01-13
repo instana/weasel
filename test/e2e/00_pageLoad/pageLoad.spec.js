@@ -400,7 +400,61 @@ describe('pageLoad', () => {
     });
   });
 
+  describe('pageload url in queryTrackedDomainList', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/queryTrackedDomainList/www.example1.com') + '@!#$**(?account1=value');
+    });
+
+    it('full url with query parameters must be sent to backend', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['u']).to.equal(getE2ETestBaseUrl('00_pageLoad/queryTrackedDomainList/www.example1.com') + '@!#$**(?account1=value');
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+
+  });
+
+  describe('pageload url not in queryTrackedDomainList', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/queryTrackedDomainList/www.example2.com') + '@!#$**(?account3=value');
+    });
+
+    it('url excluding query parameters must be sent to backend', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            let parsedUrl = (getE2ETestBaseUrl('00_pageLoad/queryTrackedDomainList/www.example2.com')).split('?')[0].split('#')[0];
+            cexpect(beacon['u']).to.equal(parsedUrl);
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+
+  });
+
+  describe('pageload url with redaction and in queryTrackedDomainList', () => {
+    beforeEach(() => {
+      browser.get(getE2ETestBaseUrl('00_pageLoad/queryTrackedDomainList/www.exampleWithRedactionCase.com') + '&account=myaccount&appsecret=password#fragmentstring');
+    });
+
+    it('full url with query parameters after redaction must be sent to backend', () => {
+      return util.retry(() => {
+        return getBeacons()
+          .then(([beacon]) => {
+            cexpect(beacon['u']).to.equal(getE2ETestBaseUrl('00_pageLoad/queryTrackedDomainList/www.exampleWithRedactionCase.com') + '&account=myaccount&appsecret=<redacted>#<redacted>');
+            cexpect(beacon['l']).to.equal(beacon['u']);
+          });
+      });
+    });
+
+  });
+
 });
+
+
 
 function stripTimingValues(node) {
   if (node instanceof Array) {

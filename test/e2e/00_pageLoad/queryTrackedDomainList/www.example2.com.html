@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>pageLoad test</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+</head>
+<body>
+  Test url domain not in queryTrackedDomainList
+
+  <script src="/e2e/initializer.js"></script>
+  <script crossorigin="anonymous" defer src="/target/eum.min.js"></script>
+
+  <script>
+    eum('queryTrackedDomainList', [/www.example1.com/i, /www.example3.com/i]);
+  </script>
+
+</body>
+</html>

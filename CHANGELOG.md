@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.4
+
+- Added support to collect all parameters for only the URLs that match a specified list of regular expressions provided by the user. The parameters of the excluded URLs are not tracked.
 
 ## 1.7.3
 

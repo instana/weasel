@@ -43,7 +43,7 @@ export function sendBeacon(data: Partial<Beacon>) {
     info('Transmitting beacon', data);
   }
 
-  if (isExcessiveUsage()) {
+  if (isExcessiveUsage() && data['ty'] != 'pl') {
     if (DEBUG) {
       info('Reached the maximum number of beacons to transmit.');
     }

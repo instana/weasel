@@ -5,7 +5,6 @@ import {hasOwnProperty} from './util';
 import {getActivePhase} from './fsm';
 import {warn} from './debug';
 import vars from './vars';
-import {sriIntegrity} from './states/init';
 
 const maximumNumberOfMetaDataFields = 25;
 const maximumLengthPerMetaDataField = 1024;
@@ -15,6 +14,8 @@ const languages = determineLanguages();
 // Internal Meta data
 const maximumNumberOfInternalMetaDataFields = 128;
 const maximumLengthPerInternalMetaDataField = 1024;
+
+let sriIntegrity: boolean;
 
 export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
   const arrayUseFeature = new Set();
@@ -55,6 +56,8 @@ export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
     // uf field will be a comma separated string if more than one use features are supported
     arrayUseFeature.add('sn');
   }
+
+  checkforSriIntegrity();
 
   if (sriIntegrity) {
     arrayUseFeature.add('sri');
@@ -147,6 +150,25 @@ function addMetaDataImpl(
       }
 
       beacon[keyPrefix + key] = serializedValue.substring(0, maxLength);
+    }
+  }
+}
+
+export function checkforSriIntegrity() {
+  sriIntegrity = false;
+  let matchedScript = null;
+  const scriptElements = document.querySelectorAll('script');
+  for (const script of scriptElements) {
+    const src = script.getAttribute('src') || '';
+    if (/.*eum.min.js$/.test(src) && !matchedScript) {
+      matchedScript = script;
+      break;
+    }
+  }
+  if (matchedScript) {
+    const checkIntegrityAttribute = matchedScript.getAttribute('integrity');
+    if (checkIntegrityAttribute) {
+      sriIntegrity = true;
     }
   }
 }

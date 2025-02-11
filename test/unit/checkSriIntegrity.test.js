@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import {expect} from 'chai';
 import {Beacon} from '@lib/types';
 import defaultVars from '@lib/vars';
-import {checkforSriIntegrity} from '@lib/states/init';
+import {checkforSriIntegrity} from '@lib/commonBeaconProperties';
 import {addCommonBeaconProperties} from '@lib/commonBeaconProperties';
 
 describe('Check for Adoption of SRI Integrity', () => {

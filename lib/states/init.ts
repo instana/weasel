@@ -17,8 +17,6 @@ import {win} from '../browser';
 import vars from '../vars';
 import {configAutoPageDetection} from '../hooks/autoPageDetection';
 
-export let sriIntegrity: boolean;
-
 const state: State = {
   onEnter() {
     if (DEBUG && !fulfillsPrerequisites()) {
@@ -71,7 +69,6 @@ const state: State = {
       }
     }
     processCommands(globalObject.q);
-    checkforSriIntegrity();
 
     // prefer the backend trace ID which was explicitly set
     vars.pageLoadBackendTraceId = vars.pageLoadBackendTraceId || getPageLoadBackendTraceId();
@@ -123,23 +120,4 @@ function addCommandAfterInitializationSupport() {
 
 function fulfillsPrerequisites() {
   return win.XMLHttpRequest && win.JSON;
-}
-
-export function checkforSriIntegrity() {
-  sriIntegrity = false;
-  let matchedScript = null;
-  const scriptElements = document.querySelectorAll('script');
-  for (const script of scriptElements) {
-    const src = script.getAttribute('src') || '';
-    if (/.*eum.min.js$/.test(src) && !matchedScript) {
-      matchedScript = script;
-      break;
-    }
-  }
-  if (matchedScript) {
-    const checkIntegrityAttribute = matchedScript.getAttribute('integrity');
-    if (checkIntegrityAttribute) {
-      sriIntegrity = true;
-    }
-  }
 }

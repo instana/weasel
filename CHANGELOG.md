@@ -2,6 +2,7 @@
 
 ## 1.7.5
 - Do not rate limit pageLoad beacon
+- Added W3C supported headers with the requests
 
 ## 1.7.4
 

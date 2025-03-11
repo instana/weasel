@@ -44,4 +44,18 @@ export function addCorrelationHttpHeaders(fn: (name: string, value: string) => v
   fn.call(ctx, 'X-INSTANA-T', traceId);
   fn.call(ctx, 'X-INSTANA-S', traceId);
   fn.call(ctx, 'X-INSTANA-L', '1,correlationType=web;correlationId=' + traceId);
+  /**
+   * The following code supports W3C trace context headers, ensuring compatibility with OpenTelemetry (OTel).
+   * The "03" flag at the end indicates that the trace was randomly generated and is not sampled from the frontend.
+   * If the trace generation method changes in the future, remove the "03" flag from the end.
+   * 
+   * References:
+   * https://www.w3.org/TR/trace-context-2/#trace-flags
+   * https://www.w3.org/TR/trace-context-2/#random-trace-id-flag
+   */
+  if(vars.enableW3CHeaders){
+    fn.call(ctx, 'traceparent','00-0000000000000000'+traceId+'-'+traceId+'-03'); 
+    fn.call(ctx, 'tracestate', traceId);
+  }
+ 
 }

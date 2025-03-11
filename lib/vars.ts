@@ -121,6 +121,12 @@ const defaultVars: {
   // eum('ignorePings', false);
   ignorePings: boolean;
 
+  // When set to true, this option will include W3C-compliant headers in the request headers,
+  // ensuring compatibility with W3C standards for tracing.
+  // Set via:
+  // eum('enableW3CHeaders', true);
+  enableW3CHeaders: boolean;
+
   // An array of error message regular expressions for which no data
   // should be collected.
   // Set via:
@@ -345,6 +351,7 @@ const defaultVars: {
   apiKey: null,
   meta: {},
   ignoreUrls: [],
+  enableW3CHeaders: false,
   ignorePings: true,
   ignoreErrorMessages: [],
   queryTrackedDomainList: [],

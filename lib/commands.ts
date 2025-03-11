@@ -64,6 +64,9 @@ export function processCommand(command: any[]): any {
     case 'ignorePings':
       vars.ignorePings = command[1];
       break;
+    case 'enableW3CHeaders':
+      vars.enableW3CHeaders = command[1];
+      break;
     case 'reportError':
       reportError(command[1], command[2]);
       break;

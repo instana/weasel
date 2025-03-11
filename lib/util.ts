@@ -30,7 +30,7 @@ if (win.crypto && win.crypto.getRandomValues && win.Uint32Array) {
   generateUniqueIdImpl = function generateUniqueIdViaCrypto(): string {
     const array = new win.Uint32Array(2);
     win.crypto.getRandomValues(array);
-    return array[0].toString(16) + array[1].toString(16);
+    return array[0].toString(16).padStart(8,'0') + array[1].toString(16).padStart(8,'0');
   };
 }
 

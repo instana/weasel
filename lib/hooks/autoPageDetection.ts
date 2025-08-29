@@ -1,20 +1,87 @@
-import {win, doc} from '../browser';
-import type {AutoPageDetectionType, MappingRule} from '../types';
+import { win, doc } from '../browser';
+import type { AutoPageDetectionType, MappingRule, TransitionData } from '../types';
 import vars from '../vars';
-import {info, debug, error} from '../debug';
-import {setPage} from '../pageChange';
+import { info, debug, error } from '../debug';
+import { setPage } from '../pageChange';
 import shimmer from 'shimmer';
-import {isWrapped} from '../utilWrap';
-import {normalizeUrl} from './normalizeUrl';
-import {stripSecrets} from '../stripSecrets';
-import {getActivePhase} from '../fsm';
+import { isWrapped } from '../utilWrap';
+import { normalizeUrl } from './normalizeUrl';
+import { stripSecrets } from '../stripSecrets';
+import { getActivePhase } from '../fsm';
+import { setTimeout } from '../timers';
+import { setPageTransitionData } from '../pageTransitionData';
+import { observeResourcePerformance } from '../performanceObserver';
+
+// Polyfill for requestIdleCallback
+const requestIdleCallback = (callback: IdleRequestCallback): number => {
+  return win.setTimeout(() => {
+    const start = Date.now();
+    callback({
+      didTimeout: false,
+      timeRemaining: () => Math.max(0, 50 - (Date.now() - start))
+    });
+  }, 1);
+};
+
+const transitionData: TransitionData = {};
+
+/**
+ * Calculate and display the total transition time when transition duration is available
+ * If resource duration is available, include it in the calculation
+ * If not, total is just the transition duration
+ * If there's a pending page change, complete it with the calculated duration
+ */
+function calculateTotalTransitionTime(): void {
+  const {
+    transitionDuration,
+    resourceDuration,
+    timestamp,
+    eventType,
+    pendingPageChange,
+  } = transitionData;
+
+  if (transitionDuration === undefined) return;
+
+  let totalDuration = transitionDuration;
+  let logMessage = '';
+
+  // Include resource duration if available
+  if (resourceDuration !== undefined) {
+    totalDuration += resourceDuration;
+    logMessage = `PageChange:: Total transition time: ${totalDuration.toFixed(2)}ms (Resource: ${resourceDuration.toFixed(2)}ms + Transition: ${transitionDuration.toFixed(2)}ms)`;
+  } else {
+    logMessage = `PageChange:: Total transition time: ${totalDuration.toFixed(2)}ms (Transition only)`;
+  }
+
+  // Append timestamp and event type info if available
+  if (timestamp) {
+    const eventInfo = eventType ? ` (Event: ${eventType})` : '';
+    logMessage += `PageChange:: | Timestamp: ${new Date(timestamp).toISOString()}${eventInfo}`;
+  }
+
+  if (DEBUG) info(logMessage);
+
+  // Store total duration for beacon
+  transitionData.totalDuration = totalDuration;
+
+  // Handle pending page change if any
+  if (pendingPageChange) {
+    const { url, customizedPageName } = pendingPageChange;
+    if (DEBUG) info('PageChange:: handlePossibleUrlChange triggered by pendingPageChange');
+    setPageWithConditions(url, customizedPageName, url);
+    transitionData.pendingPageChange = undefined;
+  }
+
+  // Clear durations after calculation
+  transitionData.transitionDuration = undefined;
+  transitionData.resourceDuration = undefined;
+}
+
 
 export function configAutoPageDetection() {
   resetPageDetectionState();
 
-  if (!isAutoPageDetectionEnabled()) {
-    return;
-  }
+  if (!isAutoPageDetectionEnabled()) return;
 
   wrapHistoryMethods();
 
@@ -22,14 +89,65 @@ export function configAutoPageDetection() {
   isHashChangeListenerAdded = true;
 
   if (!ignorePopstateEvent()) {
-    if (DEBUG) {
-      info('handlePossibleUrlChange on popstate event received');
-    }
+    if (DEBUG) info('PageChange:: handlePossibleUrlChange on popstate event received');
     win.addEventListener('popstate', popStateEventListener);
     isPopstateEventListenerAdded = true;
   }
+
   if (getActivePhase() === 'pl') {
     handlePossibleUrlChange(window.location.pathname);
+  }
+}
+
+let activeResourceObserver: any = null;
+
+function startResourceObservation() {
+  transitionData.state = 'wait';
+  cancelActiveObserverIfNeeded();
+
+  activeResourceObserver = createResourceObserver();
+  activeResourceObserver.onBeforeResourceRetrieval();
+}
+
+function cancelActiveObserverIfNeeded() {
+  if (activeResourceObserver?.cancel) {
+    activeResourceObserver.cancel();
+  }
+}
+
+function createResourceObserver() {
+  return observeResourcePerformance({
+    entryTypes: ['resource'],
+    resourceMatcher: isRelevantResourceType,
+    maxWaitForResourceMillis: 3000,
+    maxToleranceForResourceTimingsMillis: 800,
+    onEnd: handleResourceObservationEnd as (arg: { resource?: PerformanceResourceTiming | null, duration: number }) => void
+  });
+}
+
+function isRelevantResourceType(entry: PerformanceResourceTiming): boolean {
+  const allowedTypes = ['fetch', 'xmlhttprequest', 'script', 'img', 'link'];
+  return allowedTypes.includes(entry.initiatorType);
+}
+
+function handleResourceObservationEnd({ resource, duration }: { resource?: PerformanceResourceTiming | null, duration: number }): void {
+  const resourceDuration = parseFloat(duration.toFixed(2));
+
+  if (resource) {
+    if (DEBUG) info(`PageChange:: Last resource loaded: ${resource.name} transition took ${resourceDuration}ms`);
+    transitionData.resourceDuration = resourceDuration;
+  } else {
+    if (DEBUG) info('PageChange:: This is with no resource time');
+  }
+
+  calculateTotalTransitionTime();
+  transitionData.state = 'done';
+}
+
+function endResourceObservation() {
+  transitionData.state = 'done';
+  if (activeResourceObserver) {
+    activeResourceObserver.onAfterResourceRetrieved();
   }
 }
 
@@ -49,17 +167,76 @@ function resetPageDetectionState() {
 }
 
 function hashChangeEventListener(event: HashChangeEvent) {
-  if (DEBUG) {
-    info(`hashchange to ${event.newURL} from ${event.oldURL}, current location ${win.location}`);
+  if (DEBUG) info(`PageChange:: hashchange to ${event.newURL} from ${event.oldURL}, current location ${win.location}`);
+
+  try {
+    startResourceObservation();
+    performance.mark('routeChangeStart');
+  } catch (e) {
+    if (DEBUG) {
+      info('PageChange:: Failed to mark hashchange routeChangeStart', e);
+    }
   }
+
+  requestIdleCallback(() => endRouteAndUpdateTime('hashchange'));
   handlePossibleUrlChange(event.newURL);
 }
 
 function popStateEventListener(_event: PopStateEvent) {
-  if (DEBUG) {
-    info(`popstate current location ${win.location}`);
+  if (DEBUG) info(`PageChange:: popstate current location ${win.location}`);
+
+  try {
+    startResourceObservation();
+    performance.mark('routeChangeStart');
+  } catch (e) {
+    if (DEBUG) {
+      info('PageChange:: Failed to mark popstate routeChangeStart', e);
+    }
   }
+
+  requestIdleCallback(() => endRouteAndUpdateTime('popstate'));
   handlePossibleUrlChange(window.location.pathname);
+}
+
+function endRouteAndUpdateTime(routeName: string) {
+  Promise.resolve().then(() => {
+    setTimeout(() => {
+      try {
+        finalizePerformanceTracking(routeName);
+      } catch (err) {
+        if (DEBUG) {
+          info(`PageChange:: [RouteTiming] ${routeName} - measurement failed:`, err);
+        }
+      } finally {
+        cleanupPerformanceEntries();
+      }
+    }, 100);
+  });
+}
+
+function finalizePerformanceTracking(routeName: string) {
+  endResourceObservation();
+
+  performance.mark('routeChangeEnd');
+  safeMeasure('PageTransition', 'routeChangeStart', 'routeChangeEnd');
+
+  const [measure] = performance.getEntriesByName('PageTransition');
+  if (measure) {
+    const duration = parseFloat(measure.duration.toFixed(2));
+    if (DEBUG) {
+      info(`PageChange:: [RouteTiming] ${routeName} transition duration: ${duration}ms`);
+    }
+
+    transitionData.transitionDuration = duration;
+    processPendingPageTransition();
+  }
+
+}
+
+function cleanupPerformanceEntries() {
+  performance.clearMarks('routeChangeStart');
+  performance.clearMarks('routeChangeEnd');
+  performance.clearMeasures('PageTransition');
 }
 
 /**
@@ -80,32 +257,54 @@ function wrapHistoryMethods() {
 
 function unwrapHistoryMethods() {
   if (isWrapped(win.history.replaceState)) {
-    if (DEBUG) {
-      info('unwrap history.replaceState');
-    }
+    if (DEBUG) info('unwrap history.replaceState');
     shimmer.unwrap(history, 'replaceState');
   }
   if (isWrapped(win.history.pushState)) {
-    if (DEBUG) {
-      info('unwrap history.pushState');
-    }
+    if (DEBUG) info('unwrap history.pushState');
     shimmer.unwrap(history, 'pushState');
   }
 }
 
 function _patchHistoryMethod(methodName: string) {
   return (original: any) => {
-    if (DEBUG) {
-      info(`patching history ${methodName}`);
-    }
+    if (DEBUG) info(`patching history ${methodName}`);
+
     return function patchHistoryMethod(this: History, ...args: unknown[]) {
-      if (DEBUG) {
-        debug(`history ${methodName} invoked with`, args);
+      if (DEBUG) debug(`history ${methodName} invoked with`, args);
+
+      // Record timestamp and event type
+      transitionData.timestamp = Date.now();
+      transitionData.eventType = methodName;
+
+      try {
+        startResourceObservation();
+        performance.mark('routeChangeStart');
+      } catch (e) {
+        if (DEBUG) info('PageChange:: Failed to mark routeChangeStart', e);
       }
+
+      const result = original.apply(this, args);
+
+      requestIdleCallback(() => endRouteAndUpdateTime('pagechange'));
       updateLocation(args);
-      return original.apply(this, args);
+
+      return result;
     };
   };
+}
+
+function safeMeasure(name: string, startMark: string, endMark: string) {
+  const hasStart = performance.getEntriesByName(startMark).length > 0;
+  const hasEnd = performance.getEntriesByName(endMark).length > 0;
+
+  if (hasStart && hasEnd) {
+    performance.measure(name, startMark, endMark);
+    return performance.getEntriesByName(name)[0]?.duration ?? null;
+  } else {
+    if (DEBUG) info(`PageChange:: Missing marks for measure '${name}':`, { hasStart, hasEnd });
+    return null;
+  }
 }
 
 function updateLocation(args: unknown[]) {
@@ -125,32 +324,51 @@ function updateLocation(args: unknown[]) {
 }
 
 function handlePossibleUrlChange(newUrl: string) {
+  if (!transitionData.timestamp) {
+    transitionData.timestamp = Date.now();
+  }
+  if (!transitionData.eventType || newUrl.includes('#')) {
+    transitionData.eventType = newUrl.includes('#') ? 'hashchange' : transitionData.eventType || 'navigation';
+  }
   const normalizedUrl = normalizeUrl(newUrl, true);
   const customizedPageName = applyCustomPageMappings(removeUrlOrigin(normalizedUrl));
-  if (!customizedPageName) {
+  if (!customizedPageName) return;
+  setPageWithConditions(normalizedUrl, customizedPageName, newUrl);
+}
+
+function setPageWithConditions(normalizedUrl: string, customizedPageName: string, newUrl: string) {
+  const hasTransitionDuration = transitionData.totalDuration !== undefined;
+
+  if (!hasTransitionDuration) {
+    queuePendingPageChange(newUrl, customizedPageName);
     return;
   }
 
-  setPage(customizedPageName, {
-    'view.title': doc.title,
-    'view.url': stripSecrets(normalizedUrl)
-  });
+  const sanitizedUrl = stripSecrets(normalizedUrl);
+  const meta = { 'view.title': doc.title, 'view.url': sanitizedUrl };
+
+  setPageTransitionData({ d: transitionData.totalDuration });
+  if (DEBUG) info('PageChange:: Sending page change with duration:', transitionData.totalDuration);
+  setPage(customizedPageName, meta);
+  clearTransitionData();
+}
+
+function queuePendingPageChange(url: string, customizedPageName: string) {
+  transitionData.pendingPageChange = { url, customizedPageName };
+}
+
+function clearTransitionData() {
+  transitionData.totalDuration = undefined;
 }
 
 function applyCustomPageMappings(urlPath: string): string | null {
   const rules = getAutoPageDetectionMappingRule();
   const effectivePath = (titleAsPageNameInAutoPageDetection() ? doc.title : urlPath) || urlPath;
-  if (!effectivePath || !rules.length) {
-    return effectivePath;
-  }
+  if (!effectivePath || !rules.length) return effectivePath;
 
   for (const [pattern, replacement] of rules) {
-    if (!pattern || !pattern.test(effectivePath)) {
-      continue;
-    }
-    if (!replacement) {
-      return null;
-    }
+    if (!pattern || !pattern.test(effectivePath)) continue;
+    if (!replacement) return null;
     return effectivePath.replace(pattern, replacement);
   }
   return effectivePath;
@@ -190,17 +408,19 @@ function getAutoPageDetectionMappingRule(): Array<MappingRule> {
 
 export function processAutoPageDetectionCommand(input: any): boolean | AutoPageDetectionType {
   const guessCmd = input as boolean | AutoPageDetectionType | null;
-  if (!guessCmd) {
-    return false;
-  }
+  if (!guessCmd) return false;
 
-  if (typeof guessCmd !== 'object') {
-    return !!guessCmd;
-  }
+  if (typeof guessCmd !== 'object') return !!guessCmd;
 
   return {
     ignorePopstateEvent: guessCmd['ignorePopstateEvent'],
     titleAsPageName: guessCmd['titleAsPageName'],
     mappingRule: guessCmd['mappingRule']
   };
+}
+
+function processPendingPageTransition() {
+  if (transitionData.transitionDuration !== undefined && transitionData.pendingPageChange) {
+    calculateTotalTransitionTime();
+  }
 }

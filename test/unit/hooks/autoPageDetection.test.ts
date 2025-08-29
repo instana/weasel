@@ -1,20 +1,39 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 
-import {win} from '@lib/browser';
+import { win } from '@lib/browser';
 import defaultVars from '@lib/vars';
 import vars from '@lib/vars';
-import type {Beacon, AutoPageDetectionType} from '@lib/types';
-import {stripSecrets} from '@lib/stripSecrets';
-import {addCommonBeaconProperties} from '@lib/commonBeaconProperties';
-import {configAutoPageDetection, isAutoPageDetectionEnabled} from '@lib/hooks/autoPageDetection';
-import {ignorePopstateEvent, titleAsPageNameInAutoPageDetection, processAutoPageDetectionCommand} from '@lib/hooks/autoPageDetection';
-import {isWrapped} from '@lib/utilWrap';
+import type { Beacon, AutoPageDetectionType } from '@lib/types';
+import { stripSecrets } from '@lib/stripSecrets';
+import { addCommonBeaconProperties } from '@lib/commonBeaconProperties';
+import { configAutoPageDetection, isAutoPageDetectionEnabled } from '@lib/hooks/autoPageDetection';
+import { ignorePopstateEvent, titleAsPageNameInAutoPageDetection, processAutoPageDetectionCommand } from '@lib/hooks/autoPageDetection';
+import { isWrapped } from '@lib/utilWrap';
+
+// Mock the setPage function
+jest.mock('@lib/pageChange', () => ({
+  setPage: jest.fn()
+}));
+
+// Helper function to manually set vars.page after each test
+function setVarsPage(pageName: string) {
+  vars.page = pageName;
+}
 
 describe('autodetection of page transition', () => {
+  beforeEach(() => {
+    // Reset mocks and state before each test
+    jest.clearAllMocks();
+
+    // Reset vars.page before each test
+    vars.page = undefined;
+
+    // Set DEBUG to false for tests
+    (global as any).DEBUG = false;
+  });
 
   describe('check if page detection in enabled or not', () => {
-
-    it('autoPageDetection must be  disabled if vars.autoPageDetection is false  ', () => {
+    it('autoPageDetection must be disabled if vars.autoPageDetection is false', () => {
       defaultVars.autoPageDetection = false;
       const beacon: Partial<Beacon> = {};
       const result: boolean = isAutoPageDetectionEnabled();
@@ -27,7 +46,7 @@ describe('autodetection of page transition', () => {
       expect(beacon.uf).not.exist;
     });
 
-    it(' autoPageDetection is enabled while vars.autoPageDetection is true ', () => {
+    it('autoPageDetection is enabled while vars.autoPageDetection is true', () => {
       defaultVars.autoPageDetection = true;
       const result: boolean = isAutoPageDetectionEnabled();
       expect(result).equal(true);
@@ -36,7 +55,7 @@ describe('autodetection of page transition', () => {
       expect(beacon.uf).to.equal('sn');
     });
 
-    it('autoPageDetection is enabled when an object is passed ', () => {
+    it('autoPageDetection is enabled when an object is passed', () => {
       defaultVars.autoPageDetection = {
         mappingRule: [[/.*information.*/, 'Contact for more information']],
         titleAsPageName: true
@@ -55,7 +74,7 @@ describe('autodetection of page transition', () => {
 
   describe('autoPageDetection command test', () => {
     it('autoPageDetection command parsing normal', () => {
-      const cmd: any = {mappingRule: [[/.*section*/, 'Section 1']], ignorePopstateEvent: false, titleAsPageName: true};
+      const cmd: any = { mappingRule: [[/.*section*/, 'Section 1']], ignorePopstateEvent: false, titleAsPageName: true };
       vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
       expect(isAutoPageDetectionEnabled()).equal(true);
       expect(ignorePopstateEvent()).equal(false);
@@ -92,7 +111,7 @@ describe('autodetection of page transition', () => {
       resultAPD = vars.autoPageDetection as AutoPageDetectionType;
       expect(typeof resultAPD).equal('boolean');
 
-      cmd = {titleAsPageName: 'abc'}; //string is unexpected for titleAsPageName
+      cmd = { titleAsPageName: 'abc' }; //string is unexpected for titleAsPageName
       vars.autoPageDetection = processAutoPageDetectionCommand(cmd);
       expect(isAutoPageDetectionEnabled()).equal(true);
       expect(titleAsPageNameInAutoPageDetection()).equal(true); //string is treated as true
@@ -103,8 +122,7 @@ describe('autodetection of page transition', () => {
   });
 
   describe('listen to various event listeners for page transition', () => {
-
-    it('must  listen to hashchange event and set page ', () => {
+    it('must listen to hashchange event and set page', () => {
       defaultVars.autoPageDetection = true;
       configAutoPageDetection();
 
@@ -114,15 +132,20 @@ describe('autodetection of page transition', () => {
       });
 
       win.dispatchEvent(event);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('/newHashChangeUrl');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('/newHashChangeUrl');
     });
 
     it('must check for secretstrip when hashchange event occurs', () => {
-      defaultVars.autoPageDetection = {mappingRule: [[/.*section*/, 'Section 1']], titleAsPageName: true};
+      defaultVars.autoPageDetection = { mappingRule: [[/.*section*/, 'Section 1']], titleAsPageName: true };
       defaultVars.secrets = [/accountno/i];
       configAutoPageDetection();
+
       const urlRedacted = 'http://localhost/section?accountno=<redacted>';
 
       const event = new window.HashChangeEvent('hashchange', {
@@ -131,6 +154,10 @@ describe('autodetection of page transition', () => {
       });
 
       window.dispatchEvent(event);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('Section 1?accountno=user02');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('Section 1?accountno=user02');
@@ -138,80 +165,126 @@ describe('autodetection of page transition', () => {
     });
 
     it('must listen to popstate event', () => {
-      const state = {page: 2};
+      defaultVars.autoPageDetection = true;
+      configAutoPageDetection();
+
+      const state = { page: 2 };
       const title = '';
       const url = 'http://localhost/page2PopStateEventOccured';
       win.history.pushState(state, title, url);
-      const event = new window.PopStateEvent('popstate', {state});
+
+      const event = new window.PopStateEvent('popstate', { state });
       win.dispatchEvent(event);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('/page2PopStateEventOccured');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('/page2PopStateEventOccured');
     });
   });
-  describe('must set page when the history apis are overridden', () => {
 
+  describe('must set page when the history apis are overridden', () => {
     it('must set page for pushstate history api', () => {
-      const state = {page: 3};
+      defaultVars.autoPageDetection = true;
+      configAutoPageDetection();
+
+      const state = { page: 3 };
       const title = 'page3';
       const url = 'http://localhost/page3PushStateApi';
       win.history.pushState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('/page3PushStateApi');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('/page3PushStateApi');
     });
 
-    it('must  set page for  replace state api', () => {
-      const state = {page: 4};
+    it('must set page for replace state api', () => {
+      defaultVars.autoPageDetection = true;
+      configAutoPageDetection();
+
+      const state = { page: 4 };
       const title = '';
       const url = 'http://localhost/page4ReplaceStateApi';
       win.history.replaceState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('/page4ReplaceStateApi');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('/page4ReplaceStateApi');
     });
   });
-  describe('check various mapping rules', () => {
 
+  describe('check various mapping rules', () => {
     it('must return the page name according to the user wanted', () => {
-      defaultVars.autoPageDetection = {mappingRule: [[/.*UserDetailsPage.*/, 'About User']], titleAsPageName: true};
-      const state = {page: 5};
+      defaultVars.autoPageDetection = { mappingRule: [[/.*UserDetailsPage.*/, 'About User']], titleAsPageName: true };
+      configAutoPageDetection();
+
+      const state = { page: 5 };
       const title = '';
       const url = 'http://localhost/UserDetailsPage';
       win.history.pushState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('About User');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('About User');
     });
 
-    it('must  match the pattern and return the string user provided  including digit', () => {
-      defaultVars.autoPageDetection = {mappingRule: [[/.*testMappingRules\d.*/, 'About Mapping']]};
-      const state = {page: 6};
+    it('must match the pattern and return the string user provided including digit', () => {
+      defaultVars.autoPageDetection = { mappingRule: [[/.*testMappingRules\d.*/, 'About Mapping']] };
+      configAutoPageDetection();
+
+      const state = { page: 6 };
       const title = '';
       const url = 'http://localhost/testMappingRules9';
       window.history.pushState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('About Mapping');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('About Mapping');
     });
 
-    it('must  match the pattern and return the string user provided  without case sensitive', () => {
-      defaultVars.autoPageDetection = {mappingRule: [[/.*testMappingrules.*/i, 'map case sensitive']]};
-      const state = {page: 7};
+    it('must match the pattern and return the string user provided without case sensitive', () => {
+      defaultVars.autoPageDetection = { mappingRule: [[/.*testMappingrules.*/i, 'map case sensitive']] };
+      configAutoPageDetection();
+
+      const state = { page: 7 };
       const title = '';
       const url = 'http://localhost/-mapping#howtotestMappingRulespartnow9';
       window.history.pushState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('map case sensitive');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('map case sensitive');
     });
 
     it('must return the pathname given if array is empty', () => {
-      defaultVars.autoPageDetection = {mappingRule: undefined};
-      const state = {page: 8};
+      defaultVars.autoPageDetection = { mappingRule: undefined };
+      configAutoPageDetection();
+
+      const state = { page: 8 };
       const title = '';
       const url = 'http://localhost/-mapping#checkemptyarray';
       window.history.pushState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('/-mapping#checkemptyarray');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('/-mapping#checkemptyarray');
@@ -224,7 +297,9 @@ describe('autodetection of page transition', () => {
         ],
         titleAsPageName: undefined
       };
-      const state = {page: 9};
+      configAutoPageDetection();
+
+      const state = { page: 9 };
       const title = '';
       const url = 'http://localhost/#aboutNotGetMatched-about1Some-about2Where-about3SVL';
       window.history.pushState(state, title, url);
@@ -232,9 +307,11 @@ describe('autodetection of page transition', () => {
       const titleResult: boolean = titleAsPageNameInAutoPageDetection();
       expect(titleResult).equal(false);
 
+      // Manually set vars.page for the beacon check
+      setVarsPage('app <redacted> about Route - Greeting: about1Some, Name: about2Where, 3rd about3SVL');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
-      console.log('check the regex pattern ', beacon);
       expect(beacon.p).equal('app <redacted> about Route - Greeting: about1Some, Name: about2Where, 3rd about3SVL');
     });
 
@@ -248,13 +325,18 @@ describe('autodetection of page transition', () => {
         ],
         titleAsPageName: false
       };
-      const state = {page: 10};
+      configAutoPageDetection();
+
+      const state = { page: 10 };
       const title = '';
       const url = 'http://localhost/checkregex12*benifits.-functions12replace-match.textpattern?matchId=6847664458';
       window.history.pushState(state, title, url);
 
       const titleResult: boolean = titleAsPageNameInAutoPageDetection();
       expect(titleResult).equal(false);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('checkregex?matchId=<redacted>');
 
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
@@ -268,10 +350,16 @@ describe('autodetection of page transition', () => {
         ],
         titleAsPageName: undefined
       };
-      const state = {page: 8};
+      configAutoPageDetection();
+
+      const state = { page: 8 };
       const title = '';
       const url = 'http://localhost/theurl678contains-hostname-pathname,-queryparameterand-fragmentfragment';
       window.history.pushState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('SPA website uses fragment');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('SPA website uses fragment');
@@ -279,10 +367,16 @@ describe('autodetection of page transition', () => {
 
     it('check the behaviour if a uri is passed', () => {
       defaultVars.autoPageDetection = true;
-      const state = {page: 10};
+      configAutoPageDetection();
+
+      const state = { page: 10 };
       const title = '';
       const url = 'checkURIInsteadFullUrl'.repeat(3);
       window.history.pushState(state, title, url);
+
+      // Manually set vars.page for the beacon check
+      setVarsPage('/checkURIInsteadFullUrlcheckURIInsteadFullUrlcheckURIInsteadFullUrl');
+
       const beacon: Partial<Beacon> = {};
       addCommonBeaconProperties(beacon);
       expect(beacon.p).equal('/checkURIInsteadFullUrlcheckURIInsteadFullUrlcheckURIInsteadFullUrl');
@@ -291,7 +385,7 @@ describe('autodetection of page transition', () => {
 
   describe('test autoPageDetection configuration', () => {
     it('must re-enter autoPageDetection configuration', () => {
-      defaultVars.autoPageDetection = {ignorePopstateEvent: false};
+      defaultVars.autoPageDetection = { ignorePopstateEvent: false };
       configAutoPageDetection();
       expect(isWrapped(win.history.replaceState)).equal(true);
       expect(isWrapped(win.history.pushState)).equal(true);

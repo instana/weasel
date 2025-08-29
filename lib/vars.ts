@@ -1,6 +1,7 @@
-import {generateUniqueId, now} from './util';
-import {performance} from './performance';
-import type {Meta, ReportingBackend, AutoPageDetectionType} from './types';
+import { generateUniqueId, now } from './util';
+import { performance } from './performance';
+import type { Meta, ReportingBackend, AutoPageDetectionType } from './types';
+import { PageTransitionData } from './pageTransitionData';
 
 const defaultVars: {
   // This is the global object name which the user of the EUM
@@ -326,6 +327,9 @@ const defaultVars: {
   //The version of Weasel agent.
   agentVersion?: string;
 
+  // Stores timing data related to page transitions
+  pageTransitionData?: PageTransitionData;
+
   // Whether or not weasel should generate dedicated custom events on webvital metrics
   // these custom events is more reliable than webvitals in PageLoad beacon, as we
   // will not wait for so long in PageLoad beacon, with custom events, these metrics
@@ -391,6 +395,7 @@ const defaultVars: {
   reportingBackends: [],
   agentVersion: '0.0.0',
   //0.0.0 will be replaced with version from package.json
+  pageTransitionData: {}, // Initialize with empty object
   webvitalsInCustomEvent: false
 };
 

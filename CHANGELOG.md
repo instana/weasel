@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.0
+- Page transition duration for page change in SPA.
+
 ## 1.7.5
 - Do not rate limit pageLoad beacon
 - Added W3C supported headers with the requests

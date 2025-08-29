@@ -286,3 +286,20 @@ export interface CustomEventOptions {
 export interface PageChangeBeacon extends Beacon {
   ty: 'pc';
 }
+
+/**
+ * Stores timing and metadata related to page transitions
+ * Used to track performance metrics during SPA navigation events
+ */
+export interface TransitionData {
+  resourceDuration?: number;
+  transitionDuration?: number;
+  timestamp?: number;
+  eventType?: string;
+  state?: string;
+  pendingPageChange?: {
+    url: string;
+    customizedPageName: string;
+  };
+  totalDuration?: number;
+}

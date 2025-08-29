@@ -1,12 +1,13 @@
-import {createExcessiveUsageIdentifier} from './excessiveUsageIdentification';
-import {addCommonBeaconProperties, addInternalMetaDataToBeacon} from './commonBeaconProperties';
-import {pageLoad as pageLoadPhase} from './phases';
-import {sendBeacon} from './transmission/index';
-import type {PageChangeBeacon} from './types';
-import {getActivePhase} from './fsm';
-import {info} from './debug';
-import {now} from './util';
+import { createExcessiveUsageIdentifier } from './excessiveUsageIdentification';
+import { addCommonBeaconProperties, addInternalMetaDataToBeacon } from './commonBeaconProperties';
+import { pageLoad as pageLoadPhase } from './phases';
+import { sendBeacon } from './transmission/index';
+import type { PageChangeBeacon } from './types';
+import { getActivePhase } from './fsm';
+import { info } from './debug';
+import { now } from './util';
 import vars from './vars';
+import { getPageTransitionData, clearPageTransitionData } from './pageTransitionData';
 
 type InternalMetaKey = 'view.title' | 'view.url';
 export type InternalMeta = Partial<Record<InternalMetaKey, string>>;
@@ -38,9 +39,21 @@ function reportPageChange(internalMeta?: InternalMeta): void {
     'ty': 'pc',
     'ts': now()
   };
+
+  // Add page transition data to the beacon if available
+  const transitionData = getPageTransitionData();
+
+  if (transitionData.d !== undefined) {
+    beacon['d'] = transitionData.d;
+  }
+
   addCommonBeaconProperties(beacon);
   if (internalMeta) {
     addInternalMetaDataToBeacon(beacon, internalMeta);
   }
+
+  // Clear the transition data after using it
+  clearPageTransitionData();
+
   sendBeacon(beacon);
 }

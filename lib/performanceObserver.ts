@@ -1,7 +1,8 @@
-import {performance, isPerformanceObserverAvailable} from './performance';
-import {noop, now, addEventListener, removeEventListener} from './util';
-import {setTimeout, clearTimeout} from './timers';
-import {doc, win} from './browser';
+import { performance, isPerformanceObserverAvailable } from './performance';
+import { noop, now, addEventListener, removeEventListener } from './util';
+import { setTimeout, clearTimeout } from './timers';
+import { doc, win } from './browser';
+import { info } from '../lib/debug';
 
 const ONE_DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -50,7 +51,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     startTime = performance.now();
     try {
       observer = new win['PerformanceObserver'](onResource);
-      observer['observe']({'entryTypes': opts.entryTypes});
+      observer['observe']({ 'entryTypes': opts.entryTypes });
     } catch (e) {
       // Some browsers may not support the passed entryTypes and decide to throw an error.
       // This would then result in an error with a message like:
@@ -58,6 +59,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
       // entryTypes only contained unsupported types
       //
       // Swallow and ignore the error. Treat it like unavailable performance observer data.
+      if (DEBUG) info('PageChange:: Unavailable performance observer data', e);
     }
     fallbackEndNeverCalledTimerHandle = setTimeout(disposeGlobalResources, 1000 * 60 * 10);
   }
@@ -91,7 +93,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
     } else {
       duration = Math.round(endTime - startTime);
     }
-    opts.onEnd({resource, duration});
+    opts.onEnd({ resource, duration });
   }
 
   function onResource(list: PerformanceObserverEntryList) {
@@ -114,6 +116,7 @@ export function observeResourcePerformance(opts: ObserveResourcePerformanceOptio
         return;
       }
     }
+
   }
 
   function onVisibilityChanged() {
@@ -176,7 +179,7 @@ function observeWithoutPerformanceObserverSupport(onEnd: ObserveResourcePerforma
 
   function onAfterResourceRetrieved() {
     const end = now();
-    onEnd({duration: end - start});
+    onEnd({ duration: end - start });
   }
 }
 

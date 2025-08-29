@@ -1,10 +1,10 @@
 import { sendBeacon as sendBatchedBeacon, isEnabled as isBatchingEnabled } from './batched';
 import { isQueryTracked, removeQueryAndFragmentFromUrl } from '../queryTrackedDomainList';
-import {createExcessiveUsageIdentifier} from '../excessiveUsageIdentification';
+import { createExcessiveUsageIdentifier } from '../excessiveUsageIdentification';
 import { sendBeacon as sendFormEncodedBeacon } from './formEncoded';
-import {isUrlIgnored} from '../ignoreRules';
-import type {Beacon} from '../types';
-import {info, error} from '../debug';
+import { isUrlIgnored } from '../ignoreRules';
+import type { Beacon } from '../types';
+import { info, error } from '../debug';
 
 const isExcessiveUsage = createExcessiveUsageIdentifier({
   maxCalls: 8096,

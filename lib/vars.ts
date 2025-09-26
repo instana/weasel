@@ -338,6 +338,12 @@ const defaultVars: {
   // Set via:
   // eum('webvitalsInCustomEvent', false)
   webvitalsInCustomEvent: boolean;
+
+  // Changes the maximum number of keys allowed under metadata property.
+  // Must be greater than 0 and defaults to 25.
+  // Set via:
+  // eum('maxMetadataKeys', 30)
+  maxMetadataKeys: number;
 } = {
   nameOfLongGlobal: 'EumObject',
   trackingSnippetVersion: null,
@@ -393,6 +399,7 @@ const defaultVars: {
   fragment: [],
   headersToCapture: [],
   reportingBackends: [],
+  maxMetadataKeys: 25,
   agentVersion: '0.0.0',
   //0.0.0 will be replaced with version from package.json
   pageTransitionData: {}, // Initialize with empty object

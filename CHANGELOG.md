@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.1
+- Maximum number of allowed metadata keys in a beacon can now be user configured.
+
 ## 1.8.0
 - Page transition duration for page change in SPA.
 

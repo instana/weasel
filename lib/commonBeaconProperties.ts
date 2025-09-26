@@ -6,7 +6,6 @@ import {getActivePhase} from './fsm';
 import {warn} from './debug';
 import vars from './vars';
 
-const maximumNumberOfMetaDataFields = 25;
 const maximumLengthPerMetaDataField = 1024;
 
 const languages = determineLanguages();
@@ -16,6 +15,7 @@ const maximumNumberOfInternalMetaDataFields = 128;
 const maximumLengthPerInternalMetaDataField = 1024;
 
 let sriIntegrity: boolean;
+let maximumNumberOfMetaDataFields = 25;
 
 export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
   const arrayUseFeature = new Set();
@@ -24,6 +24,9 @@ export function addCommonBeaconProperties(beacon: Partial<Beacon>) {
     beacon['k'] = reportingBackend['key'];
   } else {
     beacon['k'] = vars.apiKey;
+  }
+  if (vars.maxMetadataKeys > 0) {
+    maximumNumberOfMetaDataFields = vars.maxMetadataKeys;
   }
   beacon['sv'] = vars.trackingSnippetVersion;
   beacon['r'] = vars.referenceTimestamp;

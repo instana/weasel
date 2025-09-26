@@ -148,6 +148,9 @@ export function processCommand(command: any[]): any {
     case 'reportingBackends':
       processReportingBackends(command[1]);
       break;
+    case 'maxMetadataKeys':
+      vars.maxMetadataKeys = command[1];
+      break;
     case 'webvitalsInCustomEvent':
       vars.webvitalsInCustomEvent = command[1];
       break;
